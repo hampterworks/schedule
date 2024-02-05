@@ -6,6 +6,11 @@ on:
   pull_request:
     types: [opened, synchronize]
 
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
