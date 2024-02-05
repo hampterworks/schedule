@@ -9,6 +9,7 @@ import InputElement from "@repo/ui/InputElement";
 import FormWrapper, {DateItem} from "@repo/ui/FormWrapper";
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import ResultSection from "@repo/ui/ResultSection";
 
 const timeZones: Option[] = [
   {
@@ -216,23 +217,13 @@ export default function Page(): JSX.Element {
             <div>
               <h2>Schedule time zones</h2>
               {
-                resultTime.map((time, index) => (
-                  <div key={index}>
-                    <h2>{time.date}</h2>
-                    <pre>
-                    {time.timeZones !== undefined ? time.timeZones : 'No hour given'}
-                  </pre>
-                  </div>
-                ))
+                resultTime.map((time, index) =>
+                  <ResultSection key={time.date} header={time.date} text={time.timeZones !== undefined ? time.timeZones : 'No hour given'}/>
+                )
               }
             </div>
           }
-          <div>
-            <h2>Discord schedule format</h2>
-            <pre>
-              {discordTime}
-            </pre>
-          </div>
+          <ResultSection header='Discord schedule format' text={discordTime}/>
         </section>
       }
     </main>
