@@ -47,8 +47,8 @@ const FormWrapper: React.FC<FormWrapperProps> = ({dateRange, onTimeSelect, ...pr
         ...item,
         dayjs: updatedDayjs,
         ...(isNaN(epochTime)
-          ? {discordTime: `<t:${epochDay}:F> (<t:${epochDay}:R>): ${item.description}`}
-          : {discordTime: `<t:${epochTime}:F> (<t:${epochTime}:R>) : ${item.description}`})
+          ? {discordTime: `<t:${epochDay}:F> (<t:${epochDay}:R>) ${item.description}`}
+          : {discordTime: `<t:${epochTime}:F> (<t:${epochTime}:R>) ${item.description}`})
       }
     })
     onTimeSelect(formattedDate)
@@ -84,7 +84,6 @@ const FormWrapper: React.FC<FormWrapperProps> = ({dateRange, onTimeSelect, ...pr
                 defaultValue=""
                 render={({field}) => (
                   <InputElement
-                    required={true}
                     type="text"
                     label="Enter description"
                     onSelect={(val) => field.onChange(val)}

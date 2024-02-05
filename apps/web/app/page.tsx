@@ -160,7 +160,6 @@ export default function Page(): JSX.Element {
       setResultTime(timesWithTimezones)
     }
     setDiscordTime(discordString)
-
   }
 
   const onButtonClick = () => {
@@ -180,7 +179,7 @@ export default function Page(): JSX.Element {
   return (
     <main className={styles.main}>
       <header>
-        <h1>web schedule generator</h1>
+        <h1>goom schedule generator</h1>
         <div className={styles.header}>
           <div>
             <h2>Select a starting date</h2>
@@ -232,7 +231,7 @@ export default function Page(): JSX.Element {
           <div>
             <h2>Discord schedule format</h2>
             <pre>
-            {discordTime}
+              {discordTime}
             </pre>
           </div>
         </section>
