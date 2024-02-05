@@ -121,7 +121,6 @@ export default function Page(): JSX.Element {
   const systemTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
   const onDateSelect = (selected: Dayjs | null) => {
-    console.log(selected)
     setStartingDate(selected)
   }
 
@@ -205,7 +204,7 @@ export default function Page(): JSX.Element {
           onClick={onButtonClick}
           sx={{width: '100%'}}
         >
-          LETS GO!
+          { dateRange === undefined ? 'CREATE SCHEDULE' : 'UPDATE SCHEDULE'}
         </Button>
       </section>
       <FormWrapper onTimeSelect={onTimeSelection} dateRange={dateRange} className={styles.form}/>
