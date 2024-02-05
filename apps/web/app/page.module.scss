@@ -1,0 +1,58 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 32px;
+  h1 {
+    font-size: 22px;
+    font-weight: bold;
+    font-variant: all-small-caps;
+    margin-bottom: 36px;
+  }
+  h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+}
+
+.header {
+  display: flex;
+  gap: 16px;
+  > div {
+    flex-grow: 1;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form {
+  li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    > div:first-of-type {
+      flex-basis: 150px;
+    }
+  }
+}
+
+.resultsWrapper {
+  display: flex;
+  gap: 16px;
+  div {
+    flex-grow: 1;
+    pre {
+      background: #e1e1e1;
+      border-radius: 4px;
+      padding: 16px;
+    }
+  }
+}
