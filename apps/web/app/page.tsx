@@ -121,6 +121,7 @@ export default function Page(): JSX.Element {
   const systemTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
   const onDateSelect = (selected: Dayjs | null) => {
+    console.log(selected)
     setStartingDate(selected)
   }
 
@@ -170,10 +171,10 @@ export default function Page(): JSX.Element {
       Array.from({length: range},
         (_, index) =>
           startingDate !== null
-            ? startingDate.add(index + 1, 'day')
-            : systemTime.add(index + 1, 'day')
+            ? startingDate.add(index, 'day')
+            : systemTime.add(index, 'day')
       )
-    setDateRange(_ => [...datesArray]);
+    setDateRange(_ => [...datesArray])
   }
 
   return (
