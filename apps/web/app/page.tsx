@@ -198,7 +198,7 @@ export default function Page(): JSX.Element {
       <section className={styles.section}>
         <p>
           {`Give me a schedule starting on: ${startingDate !== null ? startingDate.format('dddd, MM-DD') : systemTime.format('dddd, MM-DD')}
-        for ${range} days in the following timezones: ${timezones !== undefined ? timezones.map(item => ` ${item.label}`) : systemTimezone}`}
+        (${systemTimezone}) for ${range} days for the following time zones: ${timezones !== undefined ? timezones.map(item => ` ${item.label}`) : systemTimezone}`}
         </p>
         <Button
           variant="contained"
