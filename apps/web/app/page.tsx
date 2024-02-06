@@ -205,7 +205,7 @@ export default function Page(): JSX.Element {
           onClick={onButtonClick}
           sx={{width: '100%'}}
         >
-          { dateRange === undefined ? 'CREATE SCHEDULE' : 'UPDATE SCHEDULE'}
+          { dateRange === null ? 'CREATE SCHEDULE' : 'UPDATE SCHEDULE'}
         </Button>
       </section>
       <FormWrapper onTimeSelect={onTimeSelection} dateRange={dateRange} className={styles.form}/>
