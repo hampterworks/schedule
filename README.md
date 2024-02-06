@@ -1,5 +1,7 @@
 # Goom Schedule
 
+![Image description](./assets/header.png)
+
 ## Description
 
 This project caters to the unique needs of streamers for managing their live streaming schedules across myriad time zones. 
@@ -9,6 +11,18 @@ Built using TypeScript and leveraging the Day.js library for dealing with date a
 As a result, no matter where viewers are located worldwide, the live streaming experience remains smooth and hassle-free for everyone involved. 
 Overall, this scheduling app provides a comprehensive solution for streamers aiming for global reach, adding convenience to time management so they can focus on delivering the best content possible.
 
+## How to use
+- Start by selecting a start date. By default, the date will be set to the current date, and the time zone to your system's time zone.
+- Select the number of days for which you'd like to create a schedule.
+- Choose the time zones for which you'd like to generate a schedule. This step is not necessary if you're creating a schedule solely for Discord. If you don't select a time zone, the system will use your default time zone.
+- Click `Create Schedule` to generate a schedule template.
+- Enter a starting hour and description. It's optional to fill in these fields; you can leave any of them empty.
+- Click `Submit` to finalize and view your schedule.
+
+Clicking the update schedule will update the dates, range and time zones but will reset the template and remove all the information.
+
+
+##
 ## Project Setup
 
 This project is based on Turbo Repo and Next.js. Follow the instructions below to get it up and running on your local machine for development and testing purposes
