@@ -8,7 +8,7 @@ import dayjs, {Dayjs} from "dayjs";
 
 type DatePickerProps = {
   range?: number
-  onSelect: (selected: Dayjs | null) => void
+  onSelect?: (selected: Dayjs | null) => void
 }
 
 const DatePickerElement: React.FC<DatePickerProps> = ({range, onSelect, ...props}) => {

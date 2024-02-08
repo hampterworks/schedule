@@ -8,7 +8,7 @@ const inter = Inter({subsets: ["latin"]});
 
 export const metadata: Metadata = {
   title: "Goom schedule generator",
-  description: "Generate streaming schedules with timezone and discord support",
+  description: "Generate streaming schedules with time zone and discord support",
 };
 
 export default function RootLayout({
