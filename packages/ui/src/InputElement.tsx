@@ -24,7 +24,7 @@ type InputElementProps = {
   value?: string
   defaultValue?: string
   required?: boolean
-  onSelect: (selected: string | null) => void
+  onSelect?: (selected: string | null) => void
 }
 
 const InputElement: React.FC<InputElementProps> = ({type, label, onSelect, defaultValue, required, ...props}) => {
@@ -39,7 +39,8 @@ const InputElement: React.FC<InputElementProps> = ({type, label, onSelect, defau
       min: 1,
     }}
     onChange={(event) => {
-      onSelect(event.target.value)
+      if (onSelect !== undefined)
+        onSelect(event.target.value)
     }}
     variant="outlined"/>
 }

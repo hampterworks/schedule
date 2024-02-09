@@ -6,6 +6,7 @@ import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 export type Option = {
   value: string
   label: string
+  timeZone: string
 }
 
 type SelectElementProps = {

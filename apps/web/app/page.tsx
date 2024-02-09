@@ -11,102 +11,126 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import ResultSection from "@repo/ui/ResultSection";
 
-const timeZones: Option[] = [
+const timezonesList: Option[] = [
   {
     label: 'London, United Kingdom (GMT+0)',
-    value: 'Europe/London'
+    value: 'Europe/London',
+    timeZone: 'GMT'
   },
   {
     label: 'Amsterdam, The Kingdom of the Netherlands (GMT+1, CET)',
-    value: 'Europe/Amsterdam'
+    value: 'Europe/Amsterdam',
+    timeZone: 'CET'
   },
   {
     label: 'Helsinki, Finland (GMT+2, EET)',
     value: 'Europe/Helsinki',
+    timeZone: 'EET'
   },
   {
     label: 'Nairobi, Kenya (GMT+3, EAT)',
     value: 'Africa/Nairobi',
+    timeZone: 'EAT'
   },
   {
     label: 'Dubai, United Arab Emirates (GMT+4)',
-    value: 'Asia/Dubai'
+    value: 'Asia/Dubai',
+    timeZone: 'GMT+4'
   },
   {
     label: 'Tashkent, Uzbekistan (GMT+5)',
     value: 'Asia/Tashkent',
+    timeZone: 'GMT+5'
   },
   {
     label: 'Almaty, Kazakhstan (GMT+6)',
-    value: 'Asia/Almaty'
+    value: 'Asia/Almaty',
+    timeZone: 'GMT+6'
   },
   {
     label: 'Bangkok, Thailand (GMT+7, ICT)',
-    value: 'Asia/Bangkok'
+    value: 'Asia/Bangkok',
+    timeZone: 'ICT'
   },
   {
     label: 'Singapore, Republic of Singapore (GMT+8, SST)',
-    value: 'Asia/Singapore'
+    value: 'Asia/Singapore',
+    timeZone: 'SST'
   },
   {
     label: 'Tokyo, Japan (GMT+9, JST)',
-    value: 'Asia/Tokyo'
+    value: 'Asia/Tokyo',
+    timeZone: 'JST'
   },
   {
     label: 'Brisbane, Australia (GMT+10, AEST)',
-    value: 'Australia/Brisbane'
+    value: 'Australia/Brisbane',
+    timeZone: 'AEST'
   },
   {
     label: 'Solomon Islands (GMT+11)',
-    value: 'Pacific/Guadalcanal'
+    value: 'Pacific/Guadalcanal',
+    timeZone: 'GMT+11'
   },
   {
     label: 'Marshall Islands (GMT+12)',
-    value: 'Pacific/Majuro'
+    value: 'Pacific/Majuro',
+    timeZone: 'GMT+12'
   },
   {
     label: 'American Samoa (GMT-11)',
-    value: 'Pacific/Pago_Pago'
+    value: 'Pacific/Pago_Pago',
+    timeZone: 'GMT-11'
   },
   {
     label: 'Honolulu, Hawaii, USA (GMT-10, HAST)',
-    value: 'Pacific/Honolulu'
+    value: 'Pacific/Honolulu',
+    timeZone: 'HAST'
   },
   {
     label: 'Anchorage, Alaska, USA (GMT-9, AKST)',
-    value: 'America/Anchorage'
+    value: 'America/Anchorage',
+    timeZone: 'AKST'
   },
   {
     label: 'Los Angeles, California, USA (Pacific Standard Time, GMT-8, PST)',
-    value: 'America/Los_Angeles'
+    value: 'America/Los_Angeles',
+    timeZone: 'PST'
   },
   {
     label: 'Denver, Colorado, USA (Mountain Standard Time, GMT-7, MST)',
-    value: 'America/Denver'
+    value: 'America/Denver',
+    timeZone: 'MST'
   },
   {
     label: 'Chicago, USA (Central Standard Time, GMT-6, CST)',
-    value: 'America/Chicago'
+    value: 'America/Chicago',
+    timeZone: 'CST'
   },
   {
     label: 'New York, USA (Eastern Standard Time, GMT-5, EST)',
-    value: 'America/New_York'
+    value: 'America/New_York',
+    timeZone: 'EST'
   },
   {
     label: 'La Paz, Bolivia (GMT-4)',
-    value: 'America/La_Paz'
+    value: 'America/La_Paz',
+    timeZone: 'GMT-4'
   },
   {
     label: 'Sao Paulo, Brazil (GMT-3)',
-    value: 'America/Sao_Paulo'
+    value: 'America/Sao_Paulo',
+    timeZone: 'GMT-3'
   },
   {
     label: 'South Georgia and the South Sandwich Islands (GMT-2)',
-    value: 'Atlantic/South_Georgia'
+    value: 'Atlantic/South_Georgia',
+    timeZone: 'GMT-2'
   },
   {
     label: 'Praia, Cape Verde (GMT-1)',
-    value: 'Atlantic/Cape_Verde'
+    value: 'Atlantic/Cape_Verde',
+    timeZone: 'GMT-1'
   }
 ]
 
@@ -147,12 +171,12 @@ export default function Page(): JSX.Element {
             const dayTime = time.dayjs.format('dddd, MM-DD-YY hh:mm A')
             if (dayTime === 'Invalid Date') {
               return {
-                date: time.date
+                date: time.date,
               }
             }
             return {
               date: time.dayjs.format('dddd, MM-DD hh:mm A'),
-              timeZones: timezones.map(zone => zone.label + ' ' + time.dayjs.tz(zone.value).format('dddd, MM-DD-YY hh:mm A')).join('\n')
+              timeZones: timezones.map(zone => `${zone.label} ${time.dayjs.tz(zone.value).format('dddd, MM-DD-YY hh:mm A')}`).join('\n')
             }
           }
         )
@@ -192,7 +216,7 @@ export default function Page(): JSX.Element {
         </div>
         <div>
           <h2>For what time zones?</h2>
-          <SelectElement options={timeZones} onSelect={onTimezoneSelect}/>
+          <SelectElement options={timezonesList} onSelect={onTimezoneSelect}/>
         </div>
       </header>
       <section className={styles.section}>
@@ -218,7 +242,7 @@ export default function Page(): JSX.Element {
               <h2>Schedule time zones</h2>
               {
                 resultTime.map((time, index) =>
-                  <ResultSection key={time.date} header={time.date} text={time.timeZones !== undefined ? time.timeZones : 'No hour given'}/>
+                  <ResultSection key={time.date + index} header={time.date} text={time.timeZones !== undefined ? time.timeZones : 'No hour given'}/>
                 )
               }
             </div>

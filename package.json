@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "author": "hampter",
-  "license": "CC-BY-NC-4.0",
+  "license": "AGPL",
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
