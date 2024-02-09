@@ -82,17 +82,14 @@ Any contributions you make must be under the same license that governs the origi
 
 ## License
 
-This project is licensed under the terms of the Creative Commons Attribution-NonCommercial 4.0 International Public License ("CC-BY-NC-4.0").
+This project is licensed under the terms of the GNU Affero General Public License v3.0 ("AGPL-3.0").
+Under AGPL-3.0, you are free to:
 
-Under CC-BY-NC-4.0, you are free to:
-
-- **Share** — copy and redistribute the material in any medium or format.
-- **Adapt** — remix, transform, and build upon the material.
-
-Under the following terms:
-
-- **Attribution** — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
-
-- **NonCommercial** — You may not use the material for commercial purposes.
-
-For the complete details of the license, please refer to the [CC-BY-NC-4.0 License](https://creativecommons.org/licenses/by-nc/4.0/) page on the Creative Commons website.
+- **Copy** — copy and redistribute the material in any medium or format.
+- **Modify** — apply changes to the material and build upon it.
+  
+- Under the following terms:
+- **Source Distribution** — If you distribute the modified work or service based on this project, you must distribute the source code together with it.
+- **Same License** — If you modify the work, resulting work must be licensed under the same terms.
+- 
+  For the complete details of the license, please refer to the [AGPL-3.0 License](https://www.gnu.org/licenses/agpl-3.0.html) page on the GNU website.
