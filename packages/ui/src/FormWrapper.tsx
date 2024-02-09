@@ -191,7 +191,7 @@ const FormWrapper: React.FC<FormWrapperProps> = ({dateRange, onTimeSelect, ...pr
                       />
                     </IconButton>
                     {
-                      editingRowData !== undefined &&
+                      editingRowData !== undefined && item.id in (editingRowData ?? {}) &&
                       <IconButton onClick={() => {
                         if (editingRowData[item.id] !== undefined) {
                           const editedDayjs = editingRowData[item.id]?.dayjs ?? dayjs()
@@ -201,8 +201,8 @@ const FormWrapper: React.FC<FormWrapperProps> = ({dateRange, onTimeSelect, ...pr
 
                           append({date: date, time: time, description: description, dayjs: editedDayjs})
 
-                          setEditingRowData(() => {
-                            let newData = {...editingRowData}
+                          setEditingRowData((prevState) => {
+                            let newData = {...prevState}
                             delete newData[item.id]
                             return newData
                           })
