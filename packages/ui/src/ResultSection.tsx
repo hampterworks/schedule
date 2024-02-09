@@ -41,7 +41,7 @@ const ResultSection: React.FC<ResultSectionProps> = ({header, text, ...props}) =
   const [copyNotice, setCopyNotice] = useState<string | null>(null)
 
   const handleClick = () => {
-    navigator.clipboard.writeText(`${header} ${text}`)
+    navigator.clipboard.writeText(`${header}\n${text}`)
       .then(() => setCopyNotice("Text copied successful!"))
       .catch(error => setCopyNotice("Failed to copy text!"))
   }

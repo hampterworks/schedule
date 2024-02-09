@@ -218,7 +218,7 @@ export default function Page(): JSX.Element {
               <h2>Schedule time zones</h2>
               {
                 resultTime.map((time, index) =>
-                  <ResultSection key={time.date} header={time.date} text={time.timeZones !== undefined ? time.timeZones : 'No hour given'}/>
+                  <ResultSection key={time.date} header={`${time.date} - ${systemTimezone}`} text={time.timeZones !== undefined ? time.timeZones : 'No hour given'}/>
                 )
               }
             </div>
