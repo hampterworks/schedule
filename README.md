@@ -60,6 +60,14 @@ Before you begin, ensure you have the following installed on your local developm
 
 Open your web browser to http://localhost:3000/
 
+## Tests
+
+After setting up the application, you can run the test suite using:
+
+```bash
+yarn test
+```
+
 ## Contributing
 Contributions to this project are greatly appreciated. Whether you're fixing a bug, proposing a new feature, or improving existing features, your assistance is extremely valuable.
 
