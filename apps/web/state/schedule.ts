@@ -1,32 +1,28 @@
 "use client";
 import {create, StateCreator, StoreApi, useStore} from 'zustand'
 import {devtools, persist} from 'zustand/middleware'
+import {DateTime} from "luxon";
 import type {} from '@redux-devtools/extension'
 import {createStore} from "zustand/vanilla";
 
-export type TimeZone = {
-  label: string,
-  value: string,
-  timeZone: string
-}
-
 export type Template = {
-  date: Date,
+  date: DateTime | string,
   time?: string
   description?: string
 }
 
 export type ScheduleState = {
-  startingDate: Date,
+  startingDate: DateTime | string,
   totalStreams: number,
-  timeZones: TimeZone[],
+  timeZones: string[],
   templates: Template[],
 }
 
 export type ScheduleStateReducers = {
-  setStartingDate: (startingDate: Date) => void,
-  setTotalStreams: (totalStreams: number) => void,
-  setTimeZones: (timeZones: TimeZone[]) => void,
+  resetTemplate: () => void,
+  setStartingDate: (startingDate: DateTime, templates: Template[]) => void,
+  setTotalStreams: (totalStreams: number, startingDate: DateTime) => void,
+  setTimeZones: (timeZones: string[]) => void,
   setTemplates: (templates: Template[]) => void,
   setTemplate: (index: number, templates: Template) => void,
   removeTemplate: (index: number) => void,
@@ -34,24 +30,36 @@ export type ScheduleStateReducers = {
 }
 
 let initialState: ScheduleState = {
-  startingDate: new Date(),
+  startingDate: DateTime.local(),
   totalStreams: 1,
   timeZones: [],
-  templates: [{date: new Date()}],
+  templates: [{date: DateTime.local()}],
 }
 
 let reducers: StateCreator<ScheduleStateReducers & ScheduleState, [["zustand/devtools", never]], [], ScheduleStateReducers> =
   (set, get) => ({
-    setStartingDate: (startingDate: Date) => set((state) => ({startingDate})),
-    setTotalStreams: (totalStreams: number) => set((state) => {
-      if (totalStreams < 0)
-        throw new RangeError("Can't set total number of streams to less than 0!")
+    resetTemplate: () => set((state) => ({...initialState})),
+    setStartingDate: (startingDate: DateTime, templates: Template[]) => set((state) => {
       return {
-        totalStreams,
-        templates: [...Array(totalStreams).keys()].map(index => state.templates[index] ?? {date: new Date()})
+        startingDate,
+        ...(templates.length > 0 && {
+          templates: templates.map((value, index) => ({
+            ...value,
+            date: startingDate.plus({ days: index }),
+          }))
+        })
       }
     }),
-    setTimeZones: (timeZones: TimeZone[]) => set((state) => ({timeZones})),
+    setTotalStreams: (totalStreams: number, startingDate: DateTime) => set((state) => {
+      if (totalStreams < 0)
+        throw new RangeError("Can't set total number of streams to less than 0!")
+
+      return {
+        totalStreams,
+        templates: [...Array(totalStreams).keys()].map(index => state.templates[index] ?? {date: startingDate.plus({ days: index })})
+      }
+    }),
+    setTimeZones: (timeZones: string[]) => set((state) => ({timeZones: timeZones})),
     setTemplates: (templates: Template[]) => set((state) => {
       return {
         totalStreams: templates.length,
@@ -81,7 +89,7 @@ let reducers: StateCreator<ScheduleStateReducers & ScheduleState, [["zustand/dev
 
       return {
         totalStreams: state.totalStreams + 1,
-        templates: [...state.templates.slice(0, index), template, ...state.templates.slice(index, state.templates.length)]
+        templates: [...state.templates.slice(0, index + 1), template, ...state.templates.slice(index + 1, state.templates.length)]
       }
     })
   })

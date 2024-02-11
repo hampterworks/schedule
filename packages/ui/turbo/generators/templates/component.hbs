@@ -1,8 +1,14 @@
-export const {{ pascalCase name }} = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div>
-      <h1>{{ pascalCase name }} Component</h1>
-      {children}
+import * as React from "react";
+
+type {{ pascalCase name }}Props = {
+children?: React.ReactNode;
+} & React.ComponentPropsWithoutRef<'div'>
+
+const {{ pascalCase name }}: React.FC<{{ pascalCase name }}Props> = ({ children, ...props }) => {
+    return <div {...props}>
+        <h1>{{ name }}</h1>
+        {children}
     </div>
-  );
-};
+    }
+
+    export default {{ pascalCase name }}

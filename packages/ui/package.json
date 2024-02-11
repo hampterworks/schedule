@@ -3,9 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./button": "./src/button.tsx",
-    "./card": "./src/card.tsx",
-    "./code": "./src/code.tsx"
+    "./ApplicationFrame": "./src/ApplicationFrame.tsx",
+    "./DatePickerElement": "./src/DatePickerElement.tsx",
+    "./InputElement": "./src/InputElement.tsx",
+    "./TimePickerElement": "./src/TimePickerElement.tsx",
+    "./ButtonWrapper": "./src/ButtonWrapper.tsx",
+    "./AutocompleteElement": "./src/AutocompleteElement.tsx",
+    "./ResultSection": "./src/ResultSection.tsx",
+    "./ButtonElement": "./src/ButtonElement.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
@@ -15,12 +20,21 @@
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@turbo/gen": "^1.11.3",
-    "@types/node": "^20.10.6",
     "@types/eslint": "^8.56.1",
+    "@types/luxon": "^3.4.2",
+    "@types/node": "^20.10.6",
     "@types/react": "^18.2.46",
     "@types/react-dom": "^18.2.18",
     "eslint": "^8.56.0",
     "react": "^18.2.0",
-    "typescript": "^5.3.3"
+    "typescript": "5.2.2"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.9",
+    "@mui/material": "^5.15.9",
+    "@mui/x-date-pickers": "^6.19.4",
+    "luxon": "^3.4.4"
   }
 }
