@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --max-warnings 0"
+    "lint": "eslint . --max-warnings 0",
+    "test": "jest"
   },
   "dependencies": {
     "@redux-devtools/extension": "^3.3.0",
@@ -20,11 +21,18 @@
     "@next/eslint-plugin-next": "^14.0.4",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.2.1",
     "@types/eslint": "^8.56.1",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20.10.6",
     "@types/react": "^18.2.46",
     "@types/react-dom": "^18.2.18",
     "eslint": "^8.56.0",
+    "fast-check": "^3.15.1",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "ts-jest": "^29.1.2",
     "typescript": "^5.3.3"
   }
 }

@@ -46,7 +46,7 @@ const Page: React.FC = () => {
                 onChange={event =>
                   setTemplate(index, {...template, description: event.target.value})}/>
               <button onClick={() => removeTemplate(index)}>Remove</button>
-              <button onClick={() => addTemplateAfter(index)}>Add below</button>
+              <button onClick={() => addTemplateAfter(index, {date: template.date})}>Add below</button>
             </div>)
         }
         <pre>
