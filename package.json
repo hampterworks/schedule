@@ -1,6 +1,7 @@
 {
   "name": "streamschedule",
   "private": true,
+  "license": "AGPL",
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
