@@ -1,0 +1,48 @@
+"use client"
+
+import {TextField} from "@mui/material";
+import React from "react";
+
+type InputType =
+    'text'
+  | 'number'
+  | 'password'
+  | 'email'
+  | 'search'
+  | 'url'
+  | 'tel'
+  | 'date'
+  | 'datetime-local'
+  | 'month'
+  | 'week'
+  | 'time'
+  | 'color'
+  | 'file'
+
+type InputElementProps = {
+  label?: string
+  type: InputType
+  value?: string
+  required?: boolean
+  onInput?: (selected: string | null) => void
+}
+
+const InputElement: React.FC<InputElementProps> = ({type, label, onInput, value, required, ...props}) => {
+
+  return <TextField
+    label={label ?? ''}
+    required={required !== undefined && required}
+    type={type}
+    value={value ?? ''}
+    sx={{width: '100%'}}
+    inputProps={{
+      min: 1,
+    }}
+    onChange={(event) => {
+      if (onInput !== undefined)
+        onInput(event.target.value)
+    }}
+    variant="outlined"/>
+}
+
+export default InputElement

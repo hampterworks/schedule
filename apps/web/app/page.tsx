@@ -1,14 +1,25 @@
 "use client";
+import styles from "./page.module.css";
 import React from "react";
 import useScheduleStore from "../state/schedule";
+import DatePickerElement from "@repo/ui/DatePickerElement";
+import {DateTime} from "luxon";
+import InputElement from "@repo/ui/InputElement";
+import TimePickerElement from "@repo/ui/TimePickerElement";
+import ButtonWrapper from "@repo/ui/ButtonWrapper";
+import AutocompleteElement from "@repo/ui/AutocompleteElement";
+import ResultSection from "@repo/ui/ResultSection";
+import ButtonElement from "@repo/ui/ButtonElement";
 
-let formatDateRFC3339 = (date: Date | string) => (date instanceof Date ? date : new Date(date))?.toISOString().split("T")[0]
+const RFX339ToLuxon = (date: string): DateTime => DateTime.fromISO(date)
 
 const Page: React.FC = () => {
   const {
+    resetTemplate,
     templates,
     totalStreams,
     timeZones,
+    setTimeZones,
     startingDate,
     setTotalStreams,
     setTemplate,
@@ -16,50 +27,83 @@ const Page: React.FC = () => {
     removeTemplate,
     addTemplateAfter
   } = useScheduleStore();
+  const timeZoneList = Intl.supportedValuesOf('timeZone')
 
-  return (
-    <div>
-      <div>
-        <p>Starting date:</p>
-        <input type="date" value={formatDateRFC3339(startingDate)}
-               onChange={event => setStartingDate(new Date(event.target.value))}/>
+  return <main className={styles.main}>
+    <div className={styles.controlWrapper}>
+      <div className={styles.controlItem}>
+        <h2>Starting date:</h2>
+        <DatePickerElement
+          onSelect={(date) => {
+            if (date !== null)
+              setStartingDate(date, templates)
+          }}
+          value={startingDate}
+          fullWidth={true}
+        />
       </div>
-      <div>
-        <p>Total days:</p>
-        <input type="number" value={totalStreams} onChange={event => setTotalStreams(parseInt(event.target.value))}/>
+      <div className={styles.controlItem}>
+        <h2>Total days:</h2>
+        <InputElement
+          label='Total days:'
+          type='number'
+          value={totalStreams.toString()}
+          onInput={event =>
+            setTotalStreams(parseInt(event ?? '1'), (typeof startingDate === "string") ? RFX339ToLuxon(startingDate) : startingDate)}
+        />
       </div>
-      <p>timeZones: {JSON.stringify(timeZones)}</p>
-      <div>
-        {
-          templates.map((template, index) =>
-            <div key={"template-" + index}>
-              <input
-                type="date" value={formatDateRFC3339(template.date)}
-                onChange={event =>
-                  setTemplate(index, {...template, date: new Date(event.target.value)})}/>
-              <input
-                type="time" value={template.time}
-                onChange={event =>
-                  setTemplate(index, {...template, time: event.target.value})}/>
-              <input
-                type="text" value={template.description}
-                onChange={event =>
-                  setTemplate(index, {...template, description: event.target.value})}/>
-              <button onClick={() => removeTemplate(index)}>Remove</button>
-              <button onClick={() => addTemplateAfter(index, {date: template.date})}>Add below</button>
-            </div>)
-        }
-        <pre>
-          {JSON.stringify({
-            templates,
-            totalStreams,
-            timeZones,
-            startingDate
-          }, null, 2)}
-        </pre>
-      </div>
+      <ButtonElement
+        className={styles.resetButton}
+        onClick={() => {
+          resetTemplate()
+        }}
+      >Reset</ButtonElement>
     </div>
-  );
+    <AutocompleteElement
+      options={timeZoneList}
+      value={timeZones}
+      onSelect={(event) => {
+        setTimeZones(event)
+      }}/>
+    <ul className={styles.templateWrapper}>
+      {
+        templates.map((template, index) =>
+          <li key={"template-" + index} className={styles.templateListItem}>
+            <DatePickerElement
+              onSelect={(date) => {
+                if (date !== null)
+                  setTemplate(index, {...template, date: date})
+              }}
+              value={template.date}
+            />
+            <TimePickerElement
+              label='Time'
+              value={template.time !== undefined
+                ? DateTime.fromFormat(template.time, 'HH:mm')
+                : DateTime.fromFormat('00:00', 'HH:mm')}
+              onSelect={(selectedTime) => {
+                setTemplate(index, {...template, time: selectedTime.toFormat('HH:mm')})
+              }}
+            />
+            <InputElement
+              label='Description'
+              type='text'
+              value={template.description}
+              onInput={inputText => {
+                setTemplate(index, {...template, description: inputText ?? ''})
+              }}
+            />
+            <ButtonWrapper
+              removeTemplate={removeTemplate}
+              addTemplateAfter={addTemplateAfter}
+              index={index}
+              template={template}
+            />
+          </li>)
+      }
+    </ul>
+    <ResultSection templates={templates} timezones={timeZones}/>
+  </main>
 }
 
 export default Page
