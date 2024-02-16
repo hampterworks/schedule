@@ -13,11 +13,12 @@ Overall, this scheduling app provides a comprehensive solution for streamers aim
 - Start by selecting a start date. By default, the date will be set to the current date, and the time zone to your system's time zone.
 - Select the number of days for which you'd like to create a schedule.
 - Choose the time zones for which you'd like to generate a schedule. This step is not necessary if you're creating a schedule solely for Discord. If you don't select a time zone, the system will use your default time zone.
-- Click `Create Schedule` to generate a schedule template.
-- Enter a starting hour and description. It's optional to fill in these fields; you can leave any of them empty.
-- Click `Submit` to finalize and view your schedule.
+- the schedule template will update as you go.
+- Enter a starting hour and description. It's optional to fill in these fields; you can leave any of them empty. not specifying a time will assign the whole day.
+- Your schedule will be generated below.
 
-Clicking the update schedule will update the dates, range and time zones but will reset the template and remove all the information.
+Your selection is always saved .
+Clicking the rest button will clear the selection.
 
 
 ##
