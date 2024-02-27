@@ -10,7 +10,8 @@
     "./ButtonWrapper": "./src/ButtonWrapper.tsx",
     "./AutocompleteElement": "./src/AutocompleteElement.tsx",
     "./ResultSection": "./src/ResultSection.tsx",
-    "./ButtonElement": "./src/ButtonElement.tsx"
+    "./ButtonElement": "./src/ButtonElement.tsx",
+    "./DesignDisplay": "./src/DesignDisplay.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
