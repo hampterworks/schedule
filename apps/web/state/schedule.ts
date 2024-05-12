@@ -11,11 +11,16 @@ export type Template = {
   description?: string
 }
 
+export type DesignTemplate = {
+  mainHeader: string
+}
+
 export type ScheduleState = {
   startingDate: DateTime | string,
   totalStreams: number,
   timeZones: string[],
   templates: Template[],
+  designTemplate: DesignTemplate
 }
 
 export type ScheduleStateReducers = {
@@ -26,7 +31,8 @@ export type ScheduleStateReducers = {
   setTemplates: (templates: Template[]) => void,
   setTemplate: (index: number, templates: Template) => void,
   removeTemplate: (index: number) => void,
-  addTemplateAfter: (index: number, template: Template) => void
+  addTemplateAfter: (index: number, template: Template) => void,
+  setMainHeader: (newHeader: string) => void,
 }
 
 let initialState: ScheduleState = {
@@ -34,6 +40,9 @@ let initialState: ScheduleState = {
   totalStreams: 1,
   timeZones: [],
   templates: [{date: DateTime.local()}],
+  designTemplate: {
+    mainHeader: 'Edit header'
+  }
 }
 
 let reducers: StateCreator<ScheduleStateReducers & ScheduleState, [["zustand/devtools", never]], [], ScheduleStateReducers> =
@@ -53,10 +62,10 @@ let reducers: StateCreator<ScheduleStateReducers & ScheduleState, [["zustand/dev
     setTotalStreams: (totalStreams: number, startingDate: DateTime) => set((state) => {
       if (totalStreams < 0)
         throw new RangeError("Can't set total number of streams to less than 0!")
-
+      const streams = [...Array(totalStreams).keys()].map(index => state.templates[index] ?? {date: startingDate.plus({ days: index })})
       return {
         totalStreams,
-        templates: [...Array(totalStreams).keys()].map(index => state.templates[index] ?? {date: startingDate.plus({ days: index })})
+        templates: streams
       }
     }),
     setTimeZones: (timeZones: string[]) => set((state) => ({timeZones: timeZones})),
@@ -91,7 +100,8 @@ let reducers: StateCreator<ScheduleStateReducers & ScheduleState, [["zustand/dev
         totalStreams: state.totalStreams + 1,
         templates: [...state.templates.slice(0, index + 1), template, ...state.templates.slice(index + 1, state.templates.length)]
       }
-    })
+    }),
+    setMainHeader: (newHeader: string) => set((state) => ({designTemplate: {mainHeader: newHeader}}))
   })
 
 export const scheduleStore = createStore<ScheduleState & ScheduleStateReducers>()(
