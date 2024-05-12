@@ -11,7 +11,8 @@
     "./AutocompleteElement": "./src/AutocompleteElement.tsx",
     "./ResultSection": "./src/ResultSection.tsx",
     "./ButtonElement": "./src/ButtonElement.tsx",
-    "./DesignDisplay": "./src/DesignDisplay.tsx"
+    "./DesignDisplay": "./src/DesignDisplay.tsx",
+    "./HeaderDesigner": "./src/HeaderDesigner.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
@@ -36,6 +37,7 @@
     "@mui/icons-material": "^5.15.9",
     "@mui/material": "^5.15.9",
     "@mui/x-date-pickers": "^6.19.4",
-    "luxon": "^3.4.4"
+    "luxon": "^3.4.4",
+    "typescript": "^5.4.5"
   }
 }
