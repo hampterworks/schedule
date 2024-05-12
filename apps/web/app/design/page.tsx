@@ -8,10 +8,17 @@ import DesignDisplay from "@repo/ui/DesignDisplay";
 const Page: React.FC = ({}) => {
   const {
     templates,
-    timeZones
+    timeZones,
+    designTemplate,
+    setMainHeader
   } = useScheduleStore()
 
-  return <DesignDisplay templates={templates} timeZones={timeZones}/>
+  return <DesignDisplay
+    templates={templates}
+    timeZones={timeZones}
+    designTemplate={designTemplate}
+    setMainHeader={setMainHeader}
+  />
 }
 
 export default Page

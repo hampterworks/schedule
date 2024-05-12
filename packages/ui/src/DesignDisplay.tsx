@@ -1,31 +1,34 @@
 "use client"
 
 import React, {useRef, useState} from "react";
-import type {Template} from "web/state/schedule";
+import type {DesignTemplate, Template} from "web/state/schedule";
 import {DateTime} from "luxon";
 import styled from "@emotion/styled";
 import html2canvas from 'html2canvas';
 import ButtonElement from "./ButtonElement";
 import {macFontList, winFontList} from "web/data/fonts";
+import {MenuItem, Select} from "@mui/material";
+import HeaderDesigner from "./HeaderDesigner";
 
-const DesignResults = styled.div<{background: string}>`
+const DesignResults = styled.div<{ background: string }>`
     width: 100%;
     padding: 16px 0;
     display: grid;
     grid-template-columns: 16px repeat(2, 1fr) 16px;
     grid-template-rows: 10% 80% 10%;
     row-gap: 16px;
-    
+
     background: #fdddd8;
     background-image: ${props => `url(${props.background})`};
     background-size: contain;
     background-repeat: no-repeat;
-    background-origin: content-box;
+    background-origin: border-box;
 `
 
 const DesignHeader = styled.div`
     grid-column: 3;
     grid-row: 1;
+
     h1 {
         font-size: 24px;
     }
@@ -52,14 +55,18 @@ const DateItem = styled.li`
 `
 const DayName = styled.div`
     display: flex;
+    flex-direction: column;
+    gap: 4px;
     flex-basis: 200px;
     justify-content: center;
     align-items: center;
     font-size: 24px;
-    //border-right: 1px solid black;
     background: #feb6be;
-    border-radius: 4px;
-
+    border-radius: 4px 0 0 4px;
+    
+    span:last-of-type {
+        font-size: 18px;
+    }
 `
 const DayDetailsWrapper = styled.div`
     width: 100%;
@@ -84,7 +91,8 @@ const SocialsWrapper = styled.ul`
     gap: 16px;
     grid-column: 3;
     grid-row: 3;
-    
+    justify-content: center;
+
     li {
         display: flex;
         align-items: center;
@@ -146,16 +154,33 @@ const getAvailableFonts = (): string[] => {
 
   return fontList.filter(font => document.fonts.check(`12px "${font}"`))
 }
+
+const getWeekDurationString = (templates: Template[]): string => {
+  const firstDay = (typeof templates[0]?.date === 'string')
+      ? DateTime.fromISO(templates[0].date).toFormat('d/L')
+      : templates[0]?.date.toFormat('d/L')
+
+  const lastDay = (typeof templates[templates.length -1]?.date === 'string' )
+    ? DateTime.fromISO(templates[templates.length -1]?.date as string).toFormat('d/L')
+    : (templates[templates.length -1]?.date as DateTime).toFormat('d/L')
+
+  return `Week of ${firstDay} - ${lastDay}`
+}
+
 type DesignDisplayProps = {
   templates: Template[]
   timeZones: string[]
+  designTemplate: DesignTemplate
+  setMainHeader: (newHeader: string) => void
 }
 
-const DesignDisplay: React.FC<DesignDisplayProps> = ({timeZones, templates}) => {
+const DesignDisplay: React.FC<DesignDisplayProps> = ({timeZones, templates, designTemplate, setMainHeader}) => {
   const divRef = useRef<HTMLDivElement>(null)
   const [backgroundImage, setBackgroundImage] = useState('')
   const [screenshotDataUrl, setScreenshotDataUrl] = useState<string | null>(null)
   const localTimeZone = DateTime.local().offset / 60
+
+  const fonts = getAvailableFonts()
 
   const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0]
@@ -175,12 +200,12 @@ const DesignDisplay: React.FC<DesignDisplayProps> = ({timeZones, templates}) => 
         setScreenshotDataUrl(canvas.toDataURL('image/png')))
     }
   }
-
   return <div>
+    <HeaderDesigner designTemplate={designTemplate} setMainHeader={setMainHeader}/>
     <DesignResults background={backgroundImage} ref={divRef}>
       <DesignHeader>
-        <h1>Header</h1>
-        <div>Week of 21/2-26/2</div>
+        <h1>{designTemplate.mainHeader}</h1>
+        <div>{getWeekDurationString(templates)}</div>
       </DesignHeader>
       <DateWrapper>
         {
@@ -190,6 +215,7 @@ const DesignDisplay: React.FC<DesignDisplayProps> = ({timeZones, templates}) => 
               : template.date
 
             const day = date.toFormat('ccc')
+            const dayDate = date.toFormat('d/L')
             const time = formatTimeWithOptionalMinutes(template.time)
 
             const timeZoneList = template.time !== undefined
@@ -201,7 +227,10 @@ const DesignDisplay: React.FC<DesignDisplayProps> = ({timeZones, templates}) => 
               : undefined
 
             return <DateItem key={day + index}>
-              <DayName>{day}</DayName>
+              <DayName>
+                <span>{day}</span>
+                <span>{dayDate}</span>
+              </DayName>
               <DayDetailsWrapper>
                 <DayDescription>{template.description}</DayDescription>
                 {
@@ -247,6 +276,22 @@ const DesignDisplay: React.FC<DesignDisplayProps> = ({timeZones, templates}) => 
       accept='image/*'
       onChange={handleUpload}
     />
+    {/*<Select*/}
+    {/*  labelId="demo-simple-select-label"*/}
+    {/*  id="demo-simple-select"*/}
+    {/*  label="Age"*/}
+    {/*  onChange={(event) => {*/}
+    {/*    console.log(event)*/}
+    {/*  }}*/}
+    {/*>*/}
+    {/*  {*/}
+    {/*    fonts.map(font =>*/}
+    {/*      font !== undefined*/}
+    {/*        ? <MenuItem key={font} value={font}>{font}</MenuItem>*/}
+    {/*        : <MenuItem key={font} value={font}>''</MenuItem>*/}
+    {/*    )*/}
+    {/*  }*/}
+    {/*</Select>*/}
     <ButtonElement onClick={takeScreenshot}>Take screenshot</ButtonElement>
     {
       screenshotDataUrl && <a href={screenshotDataUrl} download="screenshot.png">
