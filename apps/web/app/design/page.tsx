@@ -9,14 +9,20 @@ const Page: React.FC = ({}) => {
   const {
     templates,
     timeZones,
-    designTemplate,
-    setMainHeader
+    mainHeader,
+    setMainHeader,
+    socials,
+    addSocials,
+    removeSocials
   } = useScheduleStore()
 
   return <DesignDisplay
     templates={templates}
     timeZones={timeZones}
-    designTemplate={designTemplate}
+    mainHeader={mainHeader}
+    socials={socials}
+    addSocials={addSocials}
+    removeSocials={removeSocials}
     setMainHeader={setMainHeader}
   />
 }
