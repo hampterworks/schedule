@@ -10,6 +10,18 @@ export type Template = {
   time?: string
   description?: string
 }
+
+export type Color = {
+  r: number
+  g: number
+  b: number
+  a: number
+}
+
+export type HeaderDesign = {
+  headerText: string
+  headerTextColor: Color
+}
 export type SocialNetworks = 'twitch' | 'twitter' | 'youtube'
 
 export type Socials = {
@@ -22,7 +34,7 @@ export type ScheduleState = {
   totalStreams: number,
   timeZones: string[],
   templates: Template[],
-  mainHeader: string
+  headerDesign: HeaderDesign
   socials: Socials[]
 }
 
@@ -41,6 +53,7 @@ export type DesignStateReducers = {
   setMainHeader: (mainHeader: string) => void,
   addSocials: (index: number, socials: Socials) => void,
   removeSocials: (index: number) => void,
+  setHeaderColor: (color: Color) => void
 }
 
 let initialState: ScheduleState = {
@@ -48,7 +61,7 @@ let initialState: ScheduleState = {
   totalStreams: 1,
   timeZones: [],
   templates: [{date: DateTime.local()}],
-  mainHeader: 'Edit header',
+  headerDesign: {headerText: 'Edit header', headerTextColor: { r: 0, g: 0, b: 0, a: 1 }},
   socials: [{network: 'none'}]
 }
 
@@ -107,18 +120,31 @@ let reducers: StateCreator<ScheduleStateReducers & DesignStateReducers & Schedul
         templates: [...state.templates.slice(0, index + 1), {date: template.date}, ...state.templates.slice(index + 1, state.templates.length)]
       }
     }),
-    setMainHeader: (mainHeader: string) => set((state) => ({mainHeader})),
+    setMainHeader: (mainHeader: string) => set((state) =>
+      ({
+        headerDesign: {
+          ...state.headerDesign,
+          headerText: mainHeader
+        }
+      })),
     addSocials: (index: number, socials: Socials) => set((state) => {
 
       return {
         socials: [...state.socials.slice(0, index), socials, ...state.socials.slice(index + 1)]
       }
     }),
-    removeSocials: index => set((state) => {
+    removeSocials: (index: number) => set((state) => {
       return {
         socials: [...state.socials.slice(0, index), ...state.socials.slice(index + 1, state.socials.length )]
       }
-    })
+    }),
+    setHeaderColor: (color: Color) => set((state) =>
+      ({
+        headerDesign: {
+          ...state.headerDesign,
+          headerTextColor: color
+        }
+      }))
   })
 
 export const scheduleStore = createStore<ScheduleState & ScheduleStateReducers & DesignStateReducers>()(

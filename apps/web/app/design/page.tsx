@@ -9,8 +9,9 @@ const Page: React.FC = ({}) => {
   const {
     templates,
     timeZones,
-    mainHeader,
+    headerDesign,
     setMainHeader,
+    setHeaderColor,
     socials,
     addSocials,
     removeSocials
@@ -19,11 +20,12 @@ const Page: React.FC = ({}) => {
   return <DesignDisplay
     templates={templates}
     timeZones={timeZones}
-    mainHeader={mainHeader}
+    headerDesign={headerDesign}
     socials={socials}
     addSocials={addSocials}
     removeSocials={removeSocials}
     setMainHeader={setMainHeader}
+    setHeaderColor={setHeaderColor}
   />
 }
 
