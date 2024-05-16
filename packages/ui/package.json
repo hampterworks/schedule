@@ -14,7 +14,8 @@
     "./DesignDisplay": "./src/DesignDisplay.tsx",
     "./HeaderDesigner": "./src/HeaderDesigner.tsx",
     "./collapsibleSection": "./src/collapsibleSection.tsx",
-    "./ColorPicker": "./src/ColorPicker.tsx"
+    "./ColorPicker": "./src/ColorPicker.tsx",
+    "./AlignmentPicker": "./src/AlignmentPicker.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",

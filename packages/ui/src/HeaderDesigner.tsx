@@ -2,12 +2,22 @@
 
 import React from "react";
 import InputElement from "./InputElement";
-import {Color, HeaderDesign, SocialNetworks, Socials} from "web/state/schedule";
+import {
+  Alignment,
+  AlignmentFn,
+  Color,
+  ColorFn,
+  DateDesign,
+  HeaderDesign,
+  SocialNetworks,
+  Socials, SocialsDesign
+} from "web/state/schedule";
 import {MenuItem, TextField} from "@mui/material";
 import styled from "@emotion/styled";
 import ButtonWrapper from "./ButtonWrapper";
 import CollapsibleSection from "./collapsibleSection";
 import ColorPicker from "./colorPicker";
+import AlignmentPicker from "./AlignmentPicker";
 
 
 const ControllersWrapper = styled.section`
@@ -30,9 +40,15 @@ type HeaderDesignerProps = {
   headerDesign: HeaderDesign
   socials: Socials[]
   setMainHeader: (newHeader: string) => void
-  setHeaderColor: (color: Color) => void
+  setHeaderColor: ColorFn
+  setHeaderBackgroundColor: ColorFn
+  setHeaderAlignment: AlignmentFn
+  dateDesign: DateDesign
+  setDateAlignment: AlignmentFn
   addSocials: (index: number, socials: Socials) => void,
   removeSocials: (index: number) => void,
+  socialsDesign: SocialsDesign,
+  setSocialsAlignment: AlignmentFn,
 } & React.ComponentPropsWithoutRef<'section'>
 
 const HeaderDesigner: React.FC<HeaderDesignerProps> =
@@ -40,15 +56,20 @@ const HeaderDesigner: React.FC<HeaderDesignerProps> =
      headerDesign,
      setMainHeader,
      setHeaderColor,
+     setHeaderBackgroundColor,
+     setHeaderAlignment,
+     dateDesign,
+     setDateAlignment,
      socials,
      addSocials,
      removeSocials,
+     socialsDesign,
+     setSocialsAlignment,
      ...props
    }) => {
 
     return <ControllersWrapper {...props}>
-
-      <CollapsibleSection title='Header Text'>
+      <CollapsibleSection title='Header'>
         <InputElement
           label='Total days:'
           type='text'
@@ -57,12 +78,31 @@ const HeaderDesigner: React.FC<HeaderDesignerProps> =
             setMainHeader(inputText ?? '')}
         />
         <ColorPicker
-          title='Header text'
+          title='Text Color'
           headerTextColor={headerDesign.headerTextColor}
           setColor={setHeaderColor}
         />
+        <ColorPicker
+          title='Background Color'
+          headerTextColor={headerDesign.headerBackgroundColor}
+          setColor={setHeaderBackgroundColor}
+        />
+        <AlignmentPicker
+          alignment={headerDesign.headerAlignment}
+          setHeaderAlignment={setHeaderAlignment}
+        />
+      </CollapsibleSection>
+      <CollapsibleSection title='Date'>
+        <AlignmentPicker
+          alignment={dateDesign.dateAlignment}
+          setHeaderAlignment={setDateAlignment}
+        />
       </CollapsibleSection>
       <CollapsibleSection title='Socials'>
+        <AlignmentPicker
+          alignment={socialsDesign.socialsAlignment}
+          setHeaderAlignment={setSocialsAlignment}
+        />
         <SocialsWrapper>
           {
             socials.map((item, index) => <SocialsToolbar key={item.network + index}>

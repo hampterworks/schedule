@@ -1,13 +1,23 @@
 "use client"
 
 import React, {useRef, useState} from "react";
-import {Color, HeaderDesign, SocialNetworks, Socials, Template} from "web/state/schedule";
+import {
+  Alignment,
+  AlignmentFn,
+  Color, ColorFn,
+  DateDesign,
+  HeaderDesign,
+  SocialNetworks,
+  Socials, SocialsDesign,
+  Template
+} from "web/state/schedule";
 import {DateTime} from "luxon";
 import styled from "@emotion/styled";
 import html2canvas from 'html2canvas';
 import ButtonElement from "./ButtonElement";
 import {macFontList, winFontList} from "web/data/fonts";
 import HeaderDesigner from "./HeaderDesigner";
+import {css} from "@emotion/react";
 
 const DesignResults = styled.div<{ background: string }>`
     width: 100%;
@@ -17,29 +27,56 @@ const DesignResults = styled.div<{ background: string }>`
     grid-template-rows: 10% 80% 10%;
     row-gap: 16px;
 
-    background: #ffffff;
+    background: #60a0a6;
     background-image: ${props => `url(${props.background})`};
-    background-size: contain;
+    background-size: auto;
     background-repeat: no-repeat;
     background-origin: border-box;
+    background-position-y: 40%;
 `
 
-const DesignHeader = styled.div<{ $headerTextColor: Color }>`
-    grid-column: 3;
-    grid-row: 1;
-    color: ${props => `rgba(
+const alignmentGridPosition = (alignment: Alignment) => {
+  switch (alignment) {
+    case "left":
+      return css`grid-column: 2;`
+    case "center":
+      return css`
+          grid-column: 2/3;
+          margin-left: 50%;
+          text-align: center;
+          width: 100%;
+      `
+    case "right":
+      return css`grid-column: 3;`
+    default:
+      return css`grid-column: 3;`
+  }
+}
+
+const DesignHeader =
+  styled.div<{ $headerTextColor: Color, $headerBackgroundColor: Color, $alignment: Alignment }>`
+      ${props => alignmentGridPosition(props.$alignment)}
+      grid-row: 1;
+      color: ${props => `rgba(
         ${props.$headerTextColor.r}, 
         ${props.$headerTextColor.g},
         ${props.$headerTextColor.b}, 
-        ${props.$headerTextColor.a})`};;
+        ${props.$headerTextColor.a})`};
+      background: ${props => `rgba(
+        ${props.$headerBackgroundColor.r}, 
+        ${props.$headerBackgroundColor.g},
+        ${props.$headerBackgroundColor.b}, 
+        ${props.$headerBackgroundColor.a})`};
+      padding: 8px;
+      border-radius: 4px;
 
-    h1 {
-        font-size: 24px;
-    }
-`
+      h1 {
+          font-size: 24px;
+      }
+  `
 
-const DateWrapper = styled.ul`
-    grid-column: 3;
+const DateWrapper = styled.ul<{ $alignment: Alignment }>`
+    ${props => alignmentGridPosition(props.$alignment)}
     grid-row: 2;
     display: flex;
     flex-direction: column;
@@ -88,10 +125,10 @@ const DayDescription = styled.div`
 const TimesWrapper = styled.div`
     justify-self: flex-end;
 `
-const SocialsWrapper = styled.ul`
+const SocialsWrapper = styled.ul<{$alignment: Alignment}>`
+    ${props => alignmentGridPosition(props.$alignment)}
     display: flex;
     gap: 16px;
-    grid-column: 3;
     grid-row: 3;
     justify-content: center;
 
@@ -202,10 +239,16 @@ type DesignDisplayProps = {
   timeZones: string[]
   headerDesign: HeaderDesign
   setMainHeader: (newHeader: string) => void
-  setHeaderColor: (color: Color) => void
+  setHeaderColor: ColorFn
+  setHeaderBackgroundColor: ColorFn
+  setHeaderAlignment: AlignmentFn
+  dateDesign: DateDesign
+  setDateAlignment: AlignmentFn
   socials: Socials[]
   addSocials: (index: number, socials: Socials) => void,
   removeSocials: (index: number) => void,
+  socialsDesign: SocialsDesign,
+  setSocialsAlignment: AlignmentFn,
 }
 
 const DesignDisplay: React.FC<DesignDisplayProps> =
@@ -215,9 +258,15 @@ const DesignDisplay: React.FC<DesignDisplayProps> =
      headerDesign,
      setMainHeader,
      setHeaderColor,
+     setHeaderBackgroundColor,
+     setHeaderAlignment,
+     dateDesign,
+     setDateAlignment,
      socials,
      addSocials,
-     removeSocials
+     removeSocials,
+     socialsDesign,
+     setSocialsAlignment
    }) => {
     const divRef = useRef<HTMLDivElement>(null)
     const [backgroundImage, setBackgroundImage] = useState('')
@@ -252,13 +301,23 @@ const DesignDisplay: React.FC<DesignDisplayProps> =
         headerDesign={headerDesign}
         setMainHeader={setMainHeader}
         setHeaderColor={setHeaderColor}
+        setHeaderBackgroundColor={setHeaderBackgroundColor}
+        setHeaderAlignment={setHeaderAlignment}
+        dateDesign={dateDesign}
+        setDateAlignment={setDateAlignment}
+        socialsDesign={socialsDesign}
+        setSocialsAlignment={setSocialsAlignment}
       />
       <DesignResults background={backgroundImage} ref={divRef}>
-        <DesignHeader $headerTextColor={headerDesign.headerTextColor}>
+        <DesignHeader
+          $alignment={headerDesign.headerAlignment}
+          $headerTextColor={headerDesign.headerTextColor}
+          $headerBackgroundColor={headerDesign.headerBackgroundColor}
+        >
           <h1>{headerDesign.headerText}</h1>
           <div>{getWeekDurationString(templates)}</div>
         </DesignHeader>
-        <DateWrapper>
+        <DateWrapper $alignment={dateDesign.dateAlignment}>
           {
             templates.map((template, index) => {
               const date = (typeof template.date === 'string')
@@ -293,7 +352,7 @@ const DesignDisplay: React.FC<DesignDisplayProps> =
             })
           }
         </DateWrapper>
-        <SocialsWrapper>
+        <SocialsWrapper $alignment={socialsDesign.socialsAlignment}>
           {
             socials.map((item, index) => {
               if (item.network !== 'none' && item.tag !== undefined) {

@@ -2,7 +2,7 @@
 
 
 import React from "react";
-import useScheduleStore from "../../state/schedule";
+import useScheduleStore, {Alignment} from "../../state/schedule";
 import DesignDisplay from "@repo/ui/DesignDisplay";
 
 const Page: React.FC = ({}) => {
@@ -12,8 +12,14 @@ const Page: React.FC = ({}) => {
     headerDesign,
     setMainHeader,
     setHeaderColor,
+    setHeaderBackgroundColor,
+    setHeaderAlignment,
+    dateDesign,
+    setDateAlignment,
     socials,
     addSocials,
+    socialsDesign,
+    setSocialsAlignment,
     removeSocials
   } = useScheduleStore()
 
@@ -24,8 +30,14 @@ const Page: React.FC = ({}) => {
     socials={socials}
     addSocials={addSocials}
     removeSocials={removeSocials}
+    socialsDesign={socialsDesign}
+    setSocialsAlignment={setSocialsAlignment}
     setMainHeader={setMainHeader}
     setHeaderColor={setHeaderColor}
+    setHeaderBackgroundColor={setHeaderBackgroundColor}
+    setHeaderAlignment={setHeaderAlignment}
+    dateDesign={dateDesign}
+    setDateAlignment={setDateAlignment}
   />
 }
 

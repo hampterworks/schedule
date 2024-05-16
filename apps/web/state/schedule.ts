@@ -18,15 +18,31 @@ export type Color = {
   a: number
 }
 
+export type Alignment = 'left' | 'center' | 'right'
+
+export type AlignmentFn = (alignment: Alignment) => void
+export type ColorFn = (color: Color) => void
+
 export type HeaderDesign = {
   headerText: string
   headerTextColor: Color
+  headerBackgroundColor: Color
+  headerAlignment: Alignment
 }
+
+export type DateDesign = {
+  dateAlignment: Alignment
+}
+
 export type SocialNetworks = 'twitch' | 'twitter' | 'youtube'
 
 export type Socials = {
   network: SocialNetworks | 'none'
   tag?: string
+}
+
+export type SocialsDesign = {
+  socialsAlignment: Alignment
 }
 
 export type ScheduleState = {
@@ -35,7 +51,9 @@ export type ScheduleState = {
   timeZones: string[],
   templates: Template[],
   headerDesign: HeaderDesign
+  dateDesign: DateDesign
   socials: Socials[]
+  socialsDesign: SocialsDesign
 }
 
 export type ScheduleStateReducers = {
@@ -53,7 +71,11 @@ export type DesignStateReducers = {
   setMainHeader: (mainHeader: string) => void,
   addSocials: (index: number, socials: Socials) => void,
   removeSocials: (index: number) => void,
-  setHeaderColor: (color: Color) => void
+  setSocialsAlignment: AlignmentFn,
+  setHeaderColor: ColorFn,
+  setHeaderBackgroundColor: ColorFn,
+  setHeaderAlignment: AlignmentFn,
+  setDateAlignment: AlignmentFn
 }
 
 let initialState: ScheduleState = {
@@ -61,8 +83,19 @@ let initialState: ScheduleState = {
   totalStreams: 1,
   timeZones: [],
   templates: [{date: DateTime.local()}],
-  headerDesign: {headerText: 'Edit header', headerTextColor: { r: 0, g: 0, b: 0, a: 1 }},
-  socials: [{network: 'none'}]
+  headerDesign: {
+    headerText: 'Edit header',
+    headerTextColor: { r: 0, g: 0, b: 0, a: 1 },
+    headerBackgroundColor: { r: 0, g: 0, b: 0, a: 0 },
+    headerAlignment: 'right'
+  },
+  dateDesign: {
+    dateAlignment: 'right'
+  },
+  socials: [{network: 'none',}],
+  socialsDesign: {
+    socialsAlignment: 'right'
+  }
 }
 
 let reducers: StateCreator<ScheduleStateReducers & DesignStateReducers & ScheduleState, [["zustand/devtools", never]], [], ScheduleStateReducers & DesignStateReducers> =
@@ -144,7 +177,35 @@ let reducers: StateCreator<ScheduleStateReducers & DesignStateReducers & Schedul
           ...state.headerDesign,
           headerTextColor: color
         }
-      }))
+      })),
+    setHeaderBackgroundColor: (color: Color) => set((state) =>
+      ({
+        headerDesign: {
+          ...state.headerDesign,
+          headerBackgroundColor: color
+        }
+      })),
+    setHeaderAlignment: (alignment: Alignment) => set((state) =>
+      ({
+        headerDesign: {
+          ...state.headerDesign,
+          headerAlignment: alignment
+        }
+      })),
+    setDateAlignment: (alignment: Alignment) => set((state) =>
+      ({
+        dateDesign: {
+          ...state.dateDesign,
+          dateAlignment: alignment
+        }
+      })),
+    setSocialsAlignment: (alignment: Alignment) => set((state) =>
+      ({
+        socialsDesign: {
+          ...state.socialsDesign,
+          socialsAlignment: alignment
+        }
+      })),
   })
 
 export const scheduleStore = createStore<ScheduleState & ScheduleStateReducers & DesignStateReducers>()(
