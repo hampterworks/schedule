@@ -13,7 +13,8 @@
     "./ButtonElement": "./src/ButtonElement.tsx",
     "./DesignDisplay": "./src/DesignDisplay.tsx",
     "./HeaderDesigner": "./src/HeaderDesigner.tsx",
-    "./collapsibleSection": "./src/collapsibleSection.tsx"
+    "./collapsibleSection": "./src/collapsibleSection.tsx",
+    "./ColorPicker": "./src/ColorPicker.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
@@ -39,6 +40,7 @@
     "@mui/material": "^5.15.9",
     "@mui/x-date-pickers": "^6.19.4",
     "luxon": "^3.4.4",
+    "react-colorful": "^5.6.1",
     "typescript": "^5.4.5"
   }
 }
