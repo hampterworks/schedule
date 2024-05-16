@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react";
 import styled from "@emotion/styled";
 import {css} from "@emotion/react";
@@ -7,7 +9,7 @@ const CollapsibleSectionWrapper = styled.section`
     border-bottom: 1px solid #e8e8e8;
     padding-bottom: 16px;
     border-radius: 4px;
-    & > :nth-child(2) {
+    & > :nth-of-type(2) {
         margin-top: 16px;
     }
 `
