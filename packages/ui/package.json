@@ -12,7 +12,8 @@
     "./ResultSection": "./src/ResultSection.tsx",
     "./ButtonElement": "./src/ButtonElement.tsx",
     "./DesignDisplay": "./src/DesignDisplay.tsx",
-    "./HeaderDesigner": "./src/HeaderDesigner.tsx"
+    "./HeaderDesigner": "./src/HeaderDesigner.tsx",
+    "./collapsibleSection": "./src/collapsibleSection.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
