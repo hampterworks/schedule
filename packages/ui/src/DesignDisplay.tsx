@@ -1,7 +1,7 @@
 "use client"
 
 import React, {useRef, useState} from "react";
-import {SocialNetworks, Socials, Template} from "web/state/schedule";
+import {Color, HeaderDesign, SocialNetworks, Socials, Template} from "web/state/schedule";
 import {DateTime} from "luxon";
 import styled from "@emotion/styled";
 import html2canvas from 'html2canvas';
@@ -24,10 +24,14 @@ const DesignResults = styled.div<{ background: string }>`
     background-origin: border-box;
 `
 
-const DesignHeader = styled.div`
+const DesignHeader = styled.div<{ $headerTextColor: Color }>`
     grid-column: 3;
     grid-row: 1;
-    color: #131313;
+    color: ${props => `rgba(
+        ${props.$headerTextColor.r}, 
+        ${props.$headerTextColor.g},
+        ${props.$headerTextColor.b}, 
+        ${props.$headerTextColor.a})`};;
 
     h1 {
         font-size: 24px;
@@ -81,11 +85,9 @@ const DayDetailsWrapper = styled.div`
 const DayDescription = styled.div`
     font-size: 20px;
 `
-
 const TimesWrapper = styled.div`
     justify-self: flex-end;
 `
-
 const SocialsWrapper = styled.ul`
     display: flex;
     gap: 16px;
@@ -104,7 +106,6 @@ const SocialsWrapper = styled.ul`
         width: fit-content;
     }
 `
-
 
 const formatTimeWithOptionalMinutes = (time?: string): string => {
   if (time !== undefined) {
@@ -199,8 +200,9 @@ const getSocialNetworkIcon = (network: SocialNetworks): React.ReactNode => {
 type DesignDisplayProps = {
   templates: Template[]
   timeZones: string[]
-  mainHeader: string
+  headerDesign: HeaderDesign
   setMainHeader: (newHeader: string) => void
+  setHeaderColor: (color: Color) => void
   socials: Socials[]
   addSocials: (index: number, socials: Socials) => void,
   removeSocials: (index: number) => void,
@@ -210,8 +212,9 @@ const DesignDisplay: React.FC<DesignDisplayProps> =
   ({
      timeZones,
      templates,
-     mainHeader,
+     headerDesign,
      setMainHeader,
+     setHeaderColor,
      socials,
      addSocials,
      removeSocials
@@ -242,11 +245,17 @@ const DesignDisplay: React.FC<DesignDisplayProps> =
       }
     }
     return <div>
-      <HeaderDesigner socials={socials} addSocials={addSocials} removeSocials={removeSocials} mainHeader={mainHeader}
-                      setMainHeader={setMainHeader}/>
+      <HeaderDesigner
+        socials={socials}
+        addSocials={addSocials}
+        removeSocials={removeSocials}
+        headerDesign={headerDesign}
+        setMainHeader={setMainHeader}
+        setHeaderColor={setHeaderColor}
+      />
       <DesignResults background={backgroundImage} ref={divRef}>
-        <DesignHeader>
-          <h1>{mainHeader}</h1>
+        <DesignHeader $headerTextColor={headerDesign.headerTextColor}>
+          <h1>{headerDesign.headerText}</h1>
           <div>{getWeekDurationString(templates)}</div>
         </DesignHeader>
         <DateWrapper>

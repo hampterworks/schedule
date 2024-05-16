@@ -1,13 +1,13 @@
 "use client"
 
-
 import React from "react";
 import InputElement from "./InputElement";
-import {SocialNetworks, Socials} from "web/state/schedule";
-import {Button, MenuItem, Select, TextField} from "@mui/material";
+import {Color, HeaderDesign, SocialNetworks, Socials} from "web/state/schedule";
+import {MenuItem, TextField} from "@mui/material";
 import styled from "@emotion/styled";
 import ButtonWrapper from "./ButtonWrapper";
 import CollapsibleSection from "./collapsibleSection";
+import ColorPicker from "./colorPicker";
 
 
 const ControllersWrapper = styled.section`
@@ -27,17 +27,19 @@ const SocialsToolbar = styled.div`
 `
 
 type HeaderDesignerProps = {
-  mainHeader: string
+  headerDesign: HeaderDesign
   socials: Socials[]
   setMainHeader: (newHeader: string) => void
+  setHeaderColor: (color: Color) => void
   addSocials: (index: number, socials: Socials) => void,
   removeSocials: (index: number) => void,
 } & React.ComponentPropsWithoutRef<'section'>
 
 const HeaderDesigner: React.FC<HeaderDesignerProps> =
   ({
-     mainHeader,
+     headerDesign,
      setMainHeader,
+     setHeaderColor,
      socials,
      addSocials,
      removeSocials,
@@ -45,13 +47,19 @@ const HeaderDesigner: React.FC<HeaderDesignerProps> =
    }) => {
 
     return <ControllersWrapper {...props}>
+
       <CollapsibleSection title='Header Text'>
         <InputElement
           label='Total days:'
           type='text'
-          value={mainHeader}
+          value={headerDesign.headerText}
           onInput={inputText =>
             setMainHeader(inputText ?? '')}
+        />
+        <ColorPicker
+          title='Header text'
+          headerTextColor={headerDesign.headerTextColor}
+          setColor={setHeaderColor}
         />
       </CollapsibleSection>
       <CollapsibleSection title='Socials'>
