@@ -3,7 +3,7 @@
 import React, {useRef, useState} from "react";
 import {
   Alignment,
-  AlignmentFn,
+  AlignmentFn, BackgroundDesign, BackgroundPosition, BackgroundSize,
   Color, ColorFn,
   DateDesign,
   HeaderDesign,
@@ -19,20 +19,25 @@ import {macFontList, winFontList} from "web/data/fonts";
 import HeaderDesigner from "./HeaderDesigner";
 import {css} from "@emotion/react";
 
-const DesignResults = styled.div<{ background: string }>`
-    width: 100%;
+const DesignResults = styled.div<{ background: string, $backgroundColor: Color, $backgroundSize: BackgroundSize, $backgroundPosition: BackgroundPosition}>`
     padding: 16px 0;
     display: grid;
     grid-template-columns: 16px repeat(2, 1fr) 16px;
     grid-template-rows: 10% 80% 10%;
     row-gap: 16px;
-
-    background: #60a0a6;
+    line-height: 22px;
+    background: ${props => `rgba(
+        ${props.$backgroundColor.r}, 
+        ${props.$backgroundColor.g},
+        ${props.$backgroundColor.b}, 
+        ${props.$backgroundColor.a})`};
+    
     background-image: ${props => `url(${props.background})`};
-    background-size: auto;
+    
+    background-size: ${props => props.$backgroundSize};
     background-repeat: no-repeat;
     background-origin: border-box;
-    background-position-y: 40%;
+    background-position: ${props => props.$backgroundPosition};
 `
 
 const alignmentGridPosition = (alignment: Alignment) => {
@@ -125,7 +130,7 @@ const DayDescription = styled.div`
 const TimesWrapper = styled.div`
     justify-self: flex-end;
 `
-const SocialsWrapper = styled.ul<{$alignment: Alignment}>`
+const SocialsWrapper = styled.ul<{ $alignment: Alignment }>`
     ${props => alignmentGridPosition(props.$alignment)}
     display: flex;
     gap: 16px;
@@ -245,10 +250,14 @@ type DesignDisplayProps = {
   dateDesign: DateDesign
   setDateAlignment: AlignmentFn
   socials: Socials[]
-  addSocials: (index: number, socials: Socials) => void,
-  removeSocials: (index: number) => void,
-  socialsDesign: SocialsDesign,
-  setSocialsAlignment: AlignmentFn,
+  addSocials: (index: number, socials: Socials) => void
+  removeSocials: (index: number) => void
+  socialsDesign: SocialsDesign
+  setSocialsAlignment: AlignmentFn
+  backgroundDesign: BackgroundDesign
+  setBackgroundColor: ColorFn
+  setBackgroundSize: (backgroundSize: BackgroundSize) => void
+  setBackgroundPosition: (backgroundPosition: BackgroundPosition) => void
 }
 
 const DesignDisplay: React.FC<DesignDisplayProps> =
@@ -266,7 +275,11 @@ const DesignDisplay: React.FC<DesignDisplayProps> =
      addSocials,
      removeSocials,
      socialsDesign,
-     setSocialsAlignment
+     setSocialsAlignment,
+     backgroundDesign,
+     setBackgroundColor,
+     setBackgroundSize,
+     setBackgroundPosition
    }) => {
     const divRef = useRef<HTMLDivElement>(null)
     const [backgroundImage, setBackgroundImage] = useState('')
@@ -307,8 +320,18 @@ const DesignDisplay: React.FC<DesignDisplayProps> =
         setDateAlignment={setDateAlignment}
         socialsDesign={socialsDesign}
         setSocialsAlignment={setSocialsAlignment}
+        backgroundDesign={backgroundDesign}
+        setBackgroundColor={setBackgroundColor}
+        setBackgroundSize={setBackgroundSize}
+        setBackgroundPosition={setBackgroundPosition}
       />
-      <DesignResults background={backgroundImage} ref={divRef}>
+      <DesignResults
+        background={backgroundImage}
+        $backgroundPosition={backgroundDesign.backgroundPosition}
+        $backgroundColor={backgroundDesign.backgroundColor}
+        $backgroundSize={backgroundDesign.backgroundSize}
+        ref={divRef}
+      >
         <DesignHeader
           $alignment={headerDesign.headerAlignment}
           $headerTextColor={headerDesign.headerTextColor}

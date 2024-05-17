@@ -20,7 +20,11 @@ const Page: React.FC = ({}) => {
     addSocials,
     socialsDesign,
     setSocialsAlignment,
-    removeSocials
+    removeSocials,
+    backgroundDesign,
+    setBackgroundColor,
+    setBackgroundSize,
+    setBackgroundPosition
   } = useScheduleStore()
 
   return <DesignDisplay
@@ -38,6 +42,10 @@ const Page: React.FC = ({}) => {
     setHeaderAlignment={setHeaderAlignment}
     dateDesign={dateDesign}
     setDateAlignment={setDateAlignment}
+    backgroundDesign={backgroundDesign}
+    setBackgroundColor={setBackgroundColor}
+    setBackgroundSize={setBackgroundSize}
+    setBackgroundPosition={setBackgroundPosition}
   />
 }
 

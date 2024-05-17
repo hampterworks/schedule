@@ -4,7 +4,7 @@ import React from "react";
 import InputElement from "./InputElement";
 import {
   Alignment,
-  AlignmentFn,
+  AlignmentFn, BackgroundDesign, BackgroundPosition, BackgroundSize,
   Color,
   ColorFn,
   DateDesign,
@@ -12,12 +12,13 @@ import {
   SocialNetworks,
   Socials, SocialsDesign
 } from "web/state/schedule";
-import {MenuItem, TextField} from "@mui/material";
+import {MenuItem, Slider, TextField} from "@mui/material";
 import styled from "@emotion/styled";
 import ButtonWrapper from "./ButtonWrapper";
-import CollapsibleSection from "./collapsibleSection";
-import ColorPicker from "./colorPicker";
+import ColorPicker from "./ColorPicker";
 import AlignmentPicker from "./AlignmentPicker";
+import CollapsibleSection from "./CollapsibleSection";
+import PositionSelector from "./PositionSelector";
 
 
 const ControllersWrapper = styled.section`
@@ -45,10 +46,14 @@ type HeaderDesignerProps = {
   setHeaderAlignment: AlignmentFn
   dateDesign: DateDesign
   setDateAlignment: AlignmentFn
-  addSocials: (index: number, socials: Socials) => void,
-  removeSocials: (index: number) => void,
-  socialsDesign: SocialsDesign,
-  setSocialsAlignment: AlignmentFn,
+  addSocials: (index: number, socials: Socials) => void
+  removeSocials: (index: number) => void
+  socialsDesign: SocialsDesign
+  setSocialsAlignment: AlignmentFn
+  backgroundDesign: BackgroundDesign
+  setBackgroundColor: ColorFn
+  setBackgroundSize: (backgroundSize: BackgroundSize) => void
+  setBackgroundPosition: (backgroundPosition: BackgroundPosition) => void
 } & React.ComponentPropsWithoutRef<'section'>
 
 const HeaderDesigner: React.FC<HeaderDesignerProps> =
@@ -65,6 +70,10 @@ const HeaderDesigner: React.FC<HeaderDesignerProps> =
      removeSocials,
      socialsDesign,
      setSocialsAlignment,
+     backgroundDesign,
+     setBackgroundColor,
+     setBackgroundSize,
+     setBackgroundPosition,
      ...props
    }) => {
 
@@ -143,7 +152,29 @@ const HeaderDesigner: React.FC<HeaderDesignerProps> =
           }
         </SocialsWrapper>
       </CollapsibleSection>
-
+      <CollapsibleSection title='Background'>
+        <ColorPicker
+          title='Background Color'
+          headerTextColor={backgroundDesign.backgroundColor}
+          setColor={setBackgroundColor}
+        />
+        <Slider
+          value={backgroundDesign.backgroundSize === 'auto' ? 100 : parseInt(backgroundDesign.backgroundSize.replace('%', ''))}
+          aria-label="Default"
+          valueLabelDisplay="auto"
+          step={10}
+          marks
+          min={10}
+          max={200}
+          onChange={(_, value) => {
+            setBackgroundSize(value + '%')
+          }}
+        />
+      </CollapsibleSection>
+      <PositionSelector
+        backgroundPosition={backgroundDesign.backgroundPosition}
+        setBackgroundPosition={setBackgroundPosition}
+      />
     </ControllersWrapper>
   }
 

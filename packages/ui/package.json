@@ -13,9 +13,10 @@
     "./ButtonElement": "./src/ButtonElement.tsx",
     "./DesignDisplay": "./src/DesignDisplay.tsx",
     "./HeaderDesigner": "./src/HeaderDesigner.tsx",
-    "./collapsibleSection": "./src/collapsibleSection.tsx",
+    "./CollapsibleSection": "./src/CollapsibleSection.tsx",
     "./ColorPicker": "./src/ColorPicker.tsx",
-    "./AlignmentPicker": "./src/AlignmentPicker.tsx"
+    "./AlignmentPicker": "./src/AlignmentPicker.tsx",
+    "./PositionSelector": "./src/PositionSelector.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",

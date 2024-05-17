@@ -34,6 +34,15 @@ export type DateDesign = {
   dateAlignment: Alignment
 }
 
+export type BackgroundSize = 'auto' | 'cover' | 'contain' | string
+export type BackgroundPosition = 'top' | 'left' | 'right' | 'bottom' | 'center' | string
+
+export type BackgroundDesign = {
+  backgroundColor: Color
+  backgroundSize: BackgroundSize
+  backgroundPosition: BackgroundPosition
+}
+
 export type SocialNetworks = 'twitch' | 'twitter' | 'youtube'
 
 export type Socials = {
@@ -54,6 +63,7 @@ export type ScheduleState = {
   dateDesign: DateDesign
   socials: Socials[]
   socialsDesign: SocialsDesign
+  backgroundDesign: BackgroundDesign
 }
 
 export type ScheduleStateReducers = {
@@ -76,6 +86,9 @@ export type DesignStateReducers = {
   setHeaderBackgroundColor: ColorFn,
   setHeaderAlignment: AlignmentFn,
   setDateAlignment: AlignmentFn
+  setBackgroundColor: ColorFn
+  setBackgroundSize: (backgroundSize: BackgroundSize) => void
+  setBackgroundPosition: (backgroundPosition: BackgroundPosition) => void
 }
 
 let initialState: ScheduleState = {
@@ -95,6 +108,11 @@ let initialState: ScheduleState = {
   socials: [{network: 'none',}],
   socialsDesign: {
     socialsAlignment: 'right'
+  },
+  backgroundDesign: {
+    backgroundColor: { r: 255, g: 255, b: 255, a: 1 },
+    backgroundSize: 'auto',
+    backgroundPosition: 'center'
   }
 }
 
@@ -204,6 +222,27 @@ let reducers: StateCreator<ScheduleStateReducers & DesignStateReducers & Schedul
         socialsDesign: {
           ...state.socialsDesign,
           socialsAlignment: alignment
+        }
+      })),
+    setBackgroundColor: (color: Color) => set((state) =>
+      ({
+        backgroundDesign: {
+          ...state.backgroundDesign,
+          backgroundColor: color
+        }
+      })),
+    setBackgroundSize: (backgroundSize: BackgroundSize) => set((state) =>
+      ({
+        backgroundDesign: {
+          ...state.backgroundDesign,
+          backgroundSize: backgroundSize
+        }
+      })),
+    setBackgroundPosition: (backgroundPosition: BackgroundPosition) => set((state) =>
+      ({
+        backgroundDesign: {
+          ...state.backgroundDesign,
+          backgroundPosition: backgroundPosition
         }
       })),
   })
