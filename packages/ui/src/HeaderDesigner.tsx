@@ -44,8 +44,14 @@ type HeaderDesignerProps = {
   setHeaderColor: ColorFn
   setHeaderBackgroundColor: ColorFn
   setHeaderAlignment: AlignmentFn
+  setHeaderSize: (size: number) => void
+  setSubHeaderSize: (size: number) => void
   dateDesign: DateDesign
   setDateAlignment: AlignmentFn
+  setDateDescriptionColor: ColorFn
+  setDateDescriptionTextColor: ColorFn
+  setDateDayColor: ColorFn
+  setDateDayTextColor: ColorFn
   addSocials: (index: number, socials: Socials) => void
   removeSocials: (index: number) => void
   socialsDesign: SocialsDesign
@@ -63,6 +69,8 @@ const HeaderDesigner: React.FC<HeaderDesignerProps> =
      setHeaderColor,
      setHeaderBackgroundColor,
      setHeaderAlignment,
+     setHeaderSize,
+     setSubHeaderSize,
      dateDesign,
      setDateAlignment,
      socials,
@@ -74,6 +82,10 @@ const HeaderDesigner: React.FC<HeaderDesignerProps> =
      setBackgroundColor,
      setBackgroundSize,
      setBackgroundPosition,
+     setDateDescriptionColor,
+     setDateDescriptionTextColor,
+     setDateDayColor,
+     setDateDayTextColor,
      ...props
    }) => {
 
@@ -100,11 +112,55 @@ const HeaderDesigner: React.FC<HeaderDesignerProps> =
           alignment={headerDesign.headerAlignment}
           setHeaderAlignment={setHeaderAlignment}
         />
+        <Slider
+          value={headerDesign.headerTextSize}
+          aria-label="Default"
+          valueLabelDisplay="auto"
+          step={1}
+          marks
+          min={10}
+          max={55}
+          onChange={(_, value) => {
+            setHeaderSize(!Array.isArray(value) ? value : 22)
+          }}
+        />
+        <Slider
+          value={headerDesign.subHeaderTextSize}
+          aria-label="Default"
+          valueLabelDisplay="auto"
+          step={1}
+          marks
+          min={10}
+          max={55}
+          onChange={(_, value) => {
+            setSubHeaderSize(!Array.isArray(value) ? value : 16)
+          }}
+        />
       </CollapsibleSection>
       <CollapsibleSection title='Date'>
         <AlignmentPicker
           alignment={dateDesign.dateAlignment}
           setHeaderAlignment={setDateAlignment}
+        />
+        <ColorPicker
+          title='Description Background Color'
+          headerTextColor={dateDesign.dateDescriptionColor}
+          setColor={setDateDescriptionColor}
+        />
+        <ColorPicker
+          title='Description Text Color'
+          headerTextColor={dateDesign.dateDescriptionTextColor}
+          setColor={setDateDescriptionTextColor}
+        />
+        <ColorPicker
+          title='Day Background Color'
+          headerTextColor={dateDesign.dateDayColor}
+          setColor={setDateDayColor}
+        />
+        <ColorPicker
+          title='Day Text Color'
+          headerTextColor={dateDesign.dateDayTextColor}
+          setColor={setDateDayTextColor}
         />
       </CollapsibleSection>
       <CollapsibleSection title='Socials'>
@@ -170,11 +226,11 @@ const HeaderDesigner: React.FC<HeaderDesignerProps> =
             setBackgroundSize(value + '%')
           }}
         />
+        <PositionSelector
+          backgroundPosition={backgroundDesign.backgroundPosition}
+          setBackgroundPosition={setBackgroundPosition}
+        />
       </CollapsibleSection>
-      <PositionSelector
-        backgroundPosition={backgroundDesign.backgroundPosition}
-        setBackgroundPosition={setBackgroundPosition}
-      />
     </ControllersWrapper>
   }
 

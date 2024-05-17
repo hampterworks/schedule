@@ -28,10 +28,16 @@ export type HeaderDesign = {
   headerTextColor: Color
   headerBackgroundColor: Color
   headerAlignment: Alignment
+  headerTextSize: number
+  subHeaderTextSize: number
 }
 
 export type DateDesign = {
   dateAlignment: Alignment
+  dateDayColor: Color
+  dateDayTextColor: Color
+  dateDescriptionColor: Color
+  dateDescriptionTextColor: Color
 }
 
 export type BackgroundSize = 'auto' | 'cover' | 'contain' | string
@@ -85,10 +91,16 @@ export type DesignStateReducers = {
   setHeaderColor: ColorFn,
   setHeaderBackgroundColor: ColorFn,
   setHeaderAlignment: AlignmentFn,
-  setDateAlignment: AlignmentFn
-  setBackgroundColor: ColorFn
-  setBackgroundSize: (backgroundSize: BackgroundSize) => void
-  setBackgroundPosition: (backgroundPosition: BackgroundPosition) => void
+  setHeaderSize: (size: number) => void
+  setSubHeaderSize: (size: number) => void
+  setDateAlignment: AlignmentFn,
+  setDateDescriptionColor: ColorFn,
+  setDateDescriptionTextColor: ColorFn,
+  setDateDayColor: ColorFn,
+  setDateDayTextColor: ColorFn,
+  setBackgroundColor: ColorFn,
+  setBackgroundSize: (backgroundSize: BackgroundSize) => void,
+  setBackgroundPosition: (backgroundPosition: BackgroundPosition) => void,
 }
 
 let initialState: ScheduleState = {
@@ -100,10 +112,16 @@ let initialState: ScheduleState = {
     headerText: 'Edit header',
     headerTextColor: { r: 0, g: 0, b: 0, a: 1 },
     headerBackgroundColor: { r: 0, g: 0, b: 0, a: 0 },
-    headerAlignment: 'right'
+    headerAlignment: 'right',
+    headerTextSize: 24,
+    subHeaderTextSize: 16
   },
   dateDesign: {
-    dateAlignment: 'right'
+    dateAlignment: 'right',
+    dateDescriptionColor: { r: 255, g: 255, b: 255, a: 1 },
+    dateDayColor: { r: 130, g: 167, b: 236, a: 1 },
+    dateDayTextColor: { r: 0, g: 0, b: 0, a: 1 },
+    dateDescriptionTextColor: { r: 0, g: 0, b: 0, a: 1 },
   },
   socials: [{network: 'none',}],
   socialsDesign: {
@@ -178,6 +196,20 @@ let reducers: StateCreator<ScheduleStateReducers & DesignStateReducers & Schedul
           headerText: mainHeader
         }
       })),
+    setHeaderSize: (size: number) => set((state) =>
+      ({
+        headerDesign: {
+          ...state.headerDesign,
+          headerTextSize: size
+        }
+      })),
+    setSubHeaderSize: (size: number) => set((state) =>
+      ({
+        headerDesign: {
+          ...state.headerDesign,
+          subHeaderTextSize: size
+        }
+      })),
     addSocials: (index: number, socials: Socials) => set((state) => {
 
       return {
@@ -215,6 +247,34 @@ let reducers: StateCreator<ScheduleStateReducers & DesignStateReducers & Schedul
         dateDesign: {
           ...state.dateDesign,
           dateAlignment: alignment
+        }
+      })),
+    setDateDayColor: (color: Color) => set((state) =>
+      ({
+        dateDesign: {
+          ...state.dateDesign,
+          dateDayColor: color
+        }
+      })),
+    setDateDayTextColor: (color: Color) => set((state) =>
+      ({
+        dateDesign: {
+          ...state.dateDesign,
+          dateDayTextColor: color
+        }
+      })),
+    setDateDescriptionColor: (color: Color) => set((state) =>
+      ({
+        dateDesign: {
+          ...state.dateDesign,
+          dateDescriptionColor: color
+        }
+      })),
+    setDateDescriptionTextColor: (color: Color) => set((state) =>
+      ({
+        dateDesign: {
+          ...state.dateDesign,
+          dateDescriptionTextColor: color
         }
       })),
     setSocialsAlignment: (alignment: Alignment) => set((state) =>

@@ -19,11 +19,16 @@ import {macFontList, winFontList} from "web/data/fonts";
 import HeaderDesigner from "./HeaderDesigner";
 import {css} from "@emotion/react";
 
-const DesignResults = styled.div<{ background: string, $backgroundColor: Color, $backgroundSize: BackgroundSize, $backgroundPosition: BackgroundPosition}>`
+const DesignResults = styled.div<{
+  background: string,
+  $backgroundColor: Color,
+  $backgroundSize: BackgroundSize,
+  $backgroundPosition: BackgroundPosition
+}>`
     padding: 16px 0;
     display: grid;
     grid-template-columns: 16px repeat(2, 1fr) 16px;
-    grid-template-rows: 10% 80% 10%;
+    grid-template-rows: minmax(10%, auto) 80% 10%;
     row-gap: 16px;
     line-height: 22px;
     background: ${props => `rgba(
@@ -31,9 +36,9 @@ const DesignResults = styled.div<{ background: string, $backgroundColor: Color, 
         ${props.$backgroundColor.g},
         ${props.$backgroundColor.b}, 
         ${props.$backgroundColor.a})`};
-    
+
     background-image: ${props => `url(${props.background})`};
-    
+
     background-size: ${props => props.$backgroundSize};
     background-repeat: no-repeat;
     background-origin: border-box;
@@ -58,27 +63,36 @@ const alignmentGridPosition = (alignment: Alignment) => {
   }
 }
 
-const DesignHeader =
-  styled.div<{ $headerTextColor: Color, $headerBackgroundColor: Color, $alignment: Alignment }>`
-      ${props => alignmentGridPosition(props.$alignment)}
-      grid-row: 1;
-      color: ${props => `rgba(
+const DesignHeader = styled.div<{
+  $headerTextColor: Color,
+  $headerBackgroundColor: Color,
+  $alignment: Alignment,
+  $headerSize: string,
+  $subHeader: string
+}>`
+    ${props => alignmentGridPosition(props.$alignment)}
+    grid-row: 1;
+    min-height: 1em;
+    color: ${props => `rgba(
         ${props.$headerTextColor.r}, 
         ${props.$headerTextColor.g},
         ${props.$headerTextColor.b}, 
         ${props.$headerTextColor.a})`};
-      background: ${props => `rgba(
+    background: ${props => `rgba(
         ${props.$headerBackgroundColor.r}, 
         ${props.$headerBackgroundColor.g},
         ${props.$headerBackgroundColor.b}, 
         ${props.$headerBackgroundColor.a})`};
-      padding: 8px;
-      border-radius: 4px;
-
-      h1 {
-          font-size: 24px;
-      }
-  `
+    padding: 8px;
+    border-radius: 4px;
+    font-size: ${props => props.$subHeader};
+    
+    h1 {
+        display: block;
+        min-height: 1em;
+        font-size: ${props => props.$headerSize};
+    }
+`
 
 const DateWrapper = styled.ul<{ $alignment: Alignment }>`
     ${props => alignmentGridPosition(props.$alignment)}
@@ -88,18 +102,24 @@ const DateWrapper = styled.ul<{ $alignment: Alignment }>`
     gap: 16px;
 `
 
-const DateItem = styled.li`
+const DateItem = styled.li<{ $backgroundColor: Color, $textColor: Color }>`
     width: 100%;
     display: flex;
     gap: 16px;
-
     border-radius: 4px;
-
     height: 65px;
-    background: white;
-
+    color: ${props => `rgba(
+        ${props.$textColor.r}, 
+        ${props.$textColor.g},
+        ${props.$textColor.b}, 
+        ${props.$textColor.a})`};
+    background: ${props => `rgba(
+        ${props.$backgroundColor.r}, 
+        ${props.$backgroundColor.g},
+        ${props.$backgroundColor.b}, 
+        ${props.$backgroundColor.a})`};
 `
-const DayName = styled.div`
+const DayName = styled.div<{ $backgroundColor: Color, $textColor: Color }>`
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -107,8 +127,18 @@ const DayName = styled.div`
     justify-content: center;
     align-items: center;
     font-size: 24px;
-    background: #82a7ec;
+    background: ${props => props.$backgroundColor};
     border-radius: 4px 0 0 4px;
+    color: ${props => `rgba(
+        ${props.$textColor.r}, 
+        ${props.$textColor.g},
+        ${props.$textColor.b}, 
+        ${props.$textColor.a})`};
+    background: ${props => `rgba(
+        ${props.$backgroundColor.r}, 
+        ${props.$backgroundColor.g},
+        ${props.$backgroundColor.b}, 
+        ${props.$backgroundColor.a})`};
 
     span:last-of-type {
         font-size: 18px;
@@ -122,7 +152,6 @@ const DayDetailsWrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-
 `
 const DayDescription = styled.div`
     font-size: 20px;
@@ -247,8 +276,14 @@ type DesignDisplayProps = {
   setHeaderColor: ColorFn
   setHeaderBackgroundColor: ColorFn
   setHeaderAlignment: AlignmentFn
+  setHeaderSize: (size: number) => void
+  setSubHeaderSize: (size: number) => void
   dateDesign: DateDesign
   setDateAlignment: AlignmentFn
+  setDateDescriptionColor: ColorFn
+  setDateDescriptionTextColor: ColorFn
+  setDateDayColor: ColorFn
+  setDateDayTextColor: ColorFn
   socials: Socials[]
   addSocials: (index: number, socials: Socials) => void
   removeSocials: (index: number) => void
@@ -269,6 +304,8 @@ const DesignDisplay: React.FC<DesignDisplayProps> =
      setHeaderColor,
      setHeaderBackgroundColor,
      setHeaderAlignment,
+     setHeaderSize,
+     setSubHeaderSize,
      dateDesign,
      setDateAlignment,
      socials,
@@ -279,7 +316,11 @@ const DesignDisplay: React.FC<DesignDisplayProps> =
      backgroundDesign,
      setBackgroundColor,
      setBackgroundSize,
-     setBackgroundPosition
+     setBackgroundPosition,
+     setDateDescriptionColor,
+     setDateDescriptionTextColor,
+     setDateDayColor,
+     setDateDayTextColor
    }) => {
     const divRef = useRef<HTMLDivElement>(null)
     const [backgroundImage, setBackgroundImage] = useState('')
@@ -316,8 +357,14 @@ const DesignDisplay: React.FC<DesignDisplayProps> =
         setHeaderColor={setHeaderColor}
         setHeaderBackgroundColor={setHeaderBackgroundColor}
         setHeaderAlignment={setHeaderAlignment}
+        setHeaderSize={setHeaderSize}
+        setSubHeaderSize={setSubHeaderSize}
         dateDesign={dateDesign}
         setDateAlignment={setDateAlignment}
+        setDateDescriptionColor={setDateDescriptionColor}
+        setDateDescriptionTextColor={setDateDescriptionTextColor}
+        setDateDayColor={setDateDayColor}
+        setDateDayTextColor={setDateDayTextColor}
         socialsDesign={socialsDesign}
         setSocialsAlignment={setSocialsAlignment}
         backgroundDesign={backgroundDesign}
@@ -336,6 +383,8 @@ const DesignDisplay: React.FC<DesignDisplayProps> =
           $alignment={headerDesign.headerAlignment}
           $headerTextColor={headerDesign.headerTextColor}
           $headerBackgroundColor={headerDesign.headerBackgroundColor}
+          $headerSize={headerDesign.headerTextSize + 'px'}
+          $subHeader={headerDesign.subHeaderTextSize + 'px'}
         >
           <h1>{headerDesign.headerText}</h1>
           <div>{getWeekDurationString(templates)}</div>
@@ -359,8 +408,15 @@ const DesignDisplay: React.FC<DesignDisplayProps> =
                 ? `${time} GMT${localTimeZone >= 0 ? '+' : ''}${localTimeZone}`
                 : undefined
 
-              return <DateItem key={day + index}>
-                <DayName>
+              return <DateItem
+                key={day + index}
+                $textColor={dateDesign.dateDescriptionTextColor}
+                $backgroundColor={dateDesign.dateDescriptionColor}
+              >
+                <DayName
+                  $textColor={dateDesign.dateDayTextColor}
+                  $backgroundColor={dateDesign.dateDayColor}
+                >
                   <span>{day}</span>
                   <span>{dayDate}</span>
                 </DayName>

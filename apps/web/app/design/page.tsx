@@ -2,7 +2,7 @@
 
 
 import React from "react";
-import useScheduleStore, {Alignment} from "../../state/schedule";
+import useScheduleStore, {Alignment, ColorFn} from "../../state/schedule";
 import DesignDisplay from "@repo/ui/DesignDisplay";
 
 const Page: React.FC = ({}) => {
@@ -14,6 +14,8 @@ const Page: React.FC = ({}) => {
     setHeaderColor,
     setHeaderBackgroundColor,
     setHeaderAlignment,
+    setHeaderSize,
+    setSubHeaderSize,
     dateDesign,
     setDateAlignment,
     socials,
@@ -24,7 +26,11 @@ const Page: React.FC = ({}) => {
     backgroundDesign,
     setBackgroundColor,
     setBackgroundSize,
-    setBackgroundPosition
+    setBackgroundPosition,
+    setDateDescriptionColor,
+    setDateDescriptionTextColor,
+    setDateDayColor,
+    setDateDayTextColor
   } = useScheduleStore()
 
   return <DesignDisplay
@@ -40,12 +46,18 @@ const Page: React.FC = ({}) => {
     setHeaderColor={setHeaderColor}
     setHeaderBackgroundColor={setHeaderBackgroundColor}
     setHeaderAlignment={setHeaderAlignment}
+    setHeaderSize={setHeaderSize}
+    setSubHeaderSize={setSubHeaderSize}
     dateDesign={dateDesign}
     setDateAlignment={setDateAlignment}
     backgroundDesign={backgroundDesign}
     setBackgroundColor={setBackgroundColor}
     setBackgroundSize={setBackgroundSize}
     setBackgroundPosition={setBackgroundPosition}
+    setDateDescriptionColor={setDateDescriptionColor}
+    setDateDescriptionTextColor={setDateDescriptionTextColor}
+    setDateDayColor={setDateDayColor}
+    setDateDayTextColor={setDateDayTextColor}
   />
 }
 
