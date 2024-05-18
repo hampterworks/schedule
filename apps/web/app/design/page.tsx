@@ -2,8 +2,12 @@
 
 
 import React from "react";
-import useScheduleStore, {Alignment, ColorFn} from "../../state/schedule";
+import useScheduleStore from "../../state/schedule";
 import DesignDisplay from "@repo/ui/DesignDisplay";
+import HeaderController from "@repo/ui/HeaderController";
+import DateController from "@repo/ui/DateController";
+import SocialsController from "@repo/ui/SocialsController";
+import BackgroundController from "@repo/ui/BackgroundController";
 
 const Page: React.FC = ({}) => {
   const {
@@ -33,32 +37,47 @@ const Page: React.FC = ({}) => {
     setDateDayTextColor
   } = useScheduleStore()
 
-  return <DesignDisplay
-    templates={templates}
-    timeZones={timeZones}
-    headerDesign={headerDesign}
-    socials={socials}
-    addSocials={addSocials}
-    removeSocials={removeSocials}
-    socialsDesign={socialsDesign}
-    setSocialsAlignment={setSocialsAlignment}
-    setMainHeader={setMainHeader}
-    setHeaderColor={setHeaderColor}
-    setHeaderBackgroundColor={setHeaderBackgroundColor}
-    setHeaderAlignment={setHeaderAlignment}
-    setHeaderSize={setHeaderSize}
-    setSubHeaderSize={setSubHeaderSize}
-    dateDesign={dateDesign}
-    setDateAlignment={setDateAlignment}
-    backgroundDesign={backgroundDesign}
-    setBackgroundColor={setBackgroundColor}
-    setBackgroundSize={setBackgroundSize}
-    setBackgroundPosition={setBackgroundPosition}
-    setDateDescriptionColor={setDateDescriptionColor}
-    setDateDescriptionTextColor={setDateDescriptionTextColor}
-    setDateDayColor={setDateDayColor}
-    setDateDayTextColor={setDateDayTextColor}
-  />
+  return <main className='main'>
+    <HeaderController
+      headerDesign={headerDesign}
+      setMainHeader={setMainHeader}
+      setHeaderColor={setHeaderColor}
+      setHeaderBackgroundColor={setHeaderBackgroundColor}
+      setHeaderAlignment={setHeaderAlignment}
+      setHeaderSize={setHeaderSize}
+      setSubHeaderSize={setSubHeaderSize}
+    />
+    <DateController
+      dateDesign={dateDesign}
+      setDateAlignment={setDateAlignment}
+      setDateDescriptionColor={setDateDescriptionColor}
+      setDateDescriptionTextColor={setDateDescriptionTextColor}
+      setDateDayColor={setDateDayColor}
+      setDateDayTextColor={setDateDayTextColor}
+    />
+    <SocialsController
+      socials={socials}
+      addSocials={addSocials}
+      removeSocials={removeSocials}
+      socialsDesign={socialsDesign}
+      setSocialsAlignment={setSocialsAlignment}
+    />
+    <BackgroundController
+      backgroundDesign={backgroundDesign}
+      setBackgroundColor={setBackgroundColor}
+      setBackgroundSize={setBackgroundSize}
+      setBackgroundPosition={setBackgroundPosition}
+    />
+    <DesignDisplay
+      templates={templates}
+      timeZones={timeZones}
+      headerDesign={headerDesign}
+      socials={socials}
+      socialsDesign={socialsDesign}
+      dateDesign={dateDesign}
+      backgroundDesign={backgroundDesign}
+    />
+  </main>
 }
 
 export default Page

@@ -272,27 +272,10 @@ type DesignDisplayProps = {
   templates: Template[]
   timeZones: string[]
   headerDesign: HeaderDesign
-  setMainHeader: (newHeader: string) => void
-  setHeaderColor: ColorFn
-  setHeaderBackgroundColor: ColorFn
-  setHeaderAlignment: AlignmentFn
-  setHeaderSize: (size: number) => void
-  setSubHeaderSize: (size: number) => void
   dateDesign: DateDesign
-  setDateAlignment: AlignmentFn
-  setDateDescriptionColor: ColorFn
-  setDateDescriptionTextColor: ColorFn
-  setDateDayColor: ColorFn
-  setDateDayTextColor: ColorFn
   socials: Socials[]
-  addSocials: (index: number, socials: Socials) => void
-  removeSocials: (index: number) => void
   socialsDesign: SocialsDesign
-  setSocialsAlignment: AlignmentFn
   backgroundDesign: BackgroundDesign
-  setBackgroundColor: ColorFn
-  setBackgroundSize: (backgroundSize: BackgroundSize) => void
-  setBackgroundPosition: (backgroundPosition: BackgroundPosition) => void
 }
 
 const DesignDisplay: React.FC<DesignDisplayProps> =
@@ -300,27 +283,10 @@ const DesignDisplay: React.FC<DesignDisplayProps> =
      timeZones,
      templates,
      headerDesign,
-     setMainHeader,
-     setHeaderColor,
-     setHeaderBackgroundColor,
-     setHeaderAlignment,
-     setHeaderSize,
-     setSubHeaderSize,
      dateDesign,
-     setDateAlignment,
      socials,
-     addSocials,
-     removeSocials,
      socialsDesign,
-     setSocialsAlignment,
      backgroundDesign,
-     setBackgroundColor,
-     setBackgroundSize,
-     setBackgroundPosition,
-     setDateDescriptionColor,
-     setDateDescriptionTextColor,
-     setDateDayColor,
-     setDateDayTextColor
    }) => {
     const divRef = useRef<HTMLDivElement>(null)
     const [backgroundImage, setBackgroundImage] = useState('')
@@ -348,30 +314,6 @@ const DesignDisplay: React.FC<DesignDisplayProps> =
       }
     }
     return <div>
-      <HeaderDesigner
-        socials={socials}
-        addSocials={addSocials}
-        removeSocials={removeSocials}
-        headerDesign={headerDesign}
-        setMainHeader={setMainHeader}
-        setHeaderColor={setHeaderColor}
-        setHeaderBackgroundColor={setHeaderBackgroundColor}
-        setHeaderAlignment={setHeaderAlignment}
-        setHeaderSize={setHeaderSize}
-        setSubHeaderSize={setSubHeaderSize}
-        dateDesign={dateDesign}
-        setDateAlignment={setDateAlignment}
-        setDateDescriptionColor={setDateDescriptionColor}
-        setDateDescriptionTextColor={setDateDescriptionTextColor}
-        setDateDayColor={setDateDayColor}
-        setDateDayTextColor={setDateDayTextColor}
-        socialsDesign={socialsDesign}
-        setSocialsAlignment={setSocialsAlignment}
-        backgroundDesign={backgroundDesign}
-        setBackgroundColor={setBackgroundColor}
-        setBackgroundSize={setBackgroundSize}
-        setBackgroundPosition={setBackgroundPosition}
-      />
       <DesignResults
         background={backgroundImage}
         $backgroundPosition={backgroundDesign.backgroundPosition}

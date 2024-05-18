@@ -12,11 +12,14 @@
     "./ResultSection": "./src/ResultSection.tsx",
     "./ButtonElement": "./src/ButtonElement.tsx",
     "./DesignDisplay": "./src/DesignDisplay.tsx",
-    "./HeaderDesigner": "./src/HeaderDesigner.tsx",
     "./CollapsibleSection": "./src/CollapsibleSection.tsx",
     "./ColorPicker": "./src/ColorPicker.tsx",
     "./AlignmentPicker": "./src/AlignmentPicker.tsx",
-    "./PositionSelector": "./src/PositionSelector.tsx"
+    "./PositionSelector": "./src/PositionSelector.tsx",
+    "./HeaderController": "./src/HeaderController.tsx",
+    "./DateController": "./src/DateController.tsx",
+    "./SocialsController": "./src/SocialsController.tsx",
+    "./BackgroundController": "./src/BackgroundController.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",

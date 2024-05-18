@@ -29,7 +29,7 @@ const Page: React.FC = () => {
   } = useScheduleStore();
   const timeZoneList = Intl.supportedValuesOf('timeZone')
 
-  return <main className={styles.main}>
+  return <main className='main'>
     <div className={styles.controlWrapper}>
       <div className={styles.controlItem}>
         <h2>Starting date:</h2>

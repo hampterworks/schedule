@@ -103,3 +103,9 @@ body {
   height: 100%;
   width: 100%;
 }
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 32px;
+}
