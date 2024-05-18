@@ -82,14 +82,14 @@ const AlignRightIcon: React.FC = () => {
 
 type AlignmentPickerProps = {
   alignment: Alignment
-  setHeaderAlignment: (alignment: Alignment) => void
+  setAlignment: (alignment: Alignment) => void
 } & React.ComponentPropsWithoutRef<'div'>
 
-const AlignmentPicker: React.FC<AlignmentPickerProps> = ({alignment, setHeaderAlignment, ...props}) => {
+const AlignmentPicker: React.FC<AlignmentPickerProps> = ({alignment, setAlignment, ...props}) => {
   const [selectedAlignment, setSelectedAlignment] = useState(alignment)
 
   useEffect(() => {
-    setHeaderAlignment(selectedAlignment)
+    setAlignment(selectedAlignment)
   }, [selectedAlignment])
 
   return <div {...props}>
@@ -111,6 +111,7 @@ const AlignmentPicker: React.FC<AlignmentPickerProps> = ({alignment, setHeaderAl
     >
       <AlignRightIcon/>
     </AlignmentButton>
+
   </div>
 }
 export default AlignmentPicker

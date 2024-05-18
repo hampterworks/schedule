@@ -27,7 +27,7 @@ const DateController: React.FC<DateControllerProps> = ({
   return <CollapsibleSection title='Date' {...props}>
     <AlignmentPicker
       alignment={dateDesign.dateAlignment}
-      setHeaderAlignment={setDateAlignment}
+      setAlignment={setDateAlignment}
     />
     <ColorPicker
       title='Description Background Color'

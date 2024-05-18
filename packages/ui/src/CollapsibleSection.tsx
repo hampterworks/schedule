@@ -6,12 +6,7 @@ import {css} from "@emotion/react";
 import {useState} from "react";
 
 const CollapsibleSectionWrapper = styled.section`
-    border-bottom: 1px solid #e8e8e8;
-    padding-bottom: 16px;
     border-radius: 4px;
-    & > :nth-of-type(2) {
-        margin-top: 16px;
-    }
 `
 const SectionTopBar = styled.div`
     display: flex;

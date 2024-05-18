@@ -3,12 +3,15 @@
 import React, {useRef, useState} from "react";
 import {
   Alignment,
-  AlignmentFn, BackgroundDesign, BackgroundPosition, BackgroundSize,
-  Color, ColorFn,
+  BackgroundDesign,
+  BackgroundPosition,
+  BackgroundSize,
+  Color,
   DateDesign,
   HeaderDesign,
   SocialNetworks,
-  Socials, SocialsDesign,
+  Socials,
+  SocialsDesign,
   Template
 } from "web/state/schedule";
 import {DateTime} from "luxon";
@@ -16,7 +19,6 @@ import styled from "@emotion/styled";
 import html2canvas from 'html2canvas';
 import ButtonElement from "./ButtonElement";
 import {macFontList, winFontList} from "web/data/fonts";
-import HeaderDesigner from "./HeaderDesigner";
 import {css} from "@emotion/react";
 
 const DesignResults = styled.div<{
@@ -221,12 +223,6 @@ const formatTimeZones = (date: DateTime, time: string, timeZones: string[]): str
   return calculatedTimezones
 }
 
-const getAvailableFonts = (): string[] => {
-  const fontList = [...new Set([...winFontList, ...macFontList])]
-
-  return fontList.filter(font => document.fonts.check(`12px "${font}"`))
-}
-
 const getWeekDurationString = (templates: Template[]): string => {
   const firstDay = (typeof templates[0]?.date === 'string')
     ? DateTime.fromISO(templates[0].date).toFormat('d/L')
@@ -292,8 +288,6 @@ const DesignDisplay: React.FC<DesignDisplayProps> =
     const [backgroundImage, setBackgroundImage] = useState('')
     const [screenshotDataUrl, setScreenshotDataUrl] = useState<string | null>(null)
     const localTimeZone = DateTime.local().offset / 60
-
-    const fonts = getAvailableFonts()
 
     const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files && event.target.files[0]

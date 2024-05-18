@@ -35,7 +35,7 @@ const SocialsController: React.FC<SocialsControllerProps> = ({
   return <CollapsibleSection title='Socials' {...props}>
     <AlignmentPicker
       alignment={socialsDesign.socialsAlignment}
-      setHeaderAlignment={setSocialsAlignment}
+      setAlignment={setSocialsAlignment}
     />
     <div>
       {

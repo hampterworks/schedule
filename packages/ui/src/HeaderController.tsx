@@ -47,7 +47,7 @@ const HeaderController: React.FC<HeaderControllerProps> = ({
     />
     <AlignmentPicker
       alignment={headerDesign.headerAlignment}
-      setHeaderAlignment={setHeaderAlignment}
+      setAlignment={setHeaderAlignment}
     />
     <Slider
       value={headerDesign.headerTextSize}
