@@ -15,11 +15,14 @@ const Page: React.FC = ({}) => {
     timeZones,
     headerDesign,
     setMainHeader,
+    setMainHeaderFont,
     setHeaderColor,
     setHeaderBackgroundColor,
     setHeaderAlignment,
     setHeaderSize,
+    setSubHeaderFont,
     setSubHeaderSize,
+    setSubHeaderColor,
     dateDesign,
     setDateAlignment,
     socials,
@@ -41,11 +44,14 @@ const Page: React.FC = ({}) => {
     <HeaderController
       headerDesign={headerDesign}
       setMainHeader={setMainHeader}
+      setMainHeaderFont={setMainHeaderFont}
       setHeaderColor={setHeaderColor}
       setHeaderBackgroundColor={setHeaderBackgroundColor}
       setHeaderAlignment={setHeaderAlignment}
       setHeaderSize={setHeaderSize}
+      setSubHeaderFont={setSubHeaderFont}
       setSubHeaderSize={setSubHeaderSize}
+      setSubHeaderColor={setSubHeaderColor}
     />
     <DateController
       dateDesign={dateDesign}

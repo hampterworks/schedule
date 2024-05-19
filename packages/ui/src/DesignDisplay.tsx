@@ -18,7 +18,6 @@ import {DateTime} from "luxon";
 import styled from "@emotion/styled";
 import html2canvas from 'html2canvas';
 import ButtonElement from "./ButtonElement";
-import {macFontList, winFontList} from "web/data/fonts";
 import {css} from "@emotion/react";
 
 const DesignResults = styled.div<{
@@ -66,33 +65,45 @@ const alignmentGridPosition = (alignment: Alignment) => {
 }
 
 const DesignHeader = styled.div<{
+  $headerWeight: number,
   $headerTextColor: Color,
   $headerBackgroundColor: Color,
   $alignment: Alignment,
   $headerSize: string,
-  $subHeader: string
+  $subHeaderWeight: number,
+  $subHeaderSize: string,
+  $subHeaderTextColor: Color
 }>`
     ${props => alignmentGridPosition(props.$alignment)}
     grid-row: 1;
     min-height: 1em;
-    color: ${props => `rgba(
-        ${props.$headerTextColor.r}, 
-        ${props.$headerTextColor.g},
-        ${props.$headerTextColor.b}, 
-        ${props.$headerTextColor.a})`};
     background: ${props => `rgba(
         ${props.$headerBackgroundColor.r}, 
         ${props.$headerBackgroundColor.g},
         ${props.$headerBackgroundColor.b}, 
         ${props.$headerBackgroundColor.a})`};
-    padding: 8px;
+    padding: 16px 8px;
     border-radius: 4px;
-    font-size: ${props => props.$subHeader};
+    font-size: ${props => props.$subHeaderSize};
     
     h1 {
+        font-weight: ${props => props.$headerWeight};
         display: block;
         min-height: 1em;
         font-size: ${props => props.$headerSize};
+        color: ${props => `rgba(
+        ${props.$headerTextColor.r}, 
+        ${props.$headerTextColor.g},
+        ${props.$headerTextColor.b}, 
+        ${props.$headerTextColor.a})`};
+    }
+    div {
+        font-weight: ${props => props.$subHeaderWeight};
+        color: ${props => `rgba(
+        ${props.$subHeaderTextColor.r}, 
+        ${props.$subHeaderTextColor.g},
+        ${props.$subHeaderTextColor.b}, 
+        ${props.$subHeaderTextColor.a})`};
     }
 `
 
@@ -316,14 +327,17 @@ const DesignDisplay: React.FC<DesignDisplayProps> =
         ref={divRef}
       >
         <DesignHeader
+          $headerWeight={parseInt(headerDesign.headerFont.weight)}
           $alignment={headerDesign.headerAlignment}
           $headerTextColor={headerDesign.headerTextColor}
           $headerBackgroundColor={headerDesign.headerBackgroundColor}
           $headerSize={headerDesign.headerTextSize + 'px'}
-          $subHeader={headerDesign.subHeaderTextSize + 'px'}
+          $subHeaderWeight={parseInt(headerDesign.subHeaderFont.weight)}
+          $subHeaderSize={headerDesign.subHeaderTextSize + 'px'}
+          $subHeaderTextColor={headerDesign.subHeaderTextColor}
         >
-          <h1>{headerDesign.headerText}</h1>
-          <div>{getWeekDurationString(templates)}</div>
+          <h1 className={headerDesign.headerFont.className}>{headerDesign.headerText}</h1>
+          <div className={headerDesign.subHeaderFont.className}>{getWeekDurationString(templates)}</div>
         </DesignHeader>
         <DateWrapper $alignment={dateDesign.dateAlignment}>
           {

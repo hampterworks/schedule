@@ -6,26 +6,34 @@ import InputElement from "./InputElement";
 import ColorPicker from "./ColorPicker";
 import AlignmentPicker from "./AlignmentPicker";
 import {Slider} from "@mui/material";
-import {AlignmentFn, ColorFn, HeaderDesign} from "web/state/schedule";
+import {AlignmentFn, ColorFn, Font, HeaderDesign} from "web/state/schedule";
+import FontSelect from "./FontSelect";
 
 type HeaderControllerProps = {
   headerDesign: HeaderDesign
   setMainHeader: (newHeader: string) => void
+  setMainHeaderFont: (font: Font) => void
   setHeaderColor: ColorFn
   setHeaderBackgroundColor: ColorFn
   setHeaderAlignment: AlignmentFn
   setHeaderSize: (size: number) => void
+  setSubHeaderFont: (font: Font) => void
   setSubHeaderSize: (size: number) => void
+  setSubHeaderColor: ColorFn
 } & React.ComponentPropsWithoutRef<'section'>
 
 const HeaderController: React.FC<HeaderControllerProps> = ({
                                                              headerDesign,
                                                              setMainHeader,
+                                                             setMainHeaderFont,
                                                              setHeaderColor,
                                                              setHeaderBackgroundColor,
                                                              setHeaderAlignment,
                                                              setHeaderSize,
-                                                             setSubHeaderSize, ...props
+                                                             setSubHeaderFont,
+                                                             setSubHeaderSize,
+                                                             setSubHeaderColor,
+                                                             ...props
                                                            }) => {
   return <CollapsibleSection title='Header' {...props}>
     <InputElement
@@ -35,8 +43,9 @@ const HeaderController: React.FC<HeaderControllerProps> = ({
       onInput={inputText =>
         setMainHeader(inputText ?? '')}
     />
+    <FontSelect font={headerDesign.headerFont} setFont={setMainHeaderFont}/>
     <ColorPicker
-      title='Text Color'
+      title='Header Text Color'
       headerTextColor={headerDesign.headerTextColor}
       setColor={setHeaderColor}
     />
@@ -44,6 +53,12 @@ const HeaderController: React.FC<HeaderControllerProps> = ({
       title='Background Color'
       headerTextColor={headerDesign.headerBackgroundColor}
       setColor={setHeaderBackgroundColor}
+    />
+    <FontSelect font={headerDesign.subHeaderFont} setFont={setSubHeaderFont}/>
+    <ColorPicker
+      title='Sub-Header Color'
+      headerTextColor={headerDesign.subHeaderTextColor}
+      setColor={setSubHeaderColor}
     />
     <AlignmentPicker
       alignment={headerDesign.headerAlignment}

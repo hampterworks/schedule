@@ -4,6 +4,8 @@ import {devtools, persist} from 'zustand/middleware'
 import {DateTime} from "luxon";
 import type {} from '@redux-devtools/extension'
 import {createStore} from "zustand/vanilla";
+import {roboto} from "../fonts/googlefonts";
+import {NextFont} from "next/dist/compiled/@next/font";
 
 export type Template = {
   date: DateTime | string,
@@ -23,13 +25,22 @@ export type Alignment = 'left' | 'center' | 'right'
 export type AlignmentFn = (alignment: Alignment) => void
 export type ColorFn = (color: Color) => void
 
+export type Font = {
+  key: string
+  weight: string
+  className: string
+}
+
 export type HeaderDesign = {
   headerText: string
+  headerFont: Font
   headerTextColor: Color
   headerBackgroundColor: Color
   headerAlignment: Alignment
   headerTextSize: number
+  subHeaderFont: Font
   subHeaderTextSize: number
+  subHeaderTextColor: Color
 }
 
 export type DateDesign = {
@@ -85,14 +96,17 @@ export type ScheduleStateReducers = {
 
 export type DesignStateReducers = {
   setMainHeader: (mainHeader: string) => void,
+  setMainHeaderFont: (font: Font) => void,
   addSocials: (index: number, socials: Socials) => void,
   removeSocials: (index: number) => void,
   setSocialsAlignment: AlignmentFn,
   setHeaderColor: ColorFn,
   setHeaderBackgroundColor: ColorFn,
   setHeaderAlignment: AlignmentFn,
-  setHeaderSize: (size: number) => void
-  setSubHeaderSize: (size: number) => void
+  setHeaderSize: (size: number) => void,
+  setSubHeaderFont: (font: Font) => void,
+  setSubHeaderSize: (size: number) => void,
+  setSubHeaderColor: ColorFn,
   setDateAlignment: AlignmentFn,
   setDateDescriptionColor: ColorFn,
   setDateDescriptionTextColor: ColorFn,
@@ -110,11 +124,22 @@ let initialState: ScheduleState = {
   templates: [{date: DateTime.local()}],
   headerDesign: {
     headerText: 'Edit header',
+    headerFont: {
+      className: '',
+      key: 'none',
+      weight: '400'
+    },
     headerTextColor: { r: 0, g: 0, b: 0, a: 1 },
     headerBackgroundColor: { r: 0, g: 0, b: 0, a: 0 },
     headerAlignment: 'right',
     headerTextSize: 24,
-    subHeaderTextSize: 16
+    subHeaderFont: {
+      className: '',
+      key: 'none',
+      weight: '400'
+    },
+    subHeaderTextSize: 16,
+    subHeaderTextColor: { r: 0, g: 0, b: 0, a: 1 },
   },
   dateDesign: {
     dateAlignment: 'right',
@@ -196,6 +221,13 @@ let reducers: StateCreator<ScheduleStateReducers & DesignStateReducers & Schedul
           headerText: mainHeader
         }
       })),
+    setMainHeaderFont: (font: Font) => set((state) =>
+      ({
+        headerDesign: {
+          ...state.headerDesign,
+          headerFont: font
+        }
+      })),
     setHeaderSize: (size: number) => set((state) =>
       ({
         headerDesign: {
@@ -203,11 +235,25 @@ let reducers: StateCreator<ScheduleStateReducers & DesignStateReducers & Schedul
           headerTextSize: size
         }
       })),
+    setSubHeaderFont: (font: Font) => set((state) =>
+      ({
+        headerDesign: {
+          ...state.headerDesign,
+          subHeaderFont: font
+        }
+      })),
     setSubHeaderSize: (size: number) => set((state) =>
       ({
         headerDesign: {
           ...state.headerDesign,
           subHeaderTextSize: size
+        }
+      })),
+    setSubHeaderColor: (color: Color) => set((state) =>
+      ({
+        headerDesign: {
+          ...state.headerDesign,
+          subHeaderTextColor: color
         }
       })),
     addSocials: (index: number, socials: Socials) => set((state) => {

@@ -19,7 +19,8 @@
     "./HeaderController": "./src/HeaderController.tsx",
     "./DateController": "./src/DateController.tsx",
     "./SocialsController": "./src/SocialsController.tsx",
-    "./BackgroundController": "./src/BackgroundController.tsx"
+    "./BackgroundController": "./src/BackgroundController.tsx",
+    "./FontSelector": "./src/FontSelector.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
