@@ -209,6 +209,7 @@ const formatTimeWithOptionalMinutes = (time?: string): string => {
 
 const formatTimeZones = (date: DateTime, time: string, timeZones: string[]): string[] => {
   const calculatedTimezones = timeZones.map(timezone => {
+
     const splitTime = time.split(':')
 
     const updatedDate = date.set({
@@ -223,12 +224,12 @@ const formatTimeZones = (date: DateTime, time: string, timeZones: string[]): str
     const gmtOffset = dateOffset.offset / 60
 
     if (date.day < dateOffset.day) {
-      return `${timeString}+1 GMT${gmtOffset > 0 ? '+' : ''}${gmtOffset > 0 ? gmtOffset : ''}`
+      return `${timeString}+1 GMT${gmtOffset > 0 ? '+' : ''}${gmtOffset !== 0 ? gmtOffset : ''}`
     } else if (date.day > dateOffset.day) {
-      return `${timeString}-1 GMT${gmtOffset > 0 ? '+' : ''}${gmtOffset > 0 ? gmtOffset : ''}`
+      return `${timeString}-1 GMT${gmtOffset > 0 ? '+' : ''}${gmtOffset !== 0 ? gmtOffset : ''}`
     }
 
-    return `${timeString} GMT${gmtOffset > 0 ? '+' : ''}${gmtOffset > 0 ? gmtOffset : ''}`
+    return `${timeString} GMT${gmtOffset > 0 ? '+' : ''}${gmtOffset !== 0 ? gmtOffset : ''}`
   })
 
   return calculatedTimezones
