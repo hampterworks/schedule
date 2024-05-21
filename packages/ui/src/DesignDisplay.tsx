@@ -120,7 +120,7 @@ const DateItem = styled.li<{ $backgroundColor: Color, $textColor: Color }>`
     display: flex;
     gap: 16px;
     border-radius: 4px;
-    height: 65px;
+    min-height: 65px;
     color: ${props => `rgba(
         ${props.$textColor.r}, 
         ${props.$textColor.g},
@@ -161,13 +161,14 @@ const DayDetailsWrapper = styled.div`
     width: 100%;
     display: flex;
     padding: 16px;
-    gap: 4px;
+    gap: 8px;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
 `
 const DayDescription = styled.div`
-    font-size: 20px;
+    font-size: 18px;
+    font-weight: bold;
 `
 const TimesWrapper = styled.div`
     justify-self: flex-end;
