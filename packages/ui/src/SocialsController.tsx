@@ -22,6 +22,8 @@ type SocialsControllerProps = {
   removeSocials: (index: number) => void
   socialsDesign: SocialsDesign
   setSocialsAlignment: AlignmentFn
+  creditsTag?: string
+  setCreditsTag: (creditsTag: string) => void
 } & React.ComponentPropsWithoutRef<'section'>
 
 const SocialsController: React.FC<SocialsControllerProps> = ({
@@ -30,14 +32,24 @@ const SocialsController: React.FC<SocialsControllerProps> = ({
                                                                removeSocials,
                                                                socialsDesign,
                                                                setSocialsAlignment,
+                                                               creditsTag,
+                                                               setCreditsTag,
                                                                ...props
                                                              }) => {
-  return <CollapsibleSection title='Socials' {...props}>
+  return <CollapsibleSection title='Socials and credits' {...props}>
     <AlignmentPicker
       alignment={socialsDesign.socialsAlignment}
       setAlignment={setSocialsAlignment}
     />
     <div>
+      <InputElement
+        label='Credits'
+        type='text'
+        value={creditsTag}
+        onInput={inputText => {
+          setCreditsTag(inputText ?? '')
+        }}
+      />
       {
         socials.map((item, index) => <SocialsToolbar key={item.network + index}>
           <TextField

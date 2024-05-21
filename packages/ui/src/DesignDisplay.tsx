@@ -85,7 +85,7 @@ const DesignHeader = styled.div<{
     padding: 16px 8px;
     border-radius: 4px;
     font-size: ${props => props.$subHeaderSize};
-    
+
     h1 {
         font-weight: ${props => props.$headerWeight};
         display: block;
@@ -97,6 +97,7 @@ const DesignHeader = styled.div<{
         ${props.$headerTextColor.b}, 
         ${props.$headerTextColor.a})`};
     }
+
     div {
         font-weight: ${props => props.$subHeaderWeight};
         color: ${props => `rgba(
@@ -173,6 +174,15 @@ const DayDescription = styled.div`
 const TimesWrapper = styled.div`
     justify-self: flex-end;
 `
+
+const tag = css`
+    gap: 8px;
+    padding: 16px;
+    background: white;
+    border-radius: 4px;
+    width: fit-content;
+`
+
 const SocialsWrapper = styled.ul<{ $alignment: Alignment }>`
     ${props => alignmentGridPosition(props.$alignment)}
     display: flex;
@@ -184,12 +194,30 @@ const SocialsWrapper = styled.ul<{ $alignment: Alignment }>`
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
-        padding: 16px;
-        background: white;
-        border-radius: 4px;
-        width: fit-content;
+        ${tag};
     }
+`
+
+const CreditsTag = styled.div<{ $alignment: Alignment }>`
+    ${tag};
+    ${props => {
+      switch (props.$alignment) {
+          case "center":
+          case "left":
+          default:
+              return css`
+                  grid-column: 3;
+                  justify-self: flex-end;
+              `
+          case "right":
+              return css`
+                  grid-column: 2;
+                  justify-self: flex-start;
+              `
+      }
+    }}
+    
+    grid-row: 3;
 `
 
 const formatTimeWithOptionalMinutes = (time?: string): string => {
@@ -285,131 +313,136 @@ type DesignDisplayProps = {
   socials: Socials[]
   socialsDesign: SocialsDesign
   backgroundDesign: BackgroundDesign
+  creditsTag?: string
 }
 
-const DesignDisplay: React.FC<DesignDisplayProps> =
-  ({
-     timeZones,
-     templates,
-     headerDesign,
-     dateDesign,
-     socials,
-     socialsDesign,
-     backgroundDesign,
-   }) => {
-    const divRef = useRef<HTMLDivElement>(null)
-    const [backgroundImage, setBackgroundImage] = useState('')
-    const [screenshotDataUrl, setScreenshotDataUrl] = useState<string | null>(null)
-    const localTimeZone = DateTime.local().offset / 60
+const DesignDisplay: React.FC<DesignDisplayProps> = (
+  {
+    timeZones,
+    templates,
+    headerDesign,
+    dateDesign,
+    socials,
+    socialsDesign,
+    backgroundDesign,
+    creditsTag
+  }) => {
+  const divRef = useRef<HTMLDivElement>(null)
+  const [backgroundImage, setBackgroundImage] = useState('')
+  const [screenshotDataUrl, setScreenshotDataUrl] = useState<string | null>(null)
+  const localTimeZone = DateTime.local().offset / 60
 
-    const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files && event.target.files[0]
-      if (file) {
-        const reader = new FileReader()
-        reader.onloadend = () => {
-          if (reader.result !== null)
-            setBackgroundImage(reader.result.toString())
-        }
-        reader.readAsDataURL(file)
+  const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        if (reader.result !== null)
+          setBackgroundImage(reader.result.toString())
       }
+      reader.readAsDataURL(file)
     }
-
-    const takeScreenshot = () => {
-      if (divRef.current) {
-        html2canvas(divRef.current).then(canvas =>
-          setScreenshotDataUrl(canvas.toDataURL('image/png')))
-      }
-    }
-    return <div>
-      <DesignResults
-        background={backgroundImage}
-        $backgroundPosition={backgroundDesign.backgroundPosition}
-        $backgroundColor={backgroundDesign.backgroundColor}
-        $backgroundSize={backgroundDesign.backgroundSize}
-        ref={divRef}
-      >
-        <DesignHeader
-          $headerWeight={parseInt(headerDesign.headerFont.weight)}
-          $alignment={headerDesign.headerAlignment}
-          $headerTextColor={headerDesign.headerTextColor}
-          $headerBackgroundColor={headerDesign.headerBackgroundColor}
-          $headerSize={headerDesign.headerTextSize + 'px'}
-          $subHeaderWeight={parseInt(headerDesign.subHeaderFont.weight)}
-          $subHeaderSize={headerDesign.subHeaderTextSize + 'px'}
-          $subHeaderTextColor={headerDesign.subHeaderTextColor}
-        >
-          <h1 className={headerDesign.headerFont.className}>{headerDesign.headerText}</h1>
-          <div className={headerDesign.subHeaderFont.className}>{getWeekDurationString(templates)}</div>
-        </DesignHeader>
-        <DateWrapper $alignment={dateDesign.dateAlignment}>
-          {
-            templates.map((template, index) => {
-              const date = (typeof template.date === 'string')
-                ? DateTime.fromISO(template.date)
-                : template.date
-
-              const day = date.toFormat('ccc')
-              const dayDate = date.toFormat('d/L')
-              const time = formatTimeWithOptionalMinutes(template.time)
-
-              const timeZoneList = template.time !== undefined
-                ? formatTimeZones(date, template.time, timeZones)
-                : []
-
-              const localTime = time
-                ? `${time} GMT${localTimeZone >= 0 ? '+' : ''}${localTimeZone}`
-                : undefined
-
-              return <DateItem
-                key={day + index}
-                $textColor={dateDesign.dateDescriptionTextColor}
-                $backgroundColor={dateDesign.dateDescriptionColor}
-              >
-                <DayName
-                  $textColor={dateDesign.dateDayTextColor}
-                  $backgroundColor={dateDesign.dateDayColor}
-                >
-                  <span>{day}</span>
-                  <span>{dayDate}</span>
-                </DayName>
-                <DayDetailsWrapper>
-                  <DayDescription>{template.description}</DayDescription>
-                  {
-                    localTime !== undefined &&
-                    <TimesWrapper>{`${localTime} ${timeZoneList.length !== 0 ? '/ ' : ''}${timeZoneList.join(" / ")}`}</TimesWrapper>
-                  }
-                </DayDetailsWrapper>
-              </DateItem>
-            })
-          }
-        </DateWrapper>
-        <SocialsWrapper $alignment={socialsDesign.socialsAlignment}>
-          {
-            socials.map((item, index) => {
-              if (item.network !== 'none' && item.tag !== undefined) {
-                return <li key={item.network + index}>
-                  {getSocialNetworkIcon(item.network)}
-                  <span>{item.tag}</span>
-                </li>
-              }
-            })
-          }
-        </SocialsWrapper>
-      </DesignResults>
-
-      <input
-        type='file'
-        accept='image/*'
-        onChange={handleUpload}
-      />
-      <ButtonElement onClick={takeScreenshot}>Take screenshot</ButtonElement>
-      {
-        screenshotDataUrl && <a href={screenshotDataUrl} download="screenshot.png">
-          <ButtonElement>Download screenshot</ButtonElement>
-        </a>
-      }
-    </div>
   }
+
+  const takeScreenshot = () => {
+    if (divRef.current) {
+      html2canvas(divRef.current).then(canvas =>
+        setScreenshotDataUrl(canvas.toDataURL('image/png')))
+    }
+  }
+  return <div>
+    <DesignResults
+      background={backgroundImage}
+      $backgroundPosition={backgroundDesign.backgroundPosition}
+      $backgroundColor={backgroundDesign.backgroundColor}
+      $backgroundSize={backgroundDesign.backgroundSize}
+      ref={divRef}
+    >
+      <DesignHeader
+        $headerWeight={parseInt(headerDesign.headerFont.weight)}
+        $alignment={headerDesign.headerAlignment}
+        $headerTextColor={headerDesign.headerTextColor}
+        $headerBackgroundColor={headerDesign.headerBackgroundColor}
+        $headerSize={headerDesign.headerTextSize + 'px'}
+        $subHeaderWeight={parseInt(headerDesign.subHeaderFont.weight)}
+        $subHeaderSize={headerDesign.subHeaderTextSize + 'px'}
+        $subHeaderTextColor={headerDesign.subHeaderTextColor}
+      >
+        <h1 className={headerDesign.headerFont.className}>{headerDesign.headerText}</h1>
+        <div className={headerDesign.subHeaderFont.className}>{getWeekDurationString(templates)}</div>
+      </DesignHeader>
+      <DateWrapper $alignment={dateDesign.dateAlignment}>
+        {
+          templates.map((template, index) => {
+            const date = (typeof template.date === 'string')
+              ? DateTime.fromISO(template.date)
+              : template.date
+
+            const day = date.toFormat('ccc')
+            const dayDate = date.toFormat('d/L')
+            const time = formatTimeWithOptionalMinutes(template.time)
+
+            const timeZoneList = template.time !== undefined
+              ? formatTimeZones(date, template.time, timeZones)
+              : []
+
+            const localTime = time
+              ? `${time} GMT${localTimeZone >= 0 ? '+' : ''}${localTimeZone}`
+              : undefined
+
+            return <DateItem
+              key={day + index}
+              $textColor={dateDesign.dateDescriptionTextColor}
+              $backgroundColor={dateDesign.dateDescriptionColor}
+            >
+              <DayName
+                $textColor={dateDesign.dateDayTextColor}
+                $backgroundColor={dateDesign.dateDayColor}
+              >
+                <span>{day}</span>
+                <span>{dayDate}</span>
+              </DayName>
+              <DayDetailsWrapper>
+                <DayDescription>{template.description}</DayDescription>
+                {
+                  localTime !== undefined &&
+                  <TimesWrapper>{`${localTime} ${timeZoneList.length !== 0 ? '/ ' : ''}${timeZoneList.join(" / ")}`}</TimesWrapper>
+                }
+              </DayDetailsWrapper>
+            </DateItem>
+          })
+        }
+      </DateWrapper>
+      <SocialsWrapper $alignment={socialsDesign.socialsAlignment}>
+        {
+          socials.map((item, index) => {
+            if (item.network !== 'none' && item.tag !== undefined) {
+              return <li key={item.network + index}>
+                {getSocialNetworkIcon(item.network)}
+                <span>{item.tag}</span>
+              </li>
+            }
+          })
+        }
+      </SocialsWrapper>
+      {
+        creditsTag !== undefined && creditsTag.length > 0 &&
+        <CreditsTag $alignment={socialsDesign.socialsAlignment}>{creditsTag}</CreditsTag>
+      }
+    </DesignResults>
+    <input
+      type='file'
+      accept='image/*'
+      onChange={handleUpload}
+    />
+    <ButtonElement onClick={takeScreenshot}>Take screenshot</ButtonElement>
+    {
+      screenshotDataUrl && <a href={screenshotDataUrl} download="screenshot.png">
+        <ButtonElement>Download screenshot</ButtonElement>
+      </a>
+    }
+  </div>
+}
 
 export default DesignDisplay
 

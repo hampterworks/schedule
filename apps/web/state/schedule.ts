@@ -81,6 +81,7 @@ export type ScheduleState = {
   socials: Socials[]
   socialsDesign: SocialsDesign
   backgroundDesign: BackgroundDesign
+  creditsTag?: string
 }
 
 export type ScheduleStateReducers = {
@@ -115,6 +116,7 @@ export type DesignStateReducers = {
   setBackgroundColor: ColorFn,
   setBackgroundSize: (backgroundSize: BackgroundSize) => void,
   setBackgroundPosition: (backgroundPosition: BackgroundPosition) => void,
+  setCreditsTag: (creditsTag: string) => void
 }
 
 let initialState: ScheduleState = {
@@ -350,6 +352,10 @@ let reducers: StateCreator<ScheduleStateReducers & DesignStateReducers & Schedul
           ...state.backgroundDesign,
           backgroundPosition: backgroundPosition
         }
+      })),
+    setCreditsTag: (creditsTag: string) => set((state) =>
+      ({
+        creditsTag: creditsTag
       })),
   })
 

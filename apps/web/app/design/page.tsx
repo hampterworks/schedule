@@ -37,7 +37,9 @@ const Page: React.FC = ({}) => {
     setDateDescriptionColor,
     setDateDescriptionTextColor,
     setDateDayColor,
-    setDateDayTextColor
+    setDateDayTextColor,
+    creditsTag,
+    setCreditsTag
   } = useScheduleStore()
 
   return <main className='main'>
@@ -67,6 +69,8 @@ const Page: React.FC = ({}) => {
       removeSocials={removeSocials}
       socialsDesign={socialsDesign}
       setSocialsAlignment={setSocialsAlignment}
+      creditsTag={creditsTag}
+      setCreditsTag={setCreditsTag}
     />
     <BackgroundController
       backgroundDesign={backgroundDesign}
@@ -82,6 +86,7 @@ const Page: React.FC = ({}) => {
       socialsDesign={socialsDesign}
       dateDesign={dateDesign}
       backgroundDesign={backgroundDesign}
+      creditsTag={creditsTag}
     />
   </main>
 }
