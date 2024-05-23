@@ -4,6 +4,8 @@ import {Inter} from "next/font/google";
 import HydrationZustand from "./HydrationZustand";
 import React from "react";
 import ApplicationFrame from "@repo/ui/ApplicationFrame";
+import Header from "@repo/ui/Header";
+import Link from "next/link";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -17,6 +19,7 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = ({children}) => {
   <body className={inter.className}>
   <HydrationZustand>
     <ApplicationFrame>
+      <Header/>
       {children}
     </ApplicationFrame>
   </HydrationZustand>
