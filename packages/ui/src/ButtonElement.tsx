@@ -3,13 +3,13 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-const ButtonWrapper = styled.button`
+export const ButtonWrapper = styled.button<{disabled: boolean}>`
     display: flex;
     align-items: center;
     justify-content: center;
 
-    cursor: pointer;
-    
+    cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
+
     padding: 8px;
     border-radius: 2px;
     border: 1px solid gray;
@@ -20,12 +20,16 @@ const ButtonWrapper = styled.button`
 `
 
 type ButtonElementProps = {
+  disabled?: boolean
   children: React.ReactNode
 } & React.ComponentPropsWithoutRef<'button'>
 
-const ButtonElement: React.FC<ButtonElementProps> = ({children, ...props}) => {
+const ButtonElement: React.FC<ButtonElementProps> = ({disabled, children, ...props}) => {
 
-  return <ButtonWrapper {...props}>
+  return <ButtonWrapper
+    disabled={disabled ?? false}
+    {...props}
+  >
     {children}
   </ButtonWrapper>
 }

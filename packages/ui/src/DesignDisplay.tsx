@@ -17,8 +17,12 @@ import {
 import {DateTime} from "luxon";
 import styled from "@emotion/styled";
 import html2canvas from 'html2canvas';
-import ButtonElement from "./ButtonElement";
+import ButtonElement, {ButtonWrapper} from "./ButtonElement";
 import {css} from "@emotion/react";
+
+const DesignWrapper = styled.section`
+    position: sticky;
+`
 
 const DesignResults = styled.div<{
   background: string,
@@ -85,6 +89,7 @@ const DesignHeader = styled.div<{
     padding: 16px 8px;
     border-radius: 4px;
     font-size: ${props => props.$subHeaderSize};
+    white-space: nowrap;
 
     h1 {
         font-weight: ${props => props.$headerWeight};
@@ -201,23 +206,49 @@ const SocialsWrapper = styled.ul<{ $alignment: Alignment }>`
 const CreditsTag = styled.div<{ $alignment: Alignment }>`
     ${tag};
     ${props => {
-      switch (props.$alignment) {
-          case "center":
-          case "left":
-          default:
-              return css`
-                  grid-column: 3;
-                  justify-self: flex-end;
-              `
-          case "right":
-              return css`
-                  grid-column: 2;
-                  justify-self: flex-start;
-              `
-      }
+        switch (props.$alignment) {
+            case "center":
+            case "left":
+            default:
+                return css`
+                    grid-column: 3;
+                    justify-self: flex-end;
+                `
+            case "right":
+                return css`
+                    grid-column: 2;
+                    justify-self: flex-start;
+                `
+        }
     }}
-    
+
     grid-row: 3;
+`
+
+const FileUpload = styled.label`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    cursor: pointer;
+
+    padding: 8px;
+    border-radius: 2px;
+    border: 1px solid gray;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.08);
+    }
+
+    input[type="file"] {
+        display: none;
+    }
+`
+
+const UploadContainer = styled.div`
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
 `
 
 const formatTimeWithOptionalMinutes = (time?: string): string => {
@@ -330,6 +361,7 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
   const divRef = useRef<HTMLDivElement>(null)
   const [backgroundImage, setBackgroundImage] = useState('')
   const [screenshotDataUrl, setScreenshotDataUrl] = useState<string | null>(null)
+  const [isUploading, setIsUploading] = useState(false)
   const localTimeZone = DateTime.local().offset / 60
 
   const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -345,12 +377,35 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
   }
 
   const takeScreenshot = () => {
+    setIsUploading(true)
     if (divRef.current) {
-      html2canvas(divRef.current).then(canvas =>
-        setScreenshotDataUrl(canvas.toDataURL('image/png')))
+      html2canvas(divRef.current)
+        .then(canvas => {
+          setIsUploading(false)
+          setScreenshotDataUrl(canvas.toDataURL('image/png'))
+        })
     }
   }
-  return <div>
+  return <DesignWrapper>
+    <UploadContainer>
+      <FileUpload>
+        Upload background
+        <input
+          type='file'
+          accept='image/*'
+          onChange={handleUpload}
+        />
+      </FileUpload>
+      {
+        backgroundImage.length > 0 &&
+        <ButtonElement onClick={takeScreenshot} disabled={isUploading}>Take screenshot</ButtonElement>
+      }
+      {
+        screenshotDataUrl && <a href={screenshotDataUrl} download="screenshot.png">
+          <ButtonElement>Download screenshot</ButtonElement>
+        </a>
+      }
+    </UploadContainer>
     <DesignResults
       background={backgroundImage}
       $backgroundPosition={backgroundDesign.backgroundPosition}
@@ -430,18 +485,7 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
         <CreditsTag $alignment={socialsDesign.socialsAlignment}>{creditsTag}</CreditsTag>
       }
     </DesignResults>
-    <input
-      type='file'
-      accept='image/*'
-      onChange={handleUpload}
-    />
-    <ButtonElement onClick={takeScreenshot}>Take screenshot</ButtonElement>
-    {
-      screenshotDataUrl && <a href={screenshotDataUrl} download="screenshot.png">
-        <ButtonElement>Download screenshot</ButtonElement>
-      </a>
-    }
-  </div>
+  </DesignWrapper>
 }
 
 export default DesignDisplay

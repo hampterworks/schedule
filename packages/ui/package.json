@@ -21,7 +21,8 @@
     "./SocialsController": "./src/SocialsController.tsx",
     "./BackgroundController": "./src/BackgroundController.tsx",
     "./FontSelector": "./src/FontSelector.tsx",
-    "./Header": "./src/Header.tsx"
+    "./Header": "./src/Header.tsx",
+    "./SliderSelect": "./src/SliderSelect.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",

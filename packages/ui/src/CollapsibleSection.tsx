@@ -6,6 +6,9 @@ import {css} from "@emotion/react";
 import {useState} from "react";
 
 const CollapsibleSectionWrapper = styled.section`
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     border-radius: 4px;
 `
 const SectionTopBar = styled.div`
@@ -47,7 +50,7 @@ type CollapsibleSectionProps = {
 } & React.ComponentPropsWithoutRef<'section'>
 
 const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({title, children, ...props}) => {
-  const [isExtended, setIsExtended] = useState(true)
+  const [isExtended, setIsExtended] = useState(false)
 
   return <CollapsibleSectionWrapper {...props}>
     <SectionTopBar onClick={() => setIsExtended(!isExtended)}>

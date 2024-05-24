@@ -1,7 +1,7 @@
 "use client"
 
-
 import React from "react";
+import styles from "./page.module.css";
 import useScheduleStore from "../../state/schedule";
 import DesignDisplay from "@repo/ui/DesignDisplay";
 import HeaderController from "@repo/ui/HeaderController";
@@ -42,7 +42,7 @@ const Page: React.FC = ({}) => {
     setCreditsTag
   } = useScheduleStore()
 
-  return <main className='main'>
+  return <main className={styles.main}>
     <HeaderController
       headerDesign={headerDesign}
       setMainHeader={setMainHeader}

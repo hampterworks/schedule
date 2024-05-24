@@ -7,11 +7,9 @@ import {Font} from "web/state/schedule";
 import styled from "@emotion/styled";
 
 const FontSelectorWrapper = styled.div`
+    width: 30%;
     display: flex;
     gap: 8px;
-    > * {
-        flex-basis: 250px;
-    }
 `
 
 const fonts = {
@@ -45,14 +43,15 @@ const fonts = {
 type FontSelectorProps = {
   font: Font,
   setFont: (font: Font) => void,
+  title?: string
 } & React.ComponentPropsWithoutRef<'div'>
 
-const FontSelector: React.FC<FontSelectorProps> = ({font, setFont, ...props}) => {
+const FontSelector: React.FC<FontSelectorProps> = ({font, setFont, title, ...props}) => {
 
   return <FontSelectorWrapper {...props}>
     <TextField
       select
-      label='Select Font'
+      label={title ?? 'Select Font'}
       value={font.key}
       onChange={(event,) => {
         setFont(
@@ -64,6 +63,10 @@ const FontSelector: React.FC<FontSelectorProps> = ({font, setFont, ...props}) =>
             weight: '400'
           })
       }}
+      sx={{
+        width: '250px',
+        minWidth: '150px'
+    }}
     >
       <MenuItem value='none'>Default</MenuItem>
       {
@@ -83,6 +86,10 @@ const FontSelector: React.FC<FontSelectorProps> = ({font, setFont, ...props}) =>
         onChange={(event,) => {
           setFont({...font,  weight: event.target.value})
         }}
+        sx={{
+          width: '250px',
+          minWidth: '150px'
+      }}
       >
         {
           fonts[font.key as keyof typeof fonts].weight.map(item => {

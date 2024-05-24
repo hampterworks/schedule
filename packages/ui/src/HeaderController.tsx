@@ -8,6 +8,18 @@ import AlignmentPicker from "./AlignmentPicker";
 import {Slider} from "@mui/material";
 import {AlignmentFn, ColorFn, Font, HeaderDesign} from "web/state/schedule";
 import FontSelect from "./FontSelect";
+import styled from "@emotion/styled";
+import SliderSelect from "./SliderSelect";
+
+const FontContainer = styled.div`
+    display: flex;
+    width: max-content;
+    gap: 32px;
+`
+const ControlsContainer = styled.div`
+    display: flex;
+    gap: 32px;
+`
 
 type HeaderControllerProps = {
   headerDesign: HeaderDesign
@@ -22,72 +34,75 @@ type HeaderControllerProps = {
   setSubHeaderColor: ColorFn
 } & React.ComponentPropsWithoutRef<'section'>
 
-const HeaderController: React.FC<HeaderControllerProps> = ({
-                                                             headerDesign,
-                                                             setMainHeader,
-                                                             setMainHeaderFont,
-                                                             setHeaderColor,
-                                                             setHeaderBackgroundColor,
-                                                             setHeaderAlignment,
-                                                             setHeaderSize,
-                                                             setSubHeaderFont,
-                                                             setSubHeaderSize,
-                                                             setSubHeaderColor,
-                                                             ...props
-                                                           }) => {
+const HeaderController: React.FC<HeaderControllerProps> = (
+  {
+    headerDesign,
+    setMainHeader,
+    setMainHeaderFont,
+    setHeaderColor,
+    setHeaderBackgroundColor,
+    setHeaderAlignment,
+    setHeaderSize,
+    setSubHeaderFont,
+    setSubHeaderSize,
+    setSubHeaderColor,
+    ...props
+  }) => {
   return <CollapsibleSection title='Header' {...props}>
     <InputElement
-      label='Total days:'
+      label='Header Text:'
       type='text'
       value={headerDesign.headerText}
       onInput={inputText =>
         setMainHeader(inputText ?? '')}
     />
-    <FontSelect font={headerDesign.headerFont} setFont={setMainHeaderFont}/>
-    <ColorPicker
-      title='Header Text Color'
-      headerTextColor={headerDesign.headerTextColor}
-      setColor={setHeaderColor}
-    />
-    <ColorPicker
-      title='Background Color'
-      headerTextColor={headerDesign.headerBackgroundColor}
-      setColor={setHeaderBackgroundColor}
-    />
-    <FontSelect font={headerDesign.subHeaderFont} setFont={setSubHeaderFont}/>
-    <ColorPicker
-      title='Sub-Header Color'
-      headerTextColor={headerDesign.subHeaderTextColor}
-      setColor={setSubHeaderColor}
-    />
-    <AlignmentPicker
-      alignment={headerDesign.headerAlignment}
-      setAlignment={setHeaderAlignment}
-    />
-    <Slider
-      value={headerDesign.headerTextSize}
-      aria-label="Default"
-      valueLabelDisplay="auto"
-      step={1}
-      marks
-      min={10}
-      max={55}
-      onChange={(_, value) => {
-        setHeaderSize(!Array.isArray(value) ? value : 22)
-      }}
-    />
-    <Slider
-      value={headerDesign.subHeaderTextSize}
-      aria-label="Default"
-      valueLabelDisplay="auto"
-      step={1}
-      marks
-      min={10}
-      max={55}
-      onChange={(_, value) => {
-        setSubHeaderSize(!Array.isArray(value) ? value : 16)
-      }}
-    />
+    <FontContainer>
+      <FontSelect
+        font={headerDesign.headerFont}
+        setFont={setMainHeaderFont}
+        title='Header Font'
+      />
+      <FontSelect
+        font={headerDesign.subHeaderFont}
+        setFont={setSubHeaderFont}
+        title='Sub-header Font'
+      />
+    </FontContainer>
+    <ControlsContainer>
+      <AlignmentPicker
+        alignment={headerDesign.headerAlignment}
+        setAlignment={setHeaderAlignment}
+      />
+      <ColorPicker
+        title='Header Text Color'
+        headerTextColor={headerDesign.headerTextColor}
+        setColor={setHeaderColor}
+      />
+      <ColorPicker
+        title='Background Color'
+        headerTextColor={headerDesign.headerBackgroundColor}
+        setColor={setHeaderBackgroundColor}
+      />
+      <ColorPicker
+        title='Sub-Header Color'
+        headerTextColor={headerDesign.subHeaderTextColor}
+        setColor={setSubHeaderColor}
+      />
+      <SliderSelect
+        title='Header Font Size'
+        size={headerDesign.headerTextSize}
+        min={10}
+        max={55}
+        fontSizeSetter={setHeaderSize}
+      />
+      <SliderSelect
+        title='Sub-header Font Size'
+        size={headerDesign.subHeaderTextSize}
+        min={10}
+        max={55}
+        fontSizeSetter={setSubHeaderSize}
+      />
+    </ControlsContainer>
   </CollapsibleSection>
 }
 

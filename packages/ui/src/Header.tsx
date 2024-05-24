@@ -13,7 +13,8 @@ const HeaderWrapper = styled.header`
     justify-content: space-between;
     padding: 16px;
     border-bottom: 1px solid black;
-
+    height: 85px;
+    
     h1 {
         display: flex;
         align-items: center;

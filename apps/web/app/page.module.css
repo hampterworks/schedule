@@ -25,3 +25,10 @@
   height: 56px;
   align-self: end;
 }
+
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 32px;
+}

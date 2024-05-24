@@ -5,12 +5,24 @@ import styled from "@emotion/styled";
 import {useEffect, useState} from "react";
 import {Alignment} from "web/state/schedule";
 
-const AlignmentButton = styled.button<{$isSelected: boolean}>`
+const AlignmentWrapper = styled.div`
+    display: flex;
+    gap: 4px;
+`
+
+const TitleContainer = styled.div`
+    margin: 0 0 4px 4px;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 13px;
+    white-space: nowrap;
+`
+
+const AlignmentButton = styled.button<{ $isSelected: boolean }>`
     cursor: pointer;
     padding: 4px;
-    margin: 0 4px;
     border-radius: 2px;
     background: ${props => props.$isSelected && '#dedede'};
+
     &:hover {
         background: #dedede;
     }
@@ -93,25 +105,27 @@ const AlignmentPicker: React.FC<AlignmentPickerProps> = ({alignment, setAlignmen
   }, [selectedAlignment])
 
   return <div {...props}>
-    <AlignmentButton
-      onClick={() => setSelectedAlignment('left')}
-      $isSelected={selectedAlignment === 'left'}
-    >
-      <AlignLeftIcon/>
-    </AlignmentButton>
-    <AlignmentButton
-      onClick={() => setSelectedAlignment('center')}
-      $isSelected={selectedAlignment === 'center'}
-    >
-      <AlignCenterIcon/>
-    </AlignmentButton>
-    <AlignmentButton
-      onClick={() => setSelectedAlignment('right')}
-      $isSelected={selectedAlignment === 'right'}
-    >
-      <AlignRightIcon/>
-    </AlignmentButton>
-
+    <TitleContainer>Select Alignment</TitleContainer>
+    <AlignmentWrapper>
+      <AlignmentButton
+        onClick={() => setSelectedAlignment('left')}
+        $isSelected={selectedAlignment === 'left'}
+      >
+        <AlignLeftIcon/>
+      </AlignmentButton>
+      <AlignmentButton
+        onClick={() => setSelectedAlignment('center')}
+        $isSelected={selectedAlignment === 'center'}
+      >
+        <AlignCenterIcon/>
+      </AlignmentButton>
+      <AlignmentButton
+        onClick={() => setSelectedAlignment('right')}
+        $isSelected={selectedAlignment === 'right'}
+      >
+        <AlignRightIcon/>
+      </AlignmentButton>
+    </AlignmentWrapper>
   </div>
 }
 export default AlignmentPicker

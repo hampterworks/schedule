@@ -4,10 +4,19 @@ import {useCallback, useEffect, useMemo, useState} from "react";
 import {BackgroundPosition, BackgroundSize, Color} from "web/state/schedule";
 
 const PositionSelectorWrapper = styled.div`
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 13px;
+    > div {
+        margin-bottom: 8px;
+    }
+`
+
+const PositionSelectorContainer = styled.div`
     position: relative;
     height: 200px;
     width: 200px;
-    border: 1px solid black;
+    background: #c5c5c5;
+    border-radius: 4px;
 `
 
 const Selector = styled.div<{ x: string; y: string }>`
@@ -17,7 +26,7 @@ const Selector = styled.div<{ x: string; y: string }>`
     left: ${(props) => props.x};
     height: 15px;
     width: 15px;
-    border: 3px solid black;
+    border: 3px solid #575757;
     border-radius: 50%;
     transform: translate(-50%, -50%);
 `
@@ -77,14 +86,17 @@ const PositionSelector: React.FC<PositionSelectorProps> = ({backgroundPosition, 
     setBackgroundPosition(`${((position.x / 100) * 300 - 100).toString() + '%'} ${((position.y / 100) * 300 - 100).toString() + '%'}`)
   }, [position])
 
-  return <PositionSelectorWrapper
-    ref={ref}
-    onMouseDown={handleMouseDown}
-    onMouseUp={handleMouseUp}
-    onMouseLeave={handleMouseUp}
-    {...props}
-  >
-    <Selector x={`${position.x}%`} y={`${position.y}%`}/>
+  return <PositionSelectorWrapper>
+    <div>Change Background Position</div>
+    <PositionSelectorContainer
+      ref={ref}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+      {...props}
+    >
+      <Selector x={`${position.x}%`} y={`${position.y}%`}/>
+    </PositionSelectorContainer>
   </PositionSelectorWrapper>
 
 }

@@ -15,6 +15,11 @@ const SocialsToolbar = styled.div`
     align-items: center;
     gap: 16px;
 `
+const SocialsContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+`
 
 type SocialsControllerProps = {
   socials: Socials[]
@@ -26,30 +31,27 @@ type SocialsControllerProps = {
   setCreditsTag: (creditsTag: string) => void
 } & React.ComponentPropsWithoutRef<'section'>
 
-const SocialsController: React.FC<SocialsControllerProps> = ({
-                                                               socials,
-                                                               addSocials,
-                                                               removeSocials,
-                                                               socialsDesign,
-                                                               setSocialsAlignment,
-                                                               creditsTag,
-                                                               setCreditsTag,
-                                                               ...props
-                                                             }) => {
+const SocialsController: React.FC<SocialsControllerProps> = (
+  {
+    socials,
+    addSocials,
+    removeSocials,
+    socialsDesign,
+    setSocialsAlignment,
+    creditsTag,
+    setCreditsTag,
+    ...props
+  }) => {
   return <CollapsibleSection title='Socials and credits' {...props}>
-    <AlignmentPicker
-      alignment={socialsDesign.socialsAlignment}
-      setAlignment={setSocialsAlignment}
+    <InputElement
+      label='Credits'
+      type='text'
+      value={creditsTag}
+      onInput={inputText => {
+        setCreditsTag(inputText ?? '')
+      }}
     />
-    <div>
-      <InputElement
-        label='Credits'
-        type='text'
-        value={creditsTag}
-        onInput={inputText => {
-          setCreditsTag(inputText ?? '')
-        }}
-      />
+    <SocialsContainer>
       {
         socials.map((item, index) => <SocialsToolbar key={item.network + index}>
           <TextField
@@ -83,11 +85,15 @@ const SocialsController: React.FC<SocialsControllerProps> = ({
             index={index}
             template={item}
             hideRemove={socials.length === 1}
-            hideAdd={socials.length === 4}
+            hideAdd={socials.length === 5}
           />
         </SocialsToolbar>)
       }
-    </div>
+    </SocialsContainer>
+    <AlignmentPicker
+      alignment={socialsDesign.socialsAlignment}
+      setAlignment={setSocialsAlignment}
+    />
   </CollapsibleSection>
 }
 
