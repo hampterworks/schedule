@@ -5,12 +5,11 @@ import HydrationZustand from "./HydrationZustand";
 import React from "react";
 import ApplicationFrame from "@repo/ui/ApplicationFrame";
 import Header from "@repo/ui/Header";
-import Link from "next/link";
 
 const inter = Inter({subsets: ["latin"]});
 
 export const metadata: Metadata = {
-  title: "GoomSchedule",
+  title: "Hampter Schedule",
   description: "Generate streaming schedules with time zone and discord support",
 };
 
