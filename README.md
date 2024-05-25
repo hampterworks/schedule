@@ -1,4 +1,4 @@
-# Goom Schedule
+# Hampter Schedule
 
 ## Description
 
@@ -42,7 +42,7 @@ Before you begin, ensure you have the following installed on your local developm
 
 1. Clone the repository
     ```bash
-    git clone https://github.com/diggerhub/goomschedule.git
+    git clone https://github.com/hampterworks/schedule.git
     ```
 2. Navigate to the project folder
     ```bash

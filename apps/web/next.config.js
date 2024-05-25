@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
   output: "export",
-  basePath: '/goomschedule',
+  basePath: '/schedule',
   transpilePackages: ["@repo/ui"]
 };

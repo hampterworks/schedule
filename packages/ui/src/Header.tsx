@@ -36,7 +36,7 @@ type HeaderProps = {} & React.ComponentPropsWithoutRef<'header'>
 
 const Header: React.FC<HeaderProps> = ({...props}) => {
   return <HeaderWrapper>
-    <h1>goom schedule</h1>
+    <h1>Hampter Schedule</h1>
     <NavigationWrapper>
       <ul>
         <li>
@@ -50,7 +50,7 @@ const Header: React.FC<HeaderProps> = ({...props}) => {
           </Link>
         </li>
         <li>
-          <a href='/https://github.com/goomworks/goomschedule' target='_blank' rel='noreferrer'>
+          <a href='https://github.com/hampterworks/schedule' target='_blank' rel='noreferrer'>
             <GithubIcon $sx={css`height: 32px`}/>
           </a>
         </li>
