@@ -41,7 +41,7 @@ const DesignResults = styled.div<{
         ${props.$backgroundColor.b}, 
         ${props.$backgroundColor.a})`};
 
-    background-image: ${props => `url(${props.background})`};
+    ${props => props.background.length > 0 && `background-image: url(${props.background})`};
 
     background-size: ${props => props.$backgroundSize};
     background-repeat: no-repeat;
@@ -396,10 +396,7 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
           onChange={handleUpload}
         />
       </FileUpload>
-      {
-        backgroundImage.length > 0 &&
-        <ButtonElement onClick={takeScreenshot} disabled={isUploading}>Take screenshot</ButtonElement>
-      }
+      <ButtonElement onClick={takeScreenshot} disabled={isUploading}>Take screenshot</ButtonElement>
       {
         screenshotDataUrl && <a href={screenshotDataUrl} download="screenshot.png">
           <ButtonElement>Download screenshot</ButtonElement>
