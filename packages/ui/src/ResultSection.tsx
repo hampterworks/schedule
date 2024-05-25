@@ -102,7 +102,7 @@ const ResultSection: React.FC<ResultSectionProps> = ({templates, timezones}) => 
       <ButtonElement onClick={() => {
         navigator.clipboard.writeText(templateWithTimezone
           .map(item =>
-            `${item.date}\n${item.description ?? 'No description'}\n${item.timezones?.join('\n')}`)
+            `${item.date}\n${item.description ?? 'No description'}\n${item.timezones !== undefined ? item.timezones.join('\n') : ''}`)
           .join('\n')
           .replace('undefined', ''))
           .then(() => setCopyNotice("Text copied successful!"))
