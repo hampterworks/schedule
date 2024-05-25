@@ -7,7 +7,6 @@ import {Font} from "web/state/schedule";
 import styled from "@emotion/styled";
 
 const FontSelectorWrapper = styled.div`
-    width: 30%;
     display: flex;
     gap: 8px;
 `

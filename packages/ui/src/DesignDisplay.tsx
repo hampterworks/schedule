@@ -33,7 +33,6 @@ const DesignResults = styled.div<{
     padding: 16px 0;
     display: grid;
     grid-template-columns: 16px repeat(2, 1fr) 16px;
-    grid-template-rows: minmax(10%, auto) 80% 10%;
     row-gap: 16px;
     line-height: 22px;
     background: ${props => `rgba(
@@ -164,6 +163,7 @@ const DayName = styled.div<{ $backgroundColor: Color, $textColor: Color }>`
     }
 `
 const DayDetailsWrapper = styled.div`
+    min-height: 85px;
     width: 100%;
     display: flex;
     padding: 16px;

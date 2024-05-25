@@ -13,7 +13,6 @@ import SliderSelect from "./SliderSelect";
 
 const FontContainer = styled.div`
     display: flex;
-    width: max-content;
     gap: 32px;
 `
 const ControlsContainer = styled.div`
