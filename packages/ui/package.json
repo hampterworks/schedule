@@ -10,7 +10,19 @@
     "./ButtonWrapper": "./src/ButtonWrapper.tsx",
     "./AutocompleteElement": "./src/AutocompleteElement.tsx",
     "./ResultSection": "./src/ResultSection.tsx",
-    "./ButtonElement": "./src/ButtonElement.tsx"
+    "./ButtonElement": "./src/ButtonElement.tsx",
+    "./DesignDisplay": "./src/DesignDisplay.tsx",
+    "./CollapsibleSection": "./src/CollapsibleSection.tsx",
+    "./ColorPicker": "./src/ColorPicker.tsx",
+    "./AlignmentPicker": "./src/AlignmentPicker.tsx",
+    "./PositionSelector": "./src/PositionSelector.tsx",
+    "./HeaderController": "./src/HeaderController.tsx",
+    "./DateController": "./src/DateController.tsx",
+    "./SocialsController": "./src/SocialsController.tsx",
+    "./BackgroundController": "./src/BackgroundController.tsx",
+    "./FontSelector": "./src/FontSelector.tsx",
+    "./Header": "./src/Header.tsx",
+    "./SliderSelect": "./src/SliderSelect.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
@@ -35,6 +47,8 @@
     "@mui/icons-material": "^5.15.9",
     "@mui/material": "^5.15.9",
     "@mui/x-date-pickers": "^6.19.4",
-    "luxon": "^3.4.4"
+    "luxon": "^3.4.4",
+    "react-colorful": "^5.6.1",
+    "typescript": "^5.4.5"
   }
 }

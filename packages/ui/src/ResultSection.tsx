@@ -25,7 +25,7 @@ const ResultWrapper = styled.div`
 const DateDisplay = styled.ul`
     li {
         margin-bottom: 32px;
-        background: rgba(0, 0, 0, 0.08);
+        background: #f8f8f8;;
         padding: 16px;
         border-radius: 4px;
     }
@@ -42,7 +42,7 @@ const DiscordDisplay = styled.ul`
     display: flex;
     flex-direction: column;
     gap: 16px;
-    background: rgba(0, 0, 0, 0.08);
+    background: #f8f8f8;
     margin-bottom: 16px;
     padding: 16px;
     border-radius: 4px;

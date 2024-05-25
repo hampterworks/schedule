@@ -133,8 +133,8 @@ test('addTemplateAfter in range', () => {
     }), fc.date(), fc.string(), fc.string(), (range, index, date, time, description) => {
       let store = scheduleStore
       store.getState().setTemplates([...Array(range).keys()].map(() => ({date: DateTime.fromJSDate(new Date())})))
-      store.getState().addTemplateAfter(index, {date: DateTime.fromJSDate(date), time, description})
-      expect(store.getState().templates[index+1]).toStrictEqual({date: DateTime.fromJSDate(date), time, description})
+      store.getState().addTemplateAfter(index, {date: DateTime.fromJSDate(date)})
+      expect(store.getState().templates[index+1]).toStrictEqual({date: DateTime.fromJSDate(date)})
     }))
 })
 

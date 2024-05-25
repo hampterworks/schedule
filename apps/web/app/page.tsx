@@ -94,8 +94,8 @@ const Page: React.FC = () => {
               }}
             />
             <ButtonWrapper
-              removeTemplate={removeTemplate}
-              addTemplateAfter={addTemplateAfter}
+              removeItemFunction={removeTemplate}
+              addItemFunction={addTemplateAfter}
               index={index}
               template={template}
             />
