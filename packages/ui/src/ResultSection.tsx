@@ -68,7 +68,7 @@ const ResultSection: React.FC<ResultSectionProps> = ({templates, timezones}) => 
         updatedDate.setZone(timezone).toFormat('EEEE, MM/d/yyyy hh:mm a z').replace('_', ' '))
 
       return {
-        date: date.toFormat('EEEE, MM/d/yyyy hh:mm a z'),
+        date: updatedDate.toFormat('EEEE, MM/d/yyyy hh:mm a z'),
         description: template.description,
         timezones: calculatedTimezones,
         discordTime: discordTime
