@@ -5,7 +5,6 @@ import CollapsibleSection from "./CollapsibleSection";
 import InputElement from "./InputElement";
 import ColorPicker from "./ColorPicker";
 import AlignmentPicker from "./AlignmentPicker";
-import {Slider} from "@mui/material";
 import {AlignmentFn, ColorFn, Font, HeaderDesign} from "web/state/schedule";
 import FontSelect from "./FontSelect";
 import styled from "@emotion/styled";
@@ -20,6 +19,22 @@ const ControlsContainer = styled.div`
     gap: 32px;
 `
 
+/**
+ * Represents the props for the HeaderController component.
+ *
+ * @typedef {Object} HeaderControllerProps
+ * @property {HeaderDesign} headerDesign - The design of the header.
+ * @property {function} setMainHeader - A function to set the main header.
+ * @property {function} setMainHeaderFont - A function to set the font of the main header.
+ * @property {function} setHeaderColor - A function to set the color of the header.
+ * @property {function} setHeaderBackgroundColor - A function to set the background color of the header.
+ * @property {function} setHeaderAlignment - A function to set the alignment of the header.
+ * @property {function} setHeaderSize - A function to set the size of the header.
+ * @property {function} setSubHeaderFont - A function to set the font of the sub header.
+ * @property {function} setSubHeaderSize - A function to set the size of the sub header.
+ * @property {function} setSubHeaderColor - A function to set the color of the sub header.
+ * @property {React.ComponentPropsWithoutRef<'section'>} - The props for the <section> element.
+ */
 type HeaderControllerProps = {
   headerDesign: HeaderDesign
   setMainHeader: (newHeader: string) => void
@@ -33,6 +48,24 @@ type HeaderControllerProps = {
   setSubHeaderColor: ColorFn
 } & React.ComponentPropsWithoutRef<'section'>
 
+/**
+ * HeaderController is a React functional component that represents a header section with customizable design options.
+ *
+ * @param {Object} HeaderControllerProps - The properties for the HeaderController component.
+ * @param {Object} headerDesign - The design options for the header.
+ * @param {function} setMainHeader - The function to set the main header text.
+ * @param {function} setMainHeaderFont - The function to set the main header font.
+ * @param {function} setHeaderColor - The function to set the header text color.
+ * @param {function} setHeaderBackgroundColor - The function to set the header background color.
+ * @param {function} setHeaderAlignment - The function to set the header alignment.
+ * @param {function} setHeaderSize - The function to set the header font size.
+ * @param {function} setSubHeaderFont - The function to set the sub-header font.
+ * @param {function} setSubHeaderSize - The function to set the sub-header font size.
+ * @param {function} setSubHeaderColor - The function to set the sub-header text color.
+ * @param {Object} props - Additional props for the HeaderController component.
+ *
+ * @returns {JSX.Element} - The rendered HeaderController component.
+ */
 const HeaderController: React.FC<HeaderControllerProps> = (
   {
     headerDesign,
@@ -74,17 +107,17 @@ const HeaderController: React.FC<HeaderControllerProps> = (
       />
       <ColorPicker
         title='Header Text Color'
-        headerTextColor={headerDesign.headerTextColor}
+        colorValue={headerDesign.headerTextColor}
         setColor={setHeaderColor}
       />
       <ColorPicker
         title='Background Color'
-        headerTextColor={headerDesign.headerBackgroundColor}
+        colorValue={headerDesign.headerBackgroundColor}
         setColor={setHeaderBackgroundColor}
       />
       <ColorPicker
         title='Sub-Header Color'
-        headerTextColor={headerDesign.subHeaderTextColor}
+        colorValue={headerDesign.subHeaderTextColor}
         setColor={setSubHeaderColor}
       />
       <SliderSelect

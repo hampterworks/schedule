@@ -32,10 +32,26 @@ const ToolTipWrapper = styled.span`
     }
 `
 
+/**
+ * Defines the props for the ToolTip component.
+ *
+ * @typedef {Object} ToolTipProps
+ * @property {string} message - The message to be displayed in the tooltip.
+ * @property {React.ComponentPropsWithoutRef<'span'>} - Additional props for the underlying 'span' component.
+ */
 type ToolTipProps = {
   message: string
 } & React.ComponentPropsWithoutRef<'span'>
 
+/**
+ * Tooltip component that displays an information message.
+ *
+ * @component
+ * @param {Object} props - The props object containing the message and additional props.
+ * @param {string} props.message - The message to be displayed in the tooltip.
+ * @param {Object} props... - Additional props that can be passed to the Tooltip component.
+ * @returns {ReactElement} The rendered Tooltip component.
+ */
 const ToolTip: React.FC<ToolTipProps> = ({message, ...props}) => {
   return <ToolTipWrapper {...props}>
     <InfoIcon/>

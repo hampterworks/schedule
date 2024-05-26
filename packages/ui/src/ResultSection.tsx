@@ -48,11 +48,26 @@ const DiscordDisplay = styled.ul`
     border-radius: 4px;
 `
 
+/**
+ * Represents the properties for the ResultSection component.
+ * @typedef {Object} ResultSectionProps
+ * @property {Template[]} templates - An array of templates.
+ * @property {string[]} timezones - An array of timezones.
+ */
 type ResultSectionProps = {
   templates: Template[]
   timezones: string[]
 }
 
+/**
+ * ResultSection component renders a section with templates and their corresponding time formats.
+ * It provides options to copy the time formats to clipboard.
+ *
+ * @param {Object} templates - An array of template objects.
+ * @param {Object[]} timezones - An array of timezone objects.
+ *
+ * @returns {JSX.Element} - Returns the JSX element for the ResultSection component.
+ */
 const ResultSection: React.FC<ResultSectionProps> = ({templates, timezones}) => {
   const [copyNotice, setCopyNotice] = useState<string | null>(null)
 

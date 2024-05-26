@@ -11,6 +11,14 @@ const FontSelectorWrapper = styled.div`
     gap: 8px;
 `
 
+/**
+ * Represents a collection of variable fonts.
+ *
+ * @typedef {Object} Font
+ * @property {string} font - The actual font file.
+ * @property {string} key - The key or identifier for the font.
+ * @property {string[]} weight - The available weights for the font.
+ */
 const fonts = {
   roboto: {
     font: roboto,
@@ -39,14 +47,32 @@ const fonts = {
   },
 }
 
+/**
+ * Props for the FontSelector component.
+ *
+ * @typedef {Object} FontSelectorProps
+ * @property {Font} font - The currently selected font.
+ * @property {function} setFont - A function to set the selected font.
+ * @property {string} [title] - Optional title for the FontSelector component.
+ * @property {React.ComponentPropsWithoutRef<'div'>} - Additional props for the wrapping 'div' element.
+ */
 type FontSelectorProps = {
   font: Font,
   setFont: (font: Font) => void,
   title?: string
 } & React.ComponentPropsWithoutRef<'div'>
 
+/**
+ * FontSelector component renders a font selector UI with options to select font and weight.
+ *
+ * @component
+ * @param {Object} font - The currently selected font.
+ * @param {Function} setFont - A callback function to set the selected font.
+ * @param {string} title - The title of the font selector.
+ * @param {...Object} props - Additional props to be passed to the FontSelectorWrapper component.
+ * @returns {ReactElement} The rendered FontSelector component.
+ */
 const FontSelector: React.FC<FontSelectorProps> = ({font, setFont, title, ...props}) => {
-
   return <FontSelectorWrapper {...props}>
     <TextField
       select

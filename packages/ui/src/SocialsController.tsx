@@ -21,6 +21,19 @@ const SocialsContainer = styled.div`
     gap: 8px;
 `
 
+/**
+ * Props for the SocialsController component
+ *
+ * @typedef {Object} SocialsControllerProps
+ * @property {Socials[]} socials - The list of socials
+ * @property {function} addSocials - Function to add socials at a specific index
+ * @property {function} removeSocials - Function to remove socials at a specific index
+ * @property {SocialsDesign} socialsDesign - The design settings for the socials
+ * @property {function} setSocialsAlignment - Function to set the alignment for the socials
+ * @property {string} [creditsTag] - An optional tag for credits
+ * @property {function} setCreditsTag - Function to set the credits tag
+ * @property {React.ComponentPropsWithoutRef<'section'>} - Additional props for the section element
+ */
 type SocialsControllerProps = {
   socials: Socials[]
   addSocials: (index: number, socials: Socials) => void
@@ -31,6 +44,13 @@ type SocialsControllerProps = {
   setCreditsTag: (creditsTag: string) => void
 } & React.ComponentPropsWithoutRef<'section'>
 
+/**
+ * React functional component for managing socials and credits.
+ *
+ * @component
+ * @param {SocialsControllerProps} props - The props for the SocialsController component.
+ * @returns {JSX.Element} - The rendered SocialsController component.
+ */
 const SocialsController: React.FC<SocialsControllerProps> = (
   {
     socials,

@@ -34,8 +34,13 @@ const iconStyle = css`height: 48px`
 
 type HeaderProps = {} & React.ComponentPropsWithoutRef<'header'>
 
+/**
+ * Header component for the Hampter Schedule application.
+ * @param {Object} props - The props for the Header component.
+ * @returns {React.Element} The rendered header component.
+ */
 const Header: React.FC<HeaderProps> = ({...props}) => {
-  return <HeaderWrapper>
+  return <HeaderWrapper {...props}>
     <h1>Hampter Schedule</h1>
     <NavigationWrapper>
       <ul>

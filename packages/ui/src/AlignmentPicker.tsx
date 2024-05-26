@@ -92,11 +92,25 @@ const AlignRightIcon: React.FC = () => {
   </IconWrapper>
 }
 
+/**
+ * Props for the AlignmentPicker component
+ * @typedef {Object} AlignmentPickerProps
+ * @property {Alignment} alignment - The current alignment value
+ * @property {function} setAlignment - Callback function to set the alignment
+ * @property {React.ComponentPropsWithoutRef<'div'>} - Additional props for the wrapping div
+ */
 type AlignmentPickerProps = {
   alignment: Alignment
   setAlignment: (alignment: Alignment) => void
 } & React.ComponentPropsWithoutRef<'div'>
 
+/**
+ * React functional component used to select alignment.
+ * @param {Object} alignment - The current alignment value.
+ * @param {Function} setAlignment - The function to set the alignment value.
+ * @param {Object} props - Additional props for the component.
+ * @returns {JSX.Element} The rendered alignment picker component.
+ */
 const AlignmentPicker: React.FC<AlignmentPickerProps> = ({alignment, setAlignment, ...props}) => {
   const [selectedAlignment, setSelectedAlignment] = useState(alignment)
 

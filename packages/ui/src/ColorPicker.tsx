@@ -55,13 +55,33 @@ const ColorWindow = styled.button<{ $selectedColor: Color }>`
     }
 `
 
+/**
+ * Represents the props for the ColorPicker component.
+ *
+ * @typedef {Object} ColorPickerProps
+ * @property {string} title - The title of the color picker.
+ * @property {Color} headerTextColor - The color of the header text.
+ * @property {function(Color): void} setColor - A callback function used to set the selected color.
+ * @property {React.ComponentPropsWithoutRef<'div'>} - The additional props for the div element.
+ */
 type ColorPickerProps = {
   title: string
-  headerTextColor: Color
+  colorValue: Color
   setColor: (color: Color) => void
 } & React.ComponentPropsWithoutRef<'div'>
 
-const ColorPicker: React.FC<ColorPickerProps> = ({title, headerTextColor, setColor, ...props}) => {
+/**
+ * ColorPicker component represents a color picker UI element using react-colorful.
+ *
+ * @param {Object} props - The props object containing the following properties:
+ *   @param {string} title - The title of the color picker.
+ *   @param {string} colorValue - The current selected color value.
+ *   @param {function} setColor - The function to set the selected color.
+ *   @param {Object} ...props - Additional props to be passed to the component.
+ *
+ * @returns {ReactElement} The rendered ColorPicker component.
+ */
+const ColorPicker: React.FC<ColorPickerProps> = ({title, colorValue, setColor, ...props}) => {
   const clickRef = useRef<HTMLDivElement>(null)
   const [isToggled, setIsToggled] = useState(false)
 
@@ -73,11 +93,11 @@ const ColorPicker: React.FC<ColorPickerProps> = ({title, headerTextColor, setCol
   return <ColorPickerWrapper ref={clickRef} {...props}>
     <ColorWindowWrapper>
       <span>{title}</span>
-      <ColorWindow onClick={() => setIsToggled(!isToggled)} $selectedColor={headerTextColor}/>
+      <ColorWindow onClick={() => setIsToggled(!isToggled)} $selectedColor={colorValue}/>
     </ColorWindowWrapper>
     {
       isToggled &&
-      <RgbaColorPicker color={headerTextColor} onChange={setColor}/>
+      <RgbaColorPicker color={colorValue} onChange={setColor}/>
     }
   </ColorPickerWrapper>
 }

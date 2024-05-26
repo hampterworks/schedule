@@ -1,7 +1,7 @@
 import * as React from "react";
-import styled from "@emotion/styled";
 import {useCallback, useEffect, useMemo, useState} from "react";
-import {BackgroundPosition, BackgroundSize, Color} from "web/state/schedule";
+import styled from "@emotion/styled";
+import {BackgroundPosition} from "web/state/schedule";
 
 const PositionSelectorWrapper = styled.div`
     color: rgba(0, 0, 0, 0.6);
@@ -31,11 +31,29 @@ const Selector = styled.div<{ x: string; y: string }>`
     transform: translate(-50%, -50%);
 `
 
+/**
+ * Object representing the props for the PositionSelector component.
+ * @typedef {Object} PositionSelectorProps
+ * @property {BackgroundPosition} backgroundPosition - The current background position.
+ * @property {function} setBackgroundPosition - A function used to set the background position.
+ * @property {React.ComponentPropsWithoutRef<'div'>} - Additional props for the div element.
+ */
 type PositionSelectorProps = {
   backgroundPosition: BackgroundPosition
   setBackgroundPosition: (backgroundPosition: BackgroundPosition) => void
 } & React.ComponentPropsWithoutRef<'div'>
 
+/**
+ * Component that allows the user to select and change the background position.
+ *
+ * @component
+ * @example
+ * <PositionSelector backgroundPosition="center" setBackgroundPosition={setBackgroundPosition} />
+ *
+ * @param {Object} props - the props object
+ * @param {string} props.backgroundPosition - the current background position
+ * @param {Function} props.setBackgroundPosition - callback function to set the new background position
+ */
 const PositionSelector: React.FC<PositionSelectorProps> = ({backgroundPosition, setBackgroundPosition, ...props}) => {
   const transformPosition = useMemo(() => {
     return backgroundPosition === 'center'
