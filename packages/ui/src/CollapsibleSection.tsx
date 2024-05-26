@@ -11,6 +11,7 @@ const CollapsibleSectionWrapper = styled.section`
     gap: 16px;
     border-radius: 4px;
 `
+
 const SectionTopBar = styled.div`
     display: flex;
     align-items: center;
@@ -26,10 +27,27 @@ const IconWrapper = styled.svg<{ $invert: boolean }>`
     transition: transform 200ms ease-in-out;
     ${props => props.$invert && css`transform: rotate(180deg);`}
 `
+
+/**
+ * Props for ChevronDown component.
+ * @typedef {Object} ChevronDownProps
+ * @property {boolean} invert - Indicates if the chevron should be inverted.
+ * @property {React.ComponentPropsWithoutRef<'svg'>} svg - SVG component props.
+ */
 type ChevronDownProps = {
   invert?: boolean
 } & React.ComponentPropsWithoutRef<'svg'>
 
+/**
+ * ChevronDown component.
+ * Renders a chevron down icon.
+ *
+ * @component
+ * @param {Object} ChevronDownProps - The props for the ChevronDown component.
+ * @param {boolean} ChevronDownProps.invert - Whether to invert the orientation of the icon.
+ * @param {Object} props - The additional props to be passed to the IconWrapper component.
+ * @returns {JSX.Element} A React JSX element representing the ChevronDown icon.
+ */
 const ChevronDown: React.FC<ChevronDownProps> = ({invert, ...props}) => {
   return <IconWrapper
     viewBox="0 0 24 24"
@@ -44,11 +62,39 @@ const ChevronDown: React.FC<ChevronDownProps> = ({invert, ...props}) => {
   </IconWrapper>
 }
 
+/**
+ * Props for the CollapsibleSection component.
+ * @typedef {Object} CollapsibleSectionProps
+ * @property {string} title - The title of the collapsible section.
+ * @property {React.ReactNode} children - The content of the collapsible section.
+ * @property {React.ComponentPropsWithoutRef<'section'>} [otherProps] - Additional properties for the section element.
+ */
 type CollapsibleSectionProps = {
   title: string
   children: React.ReactNode;
 } & React.ComponentPropsWithoutRef<'section'>
 
+/**
+ * A collapsible section component in React.
+ *
+ * @component
+ * @example
+ * <CollapsibleSection
+ *    title="Section Title"
+ *    children={
+ *      <div>
+ *        Content goes here
+ *      </div>
+ *    }
+ *    {...props}
+ * />
+ *
+ * @param {object} props - The props that are passed to the component.
+ * @param {string} props.title - The title of the collapsible section.
+ * @param {ReactNode} props.children - The content to be displayed when the section is extended.
+ *
+ * @returns {ReactNode} - The rendered React component.
+ */
 const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({title, children, ...props}) => {
   const [isExtended, setIsExtended] = useState(false)
 

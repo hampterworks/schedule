@@ -17,12 +17,8 @@ import {
 import {DateTime} from "luxon";
 import styled from "@emotion/styled";
 import html2canvas from 'html2canvas';
-import ButtonElement, {ButtonWrapper} from "./ButtonElement";
+import ButtonElement from "./ButtonElement";
 import {css} from "@emotion/react";
-
-const DesignWrapper = styled.section`
-    position: sticky;
-`
 
 const DesignResults = styled.div<{
   background: string,
@@ -49,6 +45,12 @@ const DesignResults = styled.div<{
     background-position: ${props => props.$backgroundPosition};
 `
 
+/**
+ * Returns CSS properties for grid alignment based on the provided alignment value.
+ *
+ * @param {string} alignment - The alignment value. Possible values are 'left', 'center' and 'right'.
+ * @returns {string} - The CSS properties for grid alignment.
+ */
 const alignmentGridPosition = (alignment: Alignment) => {
   switch (alignment) {
     case "left":
@@ -251,6 +253,12 @@ const UploadContainer = styled.div`
     margin-bottom: 16px;
 `
 
+/**
+ * Format a time string with optional minutes.
+ *
+ * @param {string} [time] - The time string to format.
+ * @returns {string} The formatted time string.
+ */
 const formatTimeWithOptionalMinutes = (time?: string): string => {
   if (time !== undefined) {
     const splitTime = time.split(':')
@@ -267,6 +275,14 @@ const formatTimeWithOptionalMinutes = (time?: string): string => {
   return ''
 }
 
+/**
+ * Formats the given time in multiple time zones.
+ *
+ * @param {DateTime} date - The date and time to format.
+ * @param {string} time - The time to format in `HH:mm` format.
+ * @param {string[]} timeZones - The time zones to format the time in.
+ * @returns {string[]} - An array of formatted time strings for each time zone.
+ */
 const formatTimeZones = (date: DateTime, time: string, timeZones: string[]): string[] => {
   const calculatedTimezones = timeZones.map(timezone => {
 
@@ -295,6 +311,12 @@ const formatTimeZones = (date: DateTime, time: string, timeZones: string[]): str
   return calculatedTimezones
 }
 
+/**
+ * Retrieves the week duration string based on the provided templates.
+ *
+ * @param {Template[]} templates - The array of templates representing the week. Each template must have a 'date' property.
+ * @returns {string} The week duration string in the format "Week of {firstDay} - {lastDay}".
+ */
 const getWeekDurationString = (templates: Template[]): string => {
   const firstDay = (typeof templates[0]?.date === 'string')
     ? DateTime.fromISO(templates[0].date).toFormat('d/L')
@@ -307,6 +329,11 @@ const getWeekDurationString = (templates: Template[]): string => {
   return `Week of ${firstDay} - ${lastDay}`
 }
 
+/**
+ * Returns the icon for a given social network.
+ * @param {SocialNetworks} network - The social network for which to get the icon.
+ * @returns {React.ReactNode} - The icon as a React Node.
+ */
 const getSocialNetworkIcon = (network: SocialNetworks): React.ReactNode => {
   switch (network) {
     case 'twitch':
@@ -336,6 +363,18 @@ const getSocialNetworkIcon = (network: SocialNetworks): React.ReactNode => {
   }
 }
 
+/**
+ * Represents the properties for configuring the design display.
+ * @typedef {Object} DesignDisplayProps
+ * @property {Template[]} templates - The array of templates.
+ * @property {string[]} timeZones - The array of time zones.
+ * @property {HeaderDesign} headerDesign - The header design.
+ * @property {DateDesign} dateDesign - The date design.
+ * @property {Socials[]} socials - The array of socials.
+ * @property {SocialsDesign} socialsDesign - The socials design.
+ * @property {BackgroundDesign} backgroundDesign - The background design.
+ * @property {string} [creditsTag] - Optional credits tag.
+ */
 type DesignDisplayProps = {
   templates: Template[]
   timeZones: string[]
@@ -347,6 +386,21 @@ type DesignDisplayProps = {
   creditsTag?: string
 }
 
+/**
+ * The DesignDisplay component is responsible for rendering the design elements of a template.
+ *
+ * @component
+ * @param {Object} props - The component props
+ * @param {Array} props.timeZones - The list of available time zones
+ * @param {Array} props.templates - The list of templates to render
+ * @param {Object} props.headerDesign - The design configuration for the header section
+ * @param {Object} props.dateDesign - The design configuration for the date section
+ * @param {Array} props.socials - The list of socials to render
+ * @param {Object} props.socialsDesign - The design configuration for the socials section
+ * @param {Object} props.backgroundDesign - The design configuration for the background
+ * @param {string} props.creditsTag - The credits tag to display
+ * @returns {ReactNode} The rendered DesignDisplay component
+ */
 const DesignDisplay: React.FC<DesignDisplayProps> = (
   {
     timeZones,
@@ -386,7 +440,7 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
         })
     }
   }
-  return <DesignWrapper>
+  return <section>
     <UploadContainer>
       <FileUpload>
         Upload background
@@ -482,7 +536,7 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
         <CreditsTag $alignment={socialsDesign.socialsAlignment}>{creditsTag}</CreditsTag>
       }
     </DesignResults>
-  </DesignWrapper>
+  </section>
 }
 
 export default DesignDisplay

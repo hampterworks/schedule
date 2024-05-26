@@ -17,9 +17,16 @@ Overall, this scheduling app provides a comprehensive solution for streamers aim
 - Enter a starting hour and description. It's optional to fill in these fields; you can leave any of them empty. not specifying a time will assign the whole day.
 - Your schedule will be generated below.
 
-Your selection is always saved .
+Your selection is always saved.
 Clicking the rest button will clear the selection.
 
+## How to generate a design
+- Go through the collapsible sections and edit the provided fields
+- Click on 'Upload background' to load your own background image
+- Click on 'Take screenshot' to save the design
+- Click on 'Download screenshot' to download your saved screenshot
+
+Your selection is saved but the background file itself is not.
 
 ##
 ## Project Setup
