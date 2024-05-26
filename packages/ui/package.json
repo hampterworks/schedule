@@ -22,7 +22,8 @@
     "./BackgroundController": "./src/BackgroundController.tsx",
     "./FontSelector": "./src/FontSelector.tsx",
     "./Header": "./src/Header.tsx",
-    "./SliderSelect": "./src/SliderSelect.tsx"
+    "./SliderSelect": "./src/SliderSelect.tsx",
+    "./ToolTip": "./src/ToolTip.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",

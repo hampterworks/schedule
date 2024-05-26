@@ -20,6 +20,12 @@
   gap: 8px;
 }
 
+.inlineItem {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
 .resetButton {
   max-width: 200px;
   height: 56px;

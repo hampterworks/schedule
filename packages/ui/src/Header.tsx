@@ -18,7 +18,7 @@ const HeaderWrapper = styled.header`
     h1 {
         display: flex;
         align-items: center;
-        font-size: 32px;
+        font-size: clamp(24px, 1em, 32px);
         font-variant: small-caps;
         font-weight: bold;
     }

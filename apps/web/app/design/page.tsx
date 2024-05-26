@@ -43,6 +43,9 @@ const Page: React.FC = ({}) => {
   } = useScheduleStore()
 
   return <main className={styles.main}>
+    <div className={styles.warning}>
+      This section is designed to work best in higher resolution / window sizes
+    </div>
     <HeaderController
       headerDesign={headerDesign}
       setMainHeader={setMainHeader}
