@@ -4,3 +4,16 @@
     padding: 16px;
     gap: 16px;
 }
+.warning {
+    display: none;
+    text-align: center;
+    background: red;
+    border-radius: 4px;
+    padding: 8px;
+    color: white;
+}
+@media(max-width: 900px){
+    .warning {
+        display: block;
+    }
+}
