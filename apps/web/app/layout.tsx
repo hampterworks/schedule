@@ -11,6 +11,9 @@ const inter = Inter({subsets: ["latin"]});
 export const metadata: Metadata = {
   title: "Hampter Schedule",
   description: "Generate streaming schedules with time zone and discord support",
+  openGraph: {
+    images: '/schedule/hampter.png'
+  }
 };
 
 const RootLayout: React.FC<{ children: React.ReactNode }> = ({children}) => {
