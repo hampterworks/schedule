@@ -10,6 +10,7 @@ import InputElement from "./InputElement";
 import ButtonWrapper from "./ButtonWrapper";
 import styled from "@emotion/styled";
 import Checkbox from "./Checkbox";
+import {css} from "@emotion/react";
 
 const HeaderWrapper = styled.div`
     display: flex;
@@ -25,18 +26,14 @@ const DateTimeItem = styled.li`
     gap: 8px;
 `
 
-const CheckboxContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    padding: 4px 0;
-    > div {
-        color: rgba(0, 0, 0, 0.6);
-        font-size: 13px;
-        white-space: nowrap;
-        margin-top: 6px;
-    }
-`
-
+/**
+ * @typedef {Object} DateTimeControllerProps
+ * @property {Template[]} templates - An array of templates.
+ * @property {(index: number, templates: Template) => void} setTemplate - A function to set template at a specific index.
+ * @property {(index: number) => void} removeTemplate - A function to remove template at a specific index.
+ * @property {(index: number, template: Template) => void} addTemplateAfter - A function to add a template after a specific index.
+ * @property {React.ComponentPropsWithoutRef<'section'>} [props] - Additional props for the section component.
+ */
 type DateTimeControllerProps = {
   templates: Template[]
   setTemplate: (index: number, templates: Template) => void
@@ -44,6 +41,20 @@ type DateTimeControllerProps = {
   addTemplateAfter: (index: number, template: Template) => void
 } & React.ComponentPropsWithoutRef<'section'>
 
+/**
+ * DateTimeController component is responsible for displaying and managing date and time templates.
+ *
+ * @component
+ * @category Components
+ *
+ * @param {object[]} templates - An array of date and time templates.
+ * @param {function} setTemplate - A function to modify the template at a given index.
+ * @param {function} removeTemplate - A function to remove a template at a given index.
+ * @param {function} addTemplateAfter - A function to add a new template after a given index.
+ * @param {...object} props - Other props to be passed to the component.
+ *
+ * @returns {JSX.Element} The rendered DateTimeController component.
+ */
 const DateTimeController: React.FC<DateTimeControllerProps> = ({templates, setTemplate, removeTemplate, addTemplateAfter, ...props}) => {
   return <section>
     <HeaderWrapper>
@@ -65,22 +76,26 @@ const DateTimeController: React.FC<DateTimeControllerProps> = ({templates, setTe
               label='Time'
               value={template.time !== undefined
                 ? DateTime.fromFormat(template.time, 'HH:mm')
-                : DateTime.fromFormat('00:00', 'HH:mm')}
+                : null}
               onSelect={(selectedTime) => {
                 setTemplate(index, {...template, time: selectedTime.toFormat('HH:mm')})
               }}
               disabled={template.wholeDay ?? false}
             />
-            <CheckboxContainer>
-              <Checkbox
-                title='Whole day'
-                name='name'
-                isChecked={template.wholeDay ?? false}
-                onChecked={isChecked => {
-                  setTemplate(index, {...template, wholeDay: isChecked})
-                }}
-              />
-            </CheckboxContainer>
+            <Checkbox
+              title='Whole day'
+              name='name'
+              isChecked={template.wholeDay ?? false}
+              onChecked={isChecked => {
+                setTemplate(index, {...template, wholeDay: isChecked})
+              }}
+              sx={css`
+                    color: rgba(0, 0, 0, 0.6);
+                    font-size: 13px;
+                    white-space: nowrap;
+                    margin-top: 6px;
+                `}
+            />
             <InputElement
               label='Description'
               type='text'

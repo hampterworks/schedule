@@ -3,8 +3,9 @@
 import React, {useEffect, useState} from "react";
 import Check from "./icons/Check";
 import styled from "@emotion/styled";
+import { css } from "@emotion/react";
 
-const CheckboxWrapper = styled.div`
+const CheckboxWrapper = styled.div<{ $sx?: ReturnType<typeof css> }>`
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -23,6 +24,7 @@ const CheckboxWrapper = styled.div`
         margin-left: -14px;
         margin-top: -4px;
     }
+    ${props => props.$sx}
 `
 
 type CheckboxProps = {
@@ -31,6 +33,7 @@ type CheckboxProps = {
   isChecked?: boolean
   onChecked?: (checked: boolean) => void
   required?: boolean
+  sx?: ReturnType<typeof css>
 } & React.ComponentPropsWithRef<'input'>
 
 const Checkbox: React.ForwardRefRenderFunction<HTMLInputElement, CheckboxProps> = (props, ref) => {
@@ -42,6 +45,7 @@ const Checkbox: React.ForwardRefRenderFunction<HTMLInputElement, CheckboxProps> 
     isChecked,
     onChecked,
     required,
+    sx,
     ...restProps
   } = props
 
@@ -50,7 +54,7 @@ const Checkbox: React.ForwardRefRenderFunction<HTMLInputElement, CheckboxProps> 
       setSelected(isChecked)
   }, [isChecked])
 
-  return <CheckboxWrapper>
+  return <CheckboxWrapper $sx={sx}>
     <Check isToggled={selected} onClick={() => {
       setSelected(!selected)
       if (onChecked !== undefined)

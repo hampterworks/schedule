@@ -13,22 +13,20 @@ import {DateTime} from "luxon";
  */
 type TimePickerElementProps = {
   label?: string,
-  value: DateTime
+  value: DateTime | null
   onSelect?: (selected: DateTime) => void
   disabled?: boolean
 }
 
 /**
  * Represents a time picker element.
- * @component
  *
- * @param {object} props - The component props.
+ * @param {Object} props - The properties for the time picker element.
  * @param {string} props.label - The label for the time picker element.
- * @param {function} props.onSelect - The function to be called when a time is selected.
- * @param {string} props.value - The value of the time picker element.
- * @param {boolean} props.disabled - Indicates whether the time picker element is disabled.
- *
- * @returns {ReactElement} The rendered TimePickerElement component.
+ * @param {Function} props.onSelect - The callback function triggered when a time is selected.
+ * @param {string} props.value - The currently selected time value.
+ * @param {boolean} props.disabled - Indicates if the time picker element is disabled.
+ * @returns {React.Element} The rendered time picker element.
  */
 const TimePickerElement: React.FC<TimePickerElementProps> = (
   {
