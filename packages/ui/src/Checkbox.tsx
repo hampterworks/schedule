@@ -19,11 +19,6 @@ const CheckboxWrapper = styled.div<{ $sx?: ReturnType<typeof css> }>`
         }
     }
     
-    span {
-        display: block;
-        margin-left: -14px;
-        margin-top: -4px;
-    }
     ${props => props.$sx}
 `
 
