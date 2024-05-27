@@ -1,16 +1,14 @@
 "use client";
-import {create, StateCreator, StoreApi, useStore} from 'zustand'
+import {StateCreator, StoreApi, useStore} from 'zustand'
 import {devtools, persist} from 'zustand/middleware'
 import {DateTime} from "luxon";
-import type {} from '@redux-devtools/extension'
 import {createStore} from "zustand/vanilla";
-import {roboto} from "../fonts/googlefonts";
-import {NextFont} from "next/dist/compiled/@next/font";
 
 export type Template = {
   date: DateTime | string,
   time?: string
   description?: string
+  wholeDay?: boolean
 }
 
 export type Color = {
