@@ -75,7 +75,7 @@ const ResultSection: React.FC<ResultSectionProps> = ({templates, timezones}) => 
     const date = (typeof template.date === 'string') ? DateTime.fromISO(template.date) : template.date
     const time = template.time !== undefined ? template.time.split(':') : undefined
 
-    if (time !== undefined) {
+    if (time !== undefined && template.wholeDay !== true) {
       const updatedDate = date.set({hour: parseInt(time[0] ?? '12'), minute: parseInt(time[1] ?? '00')})
       const discordTime = `<t:${Math.floor(updatedDate.toSeconds())}:F> (<t:${Math.floor(updatedDate.toSeconds())}:R>) ${template.description ?? ''}`
 
@@ -95,7 +95,7 @@ const ResultSection: React.FC<ResultSectionProps> = ({templates, timezones}) => 
     return {
       date: date.toFormat('EEEE, MM/d/yyyy'),
       description: template.description,
-      discordTime: `<t:${Math.floor(date.toSeconds())}:F> (<t:${Math.floor(date.toSeconds())}:R>) ${template.description ?? ''}`
+      discordTime: `<t:${Math.floor(date.toSeconds())}:D> (<t:${Math.floor(date.toSeconds())}:R>) ${template.description ?? ''}`
     }
   })
 

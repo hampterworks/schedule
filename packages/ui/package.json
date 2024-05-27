@@ -23,7 +23,8 @@
     "./FontSelector": "./src/FontSelector.tsx",
     "./Header": "./src/Header.tsx",
     "./SliderSelect": "./src/SliderSelect.tsx",
-    "./ToolTip": "./src/ToolTip.tsx"
+    "./ToolTip": "./src/ToolTip.tsx",
+    "./DateTimeController": "./src/DateTimeController.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",

@@ -11,6 +11,7 @@ import AutocompleteElement from "@repo/ui/AutocompleteElement";
 import ResultSection from "@repo/ui/ResultSection";
 import ButtonElement from "@repo/ui/ButtonElement";
 import ToolTip from "@repo/ui/ToolTip";
+import DateTimeController from "@repo/ui/DateTimeController";
 
 const RFX339ToLuxon = (date: string): DateTime => DateTime.fromISO(date)
 
@@ -74,49 +75,12 @@ const Page: React.FC = () => {
           setTimeZones(event)
         }}/>
     </div>
-    <div className={styles.controlItem}>
-      <div className={styles.inlineItem}>
-        Add Time and Description:
-        <ToolTip message="If you wish to select a whole day do not change the default hour"/>
-      </div>
-      <ul className={styles.templateWrapper}>
-        {
-          templates.map((template, index) =>
-            <li key={"template-" + index} className={styles.templateListItem}>
-              <DatePickerElement
-                onSelect={(date) => {
-                  if (date !== null)
-                    setTemplate(index, {...template, date: date})
-                }}
-                value={template.date}
-              />
-              <TimePickerElement
-                label='Time'
-                value={template.time !== undefined
-                  ? DateTime.fromFormat(template.time, 'HH:mm')
-                  : DateTime.fromFormat('00:00', 'HH:mm')}
-                onSelect={(selectedTime) => {
-                  setTemplate(index, {...template, time: selectedTime.toFormat('HH:mm')})
-                }}
-              />
-              <InputElement
-                label='Description'
-                type='text'
-                value={template.description}
-                onInput={inputText => {
-                  setTemplate(index, {...template, description: inputText ?? ''})
-                }}
-              />
-              <ButtonWrapper
-                removeItemFunction={removeTemplate}
-                addItemFunction={addTemplateAfter}
-                index={index}
-                template={template}
-              />
-            </li>)
-        }
-      </ul>
-    </div>
+    <DateTimeController
+      templates={templates}
+      setTemplate={setTemplate}
+      removeTemplate={removeTemplate}
+      addTemplateAfter={addTemplateAfter}
+    />
     <ResultSection templates={templates} timezones={timeZones}/>
   </main>
 }

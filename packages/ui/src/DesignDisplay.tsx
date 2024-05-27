@@ -511,7 +511,7 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
               <DayDetailsWrapper>
                 <DayDescription>{template.description}</DayDescription>
                 {
-                  localTime !== undefined &&
+                  localTime !== undefined && template.wholeDay !== true &&
                   <TimesWrapper>{`${localTime} ${timeZoneList.length !== 0 ? '/ ' : ''}${timeZoneList.join(" / ")}`}</TimesWrapper>
                 }
               </DayDetailsWrapper>
