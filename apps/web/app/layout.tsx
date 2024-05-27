@@ -9,11 +9,11 @@ import Header from "@repo/ui/Header";
 const inter = Inter({subsets: ["latin"]});
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://hampterworks.github.io/schedule/'),
+  metadataBase: new URL('https://hampterworks.github.io/'),
   title: "Hampter Schedule",
   description: "Generate streaming schedules with time zone and discord support",
   openGraph: {
-    images: '/hampter.png'
+    images: '/schedule/hampter.png'
   },
   keywords:[
     'schedule',
