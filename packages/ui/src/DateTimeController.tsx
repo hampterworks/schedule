@@ -84,7 +84,7 @@ const DateTimeController: React.FC<DateTimeControllerProps> = ({templates, setTe
             />
             <Checkbox
               title='Whole day'
-              name='name'
+              name='whole-day-toggle'
               isChecked={template.wholeDay ?? false}
               onChecked={isChecked => {
                 setTemplate(index, {...template, wholeDay: isChecked})
