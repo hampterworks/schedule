@@ -45,17 +45,17 @@ const Header: React.FC<HeaderProps> = ({...props}) => {
     <NavigationWrapper>
       <ul>
         <li>
-          <Link href='/'>
+          <Link href='/' aria-label="Home">
             <ScheduleIcon $sx={iconStyle}/>
           </Link>
         </li>
         <li>
-          <Link href='/design'>
+          <Link href='/design' aria-label="Design">
             <FillIcon $sx={iconStyle}/>
           </Link>
         </li>
         <li>
-          <a href='https://github.com/hampterworks/schedule' target='_blank' rel='noreferrer'>
+          <a href='https://github.com/hampterworks/schedule' target='_blank' rel='noreferrer' aria-label="Github">
             <GithubIcon $sx={css`height: 32px`}/>
           </a>
         </li>

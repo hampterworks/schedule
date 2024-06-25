@@ -57,13 +57,13 @@ function ButtonWrapper<T>
   return <ButtonContainer>
     {
       hideRemove !== true &&
-      <IconButton onClick={() => removeItemFunction(index)}>
+      <IconButton onClick={() => removeItemFunction(index)} aria-label="remove">
         <CancelRoundedIcon/>
       </IconButton>
     }
     {
       hideAdd !== true &&
-      <IconButton onClick={() => addItemFunction(index, template)}>
+      <IconButton onClick={() => addItemFunction(index, template)} aria-label="add">
         <AddCircleRoundedIcon/>
       </IconButton>
     }
