@@ -26,12 +26,6 @@
   gap: 8px;
 }
 
-.resetButton {
-  max-width: 200px;
-  height: 56px;
-  align-self: end;
-}
-
 .main {
   display: flex;
   flex-direction: column;

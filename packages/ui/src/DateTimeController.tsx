@@ -9,8 +9,11 @@ import {DateTime} from "luxon";
 import InputElement from "./InputElement";
 import ButtonWrapper from "./ButtonWrapper";
 import styled from "@emotion/styled";
-import Checkbox from "./Checkbox";
-import {css} from "@emotion/react";
+
+
+import Input from "./components/Input";
+import Checkbox from "./components/Checkbox";
+import {css} from "styled-components";
 
 const HeaderWrapper = styled.div`
     display: flex;
@@ -65,26 +68,27 @@ const DateTimeController: React.FC<DateTimeControllerProps> = ({templates, setTe
       {
         templates.map((template, index) =>
           <DateTimeItem key={"template-" + index}>
-            <DatePickerElement
-              onSelect={(date) => {
+            <Input
+              type='date'
+              value={typeof template.date !== "string"
+                ? template.date.toISODate() ?? ''
+                : DateTime.fromISO(template.date).toISODate() ?? ''}
+              onInput={date => {
                 if (date !== null)
-                  setTemplate(index, {...template, date: date})
+                  setTemplate(index, {...template, date: date as string})
               }}
-              value={template.date}
             />
-            <TimePickerElement
-              label='Time'
-              value={template.time !== undefined
-                ? DateTime.fromFormat(template.time, 'HH:mm')
-                : null}
-              onSelect={(selectedTime) => {
-                setTemplate(index, {...template, time: selectedTime.toFormat('HH:mm')})
+            <Input
+              type='time'
+              value={template.time ?? ''}
+              onInput={selectedTime => {
+                setTemplate(index, {...template, time: (selectedTime as string)})
               }}
               disabled={template.wholeDay ?? false}
             />
             <Checkbox
-              title='Whole day'
-              name='whole-day-toggle'
+              label='Whole day'
+              name='whole-day'
               isChecked={template.wholeDay ?? false}
               onChecked={isChecked => {
                 setTemplate(index, {...template, wholeDay: isChecked})
@@ -96,12 +100,11 @@ const DateTimeController: React.FC<DateTimeControllerProps> = ({templates, setTe
                     margin-top: 6px;
                 `}
             />
-            <InputElement
-              label='Description'
-              type='text'
+            <Input
               value={template.description}
+              placeholder='description'
               onInput={inputText => {
-                setTemplate(index, {...template, description: inputText ?? ''})
+                setTemplate(index, {...template, description: inputText as string ?? ''})
               }}
             />
             <ButtonWrapper
