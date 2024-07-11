@@ -27,7 +27,8 @@
     "./DateTimeController": "./src/DateTimeController.tsx",
     "./Input": "./src/components/Input.tsx",
     "./Button": "./src/components/Button.tsx",
-    "./Checkbox": "./src/components/Checkbox.tsx"
+    "./Checkbox": "./src/components/Checkbox.tsx",
+    "./Select": "./src/components/Select.tsx"
 
   },
   "scripts": {

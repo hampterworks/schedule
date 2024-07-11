@@ -12,6 +12,7 @@ import ToolTip from "@repo/ui/ToolTip";
 import DateTimeController from "@repo/ui/DateTimeController";
 import Input from "@repo/ui/Input";
 import Button from "@repo/ui/Button";
+import Select from "@repo/ui/Select";
 
 const RFX339ToLuxon = (date: string): DateTime => DateTime.fromISO(date)
 
@@ -70,12 +71,15 @@ const Page: React.FC = () => {
         Select timezones: {systemTimeZone}
         <ToolTip message="Your system's timezone is automatically selected."/>
       </div>
-      <AutocompleteElement
-        options={timeZoneList}
-        value={timeZones}
-        onSelect={(event) => {
-          setTimeZones(event)
-        }}/>
+      <Select
+        options={timeZoneList.map(item => ({value: item, title: item}))}
+        selectedValue={timeZones.map(item => ({value: item, title: item}))}
+        onSelectedValue={(event) => {
+          setTimeZones(event.map(item => item.value))
+        }}
+        searchable
+        multiple
+      />
     </div>
     <DateTimeController
       templates={templates}
