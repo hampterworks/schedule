@@ -3,17 +3,11 @@
 import React from "react";
 import {Template} from "web/state/schedule";
 import ToolTip from "./ToolTip";
-import DatePickerElement from "./DatePickerElement";
-import TimePickerElement from "./TimePickerElement";
 import {DateTime} from "luxon";
-import InputElement from "./InputElement";
 import ButtonWrapper from "./ButtonWrapper";
-import styled from "@emotion/styled";
-
-
 import Input from "./components/Input";
 import Checkbox from "./components/Checkbox";
-import {css} from "styled-components";
+import styled, {css} from "styled-components";
 
 const HeaderWrapper = styled.div`
     display: flex;
@@ -23,7 +17,8 @@ const HeaderWrapper = styled.div`
 `
 
 const DateTimeItem = styled.li`
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(100px, 200px) minmax(65px, 150px) 75px minmax(200px, 1fr) 40px;
     justify-content: center;
     align-items: center;
     gap: 8px;
@@ -98,6 +93,8 @@ const DateTimeController: React.FC<DateTimeControllerProps> = ({templates, setTe
                     font-size: 13px;
                     white-space: nowrap;
                     margin-top: 6px;
+                    flex-direction: column;
+                    gap: 2px;
                 `}
             />
             <Input

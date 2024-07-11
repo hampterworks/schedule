@@ -11,15 +11,19 @@ const CheckboxWrapper = styled.div<{ $sx?: ReturnType<typeof css> }>`
     align-items: center;
     gap: 4px;
     position: relative;
+    font-size: 18px;
 
     label, svg {
         cursor: pointer;
-        font-size: 18px;
     }
 
     &:hover {
         svg path:last-of-type {
             display: block;
+        }
+
+        svg path:first-of-type {
+            fill: #6eae5a;
         }
     }
 
