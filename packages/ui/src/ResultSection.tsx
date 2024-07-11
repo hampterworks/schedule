@@ -3,9 +3,9 @@
 import React, {useState} from "react";
 import {Template} from "web/state/schedule";
 import {DateTime} from "luxon";
-import styled from "@emotion/styled";
 import {Snackbar} from "@mui/material";
-import ButtonElement from "./ButtonElement";
+import Button from "./components/Button";
+import styled, {css} from "styled-components";
 
 const ResultWrapper = styled.div`
     display: flex;
@@ -106,23 +106,30 @@ const ResultSection: React.FC<ResultSectionProps> = ({templates, timezones}) => 
         templateWithTimezone.map((item, index) =>
           <li key={item.discordTime + index}>{item.discordTime}</li>)
       }
-      <ButtonElement onClick={() => {
-        navigator.clipboard.writeText(`${templateWithTimezone.map(item => item.discordTime).join('\n')}`)
-          .then(() => setCopyNotice("Text copied successful!"))
-          .catch(error => setCopyNotice("Failed to copy text!"))
-      }}>Copy</ButtonElement>
+      <Button
+        label='Copy'
+        onClick={() => {
+          navigator.clipboard.writeText(`${templateWithTimezone.map(item => item.discordTime).join('\n')}`)
+            .then(() => setCopyNotice("Text copied successful!"))
+            .catch(error => setCopyNotice("Failed to copy text!"))
+        }}
+        sx={css({width: '100%'})}
+      />
     </DiscordDisplay>
     <HeaderWrapper>
       <h2>Generic time format</h2>
-      <ButtonElement onClick={() => {
-        navigator.clipboard.writeText(templateWithTimezone
-          .map(item =>
-            `${item.date}\n${item.description ?? 'No description'}\n${item.timezones !== undefined ? item.timezones.join('\n') : ''}`)
-          .join('\n')
-          .replace('undefined', ''))
-          .then(() => setCopyNotice("Text copied successful!"))
-          .catch(error => setCopyNotice("Failed to copy text!"))
-      }}>Copy All</ButtonElement>
+      <Button
+        label='Copy All'
+        onClick={() => {
+          navigator.clipboard.writeText(templateWithTimezone
+            .map(item =>
+              `${item.date}\n${item.description ?? 'No description'}\n${item.timezones !== undefined ? item.timezones.join('\n') : ''}`)
+            .join('\n')
+            .replace('undefined', ''))
+            .then(() => setCopyNotice("Text copied successful!"))
+            .catch(error => setCopyNotice("Failed to copy text!"))
+        }}
+      />
     </HeaderWrapper>
     <DateDisplay>
       {
@@ -133,11 +140,15 @@ const ResultSection: React.FC<ResultSectionProps> = ({templates, timezones}) => 
             <ul>
               {template.timezones?.map(timezone => <li key={timezone}>- {timezone}</li>)}
             </ul>
-            <ButtonElement onClick={() => {
-              navigator.clipboard.writeText(`${template.date}\n${template.description}\n${template.timezones?.join('\n')}`)
-                .then(() => setCopyNotice("Text copied successful!"))
-                .catch(error => setCopyNotice("Failed to copy text!"))
-            }}>Copy</ButtonElement>
+            <Button
+              label='Copy'
+              onClick={() => {
+                navigator.clipboard.writeText(`${template.date}\n${template.description}\n${template.timezones?.join('\n')}`)
+                  .then(() => setCopyNotice("Text copied successful!"))
+                  .catch(error => setCopyNotice("Failed to copy text!"))
+              }}
+              sx={css({width: '100%'})}
+            />
           </li>
         )
       }
