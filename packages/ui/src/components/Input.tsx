@@ -16,7 +16,8 @@ const InputWrapper = styled.div<
   {
     $iconLeft: boolean,
     $iconRight: boolean,
-    $isInvalid: boolean
+    $isInvalid: boolean,
+    $disabled: boolean
   }>
   `
       --text-padding: 28px;
@@ -49,6 +50,20 @@ const InputWrapper = styled.div<
           }
 
           ${props => props.$isInvalid && css`border: 3px solid red;`}
+
+          &::-webkit-calendar-picker-indicator {
+              cursor: pointer;
+          }
+          
+          &::placeholder {
+              color: gray;
+              opacity: 1; /* Firefox */
+          }
+          
+          ${props => props.$disabled && css`
+            cursor: not-allowed;
+              color: gray;
+          `}
       }
   `
 
@@ -148,6 +163,7 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, InputProps> = (pro
     requiredTitle,
     isInvalid,
     onInput,
+    disabled,
     ...restProps
   } = props
 
@@ -168,6 +184,7 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, InputProps> = (pro
       $iconLeft={iconLeft !== undefined}
       $iconRight={iconRight !== undefined}
       $isInvalid={isInvalid ?? false}
+      $disabled={disabled ?? false}
     >
       {
         props.iconLeft !== undefined && <IconLeft>
@@ -187,6 +204,7 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, InputProps> = (pro
         onFocus={onFocus}
         onBlur={onBlur}
         required={required}
+        disabled={disabled}
         {...restProps}
       />
       {
