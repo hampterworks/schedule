@@ -28,7 +28,8 @@
     "./Input": "./src/components/Input.tsx",
     "./Button": "./src/components/Button.tsx",
     "./Checkbox": "./src/components/Checkbox.tsx",
-    "./Select": "./src/components/Select.tsx"
+    "./Select": "./src/components/Select.tsx",
+    "./Notifications": "./src/components/Notifications.tsx"
 
   },
   "scripts": {

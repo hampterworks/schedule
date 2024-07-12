@@ -3,14 +3,15 @@
 import React, {useState} from "react";
 import {Template} from "web/state/schedule";
 import {DateTime} from "luxon";
-import {Snackbar} from "@mui/material";
 import Button from "./components/Button";
 import styled, {css} from "styled-components";
+import Notifications from "./components/Notifications";
 
 const ResultWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 16px;
+    
     ul {
         width: 100%;
     }
@@ -155,11 +156,9 @@ const ResultSection: React.FC<ResultSectionProps> = ({templates, timezones}) => 
     </DateDisplay>
     {
       copyNotice !== null &&
-      <Snackbar
-        open={true}
-        autoHideDuration={2000}
-        onClose={() => setCopyNotice(null)}
+      <Notifications
         message={copyNotice}
+        onClose={() => setCopyNotice(null)}
       />
     }
   </ResultWrapper>
