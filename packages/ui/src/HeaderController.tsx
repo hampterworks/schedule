@@ -2,13 +2,13 @@
 
 import React from "react";
 import CollapsibleSection from "./CollapsibleSection";
-import InputElement from "./InputElement";
 import ColorPicker from "./ColorPicker";
 import AlignmentPicker from "./AlignmentPicker";
 import {AlignmentFn, ColorFn, Font, HeaderDesign} from "web/state/schedule";
 import FontSelect from "./FontSelect";
 import styled from "@emotion/styled";
 import SliderSelect from "./SliderSelect";
+import Input from "./components/Input";
 
 const FontContainer = styled.div`
     display: flex;
@@ -80,13 +80,14 @@ const HeaderController: React.FC<HeaderControllerProps> = (
     setSubHeaderColor,
     ...props
   }) => {
+
   return <CollapsibleSection title='Header' {...props}>
-    <InputElement
+    <Input
       label='Header Text:'
-      type='text'
+      placeholder='Edit header text'
       value={headerDesign.headerText}
       onInput={inputText =>
-        setMainHeader(inputText ?? '')}
+        setMainHeader((inputText as string) ?? '')}
     />
     <FontContainer>
       <FontSelect

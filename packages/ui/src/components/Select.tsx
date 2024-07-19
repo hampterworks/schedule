@@ -56,7 +56,7 @@ const DropDown = styled.ul`
     color: black;
     width: 100%;
     max-height: 350px;
-    overflow-y: scroll;
+    overflow-y: auto;
     border-radius: 4px;
     border: 1px solid gray;
     z-index: 9001;
@@ -69,10 +69,13 @@ const DropDown = styled.ul`
  * @property {boolean} $isSelected - Determines whether the list item is selected with keyboard input.
  */
 const ListItem = styled.li<{ $isSelected: boolean }>`
-    border-bottom: 1px solid black;
     cursor: pointer;
     background: white;
 
+    &:not(:last-of-type) {
+        border-bottom: 1px solid black;
+    }
+    
     div {
         display: flex;
         gap: 8px;

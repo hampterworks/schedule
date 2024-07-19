@@ -126,7 +126,7 @@ let initialState: ScheduleState = {
     headerText: 'Edit header',
     headerFont: {
       className: '',
-      key: 'none',
+      key: 'Default',
       weight: '400'
     },
     headerTextColor: { r: 0, g: 0, b: 0, a: 1 },
@@ -135,7 +135,7 @@ let initialState: ScheduleState = {
     headerTextSize: 24,
     subHeaderFont: {
       className: '',
-      key: 'none',
+      key: 'Default',
       weight: '400'
     },
     subHeaderTextSize: 16,
