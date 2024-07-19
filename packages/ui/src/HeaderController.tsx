@@ -9,6 +9,7 @@ import FontSelect from "./FontSelect";
 import styled from "@emotion/styled";
 import SliderSelect from "./SliderSelect";
 import Input from "./components/Input";
+import RangeSlider from "./components/RangeSlider";
 
 const FontContainer = styled.div`
     display: flex;
@@ -121,19 +122,23 @@ const HeaderController: React.FC<HeaderControllerProps> = (
         colorValue={headerDesign.subHeaderTextColor}
         setColor={setSubHeaderColor}
       />
-      <SliderSelect
-        title='Header Font Size'
-        size={headerDesign.headerTextSize}
+      <RangeSlider
+        label='Header Font Size'
+        value={headerDesign.headerTextSize}
         min={10}
         max={55}
-        fontSizeSetter={setHeaderSize}
+        onSelected={event => {
+          setHeaderSize(parseInt(event))
+        }}
       />
-      <SliderSelect
-        title='Sub-header Font Size'
-        size={headerDesign.subHeaderTextSize}
+      <RangeSlider
+        label='Sub-header Font Size'
+        value={headerDesign.subHeaderTextSize}
         min={10}
         max={55}
-        fontSizeSetter={setSubHeaderSize}
+        onSelected={event => {
+          setSubHeaderSize(parseInt(event))
+        }}
       />
     </ControlsContainer>
   </CollapsibleSection>

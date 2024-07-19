@@ -29,7 +29,8 @@
     "./Button": "./src/components/Button.tsx",
     "./Checkbox": "./src/components/Checkbox.tsx",
     "./Select": "./src/components/Select.tsx",
-    "./Notifications": "./src/components/Notifications.tsx"
+    "./Notifications": "./src/components/Notifications.tsx",
+    "./RangeSlider": "./src/components/RangeSlider.tsx"
 
   },
   "scripts": {
