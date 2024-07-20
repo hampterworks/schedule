@@ -14,7 +14,6 @@ import RequiredLabel from "./RequiredLabel";
  */
 const SelectWrapper = styled.div<{ $sx?: ReturnType<typeof css> }>`
     position: relative;
-    margin: 8px 0;
     display: flex;
     flex-direction: column;
     gap: 8px;

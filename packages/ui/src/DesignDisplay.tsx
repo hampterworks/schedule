@@ -19,6 +19,7 @@ import styled from "@emotion/styled";
 import html2canvas from 'html2canvas';
 import ButtonElement from "./ButtonElement";
 import {css} from "@emotion/react";
+import Button from "./components/Button";
 
 const DesignResults = styled.div<{
   background: string,
@@ -233,9 +234,9 @@ const FileUpload = styled.label`
     justify-content: center;
     width: 200px;
     cursor: pointer;
-
-    padding: 8px;
-    border-radius: 2px;
+    
+    height: 37px;
+    border-radius: 4px;
     border: 1px solid gray;
 
     &:hover {
@@ -450,10 +451,14 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
           onChange={handleUpload}
         />
       </FileUpload>
-      <ButtonElement onClick={takeScreenshot} disabled={isUploading}>Take screenshot</ButtonElement>
+      <Button
+        label='Take screenshot'
+        onClick={takeScreenshot}
+        disabled={isUploading}
+      />
       {
         screenshotDataUrl && <a href={screenshotDataUrl} download="screenshot.png">
-          <ButtonElement>Download screenshot</ButtonElement>
+          <Button label='Download screenshot'/>
         </a>
       }
     </UploadContainer>
@@ -522,7 +527,7 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
       <SocialsWrapper $alignment={socialsDesign.socialsAlignment}>
         {
           socials.map((item, index) => {
-            if (item.network !== 'none' && item.tag !== undefined) {
+            if (item.network !== 'None' && item.tag !== undefined) {
               return <li key={item.network + index}>
                 {getSocialNetworkIcon(item.network)}
                 <span>{item.tag}</span>

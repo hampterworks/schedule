@@ -4,15 +4,14 @@ import React from "react";
 import CollapsibleSection from "./CollapsibleSection";
 import AlignmentPicker from "./AlignmentPicker";
 import {AlignmentFn, SocialNetworks, Socials, SocialsDesign} from "web/state/schedule";
-import {MenuItem, TextField} from "@mui/material";
-import InputElement from "./InputElement";
 import ButtonWrapper from "./ButtonWrapper";
 import styled from "@emotion/styled";
+import Input from "./components/Input";
+import Select from "./components/Select";
 
 const SocialsToolbar = styled.div`
     width: 100%;
     display: flex;
-    align-items: center;
     gap: 16px;
 `
 const SocialsContainer = styled.div`
@@ -63,43 +62,54 @@ const SocialsController: React.FC<SocialsControllerProps> = (
     ...props
   }) => {
   return <CollapsibleSection title='Socials and credits' {...props}>
-    <InputElement
-      label='Credits'
-      type='text'
+    <Input
+      label='Credits Tag'
       value={creditsTag}
       onInput={inputText => {
-        setCreditsTag(inputText ?? '')
+        setCreditsTag((inputText as string) ?? '')
       }}
     />
     <SocialsContainer>
       {
         socials.map((item, index) => <SocialsToolbar key={item.network + index}>
-          <TextField
-            select
+          <Select
             label='Select Network'
-            value={socials[index]?.network}
-            onChange={(event) => {
-              addSocials((index), {...socials[index], network: event.target.value as SocialNetworks})
+            selectedValue={{value: socials[index]?.network ?? 'none', title: socials[index]?.network ?? 'None'}}
+            options={
+              [
+                {
+                  title: 'None',
+                  value: 'none'
+                },
+                {
+                  title: 'Twitch',
+                  value: 'twitch'
+                },
+                {
+                  title: 'Youtube',
+                  value: 'youtube'
+                },
+                {
+                  title: 'Twitter',
+                  value: 'twitter'
+                }
+              ]
+            }
+            onSelectedValue={(event) => {
+              addSocials((index), {...socials[index], network: event[0]?.value as SocialNetworks})
             }}
-            style={{flexBasis: '200px'}}
-          >
-            <MenuItem value='none'>None</MenuItem>
-            <MenuItem value='twitch'>Twitch</MenuItem>
-            <MenuItem value='youtube'>Youtube</MenuItem>
-            <MenuItem value='twitter'>Twitter</MenuItem>
-          </TextField>
-          <InputElement
-            label='Tag'
-            type='text'
+          />
+          <Input
+            label='Social Tag'
             value={item.tag}
             onInput={inputText => {
-              const network = socials[index]?.network ?? 'none'
-              addSocials(index, {network, tag: inputText ?? ''})
+              const network = socials[index]?.network ?? 'None'
+              addSocials(index, {network, tag: (inputText as string) ?? ''})
             }}
           />
           <ButtonWrapper
             addItemFunction={() => {
-              addSocials((socials.length + 1), {network: 'none'})
+              addSocials((socials.length + 1), {network: 'None'})
             }}
             removeItemFunction={removeSocials}
             index={index}
