@@ -2,8 +2,7 @@
 
 import React, {useEffect, useState} from "react";
 import Check from "./icons/Check";
-import styled from "@emotion/styled";
-import { css } from "@emotion/react";
+import styled, { css } from "styled-components";
 
 const CheckboxWrapper = styled.div<{ $sx?: ReturnType<typeof css> }>`
     display: flex;

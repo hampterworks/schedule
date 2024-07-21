@@ -15,11 +15,9 @@ import {
   Template
 } from "web/state/schedule";
 import {DateTime} from "luxon";
-import styled from "@emotion/styled";
 import html2canvas from 'html2canvas';
-import ButtonElement from "./ButtonElement";
-import {css} from "@emotion/react";
 import Button from "./components/Button";
+import styled, {css} from "styled-components";
 
 const DesignResults = styled.div<{
   background: string,

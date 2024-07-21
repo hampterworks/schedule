@@ -5,9 +5,9 @@ import CollapsibleSection from "./CollapsibleSection";
 import AlignmentPicker from "./AlignmentPicker";
 import {AlignmentFn, SocialNetworks, Socials, SocialsDesign} from "web/state/schedule";
 import ButtonWrapper from "./ButtonWrapper";
-import styled from "@emotion/styled";
 import Input from "./components/Input";
 import Select from "./components/Select";
+import styled from "styled-components";
 
 const SocialsToolbar = styled.div`
     width: 100%;

@@ -2,10 +2,9 @@
 
 import React from "react";
 import {holtwoodOneSC, merriweather, peralta, roboto, robotoSlab} from "web/fonts/googlefonts"
-import {MenuItem, TextField} from "@mui/material";
 import {Font} from "web/state/schedule";
-import styled from "@emotion/styled";
 import Select from "./components/Select";
+import styled from "styled-components";
 
 const FontSelectorWrapper = styled.div`
     display: flex;

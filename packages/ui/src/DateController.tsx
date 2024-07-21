@@ -5,7 +5,7 @@ import CollapsibleSection from "./CollapsibleSection";
 import ColorPicker from "./ColorPicker";
 import AlignmentPicker from "./AlignmentPicker";
 import {AlignmentFn, ColorFn, DateDesign} from "web/state/schedule";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 const DateContainer = styled.div`
     display: flex;

@@ -5,9 +5,8 @@ import CollapsibleSection from "./CollapsibleSection";
 import {BackgroundDesign, BackgroundPosition, BackgroundSize, ColorFn} from "web/state/schedule";
 import ColorPicker from "./ColorPicker";
 import PositionSelector from "./PositionSelector";
-import SliderSelect from "./SliderSelect";
-import styled from "@emotion/styled";
 import RangeSlider from "./components/RangeSlider";
+import styled from "styled-components";
 
 const BackgroundContainer = styled.div`
     display: flex;

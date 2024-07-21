@@ -8,7 +8,6 @@
     "./InputElement": "./src/InputElement.tsx",
     "./TimePickerElement": "./src/TimePickerElement.tsx",
     "./ButtonWrapper": "./src/ButtonWrapper.tsx",
-    "./AutocompleteElement": "./src/AutocompleteElement.tsx",
     "./ResultSection": "./src/ResultSection.tsx",
     "./ButtonElement": "./src/ButtonElement.tsx",
     "./DesignDisplay": "./src/DesignDisplay.tsx",
@@ -51,11 +50,6 @@
     "typescript": "5.2.2"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.15.9",
-    "@mui/material": "^5.15.9",
-    "@mui/x-date-pickers": "^6.19.4",
     "luxon": "^3.4.4",
     "react-colorful": "^5.6.1",
     "styled-components": "^6.1.11",

@@ -6,10 +6,9 @@ import ColorPicker from "./ColorPicker";
 import AlignmentPicker from "./AlignmentPicker";
 import {AlignmentFn, ColorFn, Font, HeaderDesign} from "web/state/schedule";
 import FontSelect from "./FontSelect";
-import styled from "@emotion/styled";
-import SliderSelect from "./SliderSelect";
 import Input from "./components/Input";
 import RangeSlider from "./components/RangeSlider";
+import styled from "styled-components";
 
 const FontContainer = styled.div`
     display: flex;
