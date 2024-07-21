@@ -2,5 +2,8 @@
 module.exports = {
   output: "export",
   basePath: '/schedule',
-  transpilePackages: ["@repo/ui"]
+  transpilePackages: ["@repo/ui"],
+  compiler: {
+    styledComponents: true,
+  }
 };

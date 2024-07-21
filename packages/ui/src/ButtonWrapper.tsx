@@ -1,16 +1,15 @@
 "use client"
-import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
-import {IconButton} from "@mui/material";
 import React from "react";
-import styled from "@emotion/styled";
+import Button from "./components/Button";
+import styled from "styled-components";
+import CancelRoundedIcon from "./icons/CancelRoundedIcon";
+import AddCircleRoundedIcon from "./icons/AddCircleRoundedIcon";
 
 const ButtonContainer = styled.div`
     display: flex;
-    flex-basis: 40px;
+    justify-content: flex-end;
+    align-items: flex-end;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
 `
 /**
  * Represents the props for the ButtonWrapper component.
@@ -57,15 +56,21 @@ function ButtonWrapper<T>
   return <ButtonContainer>
     {
       hideRemove !== true &&
-      <IconButton onClick={() => removeItemFunction(index)} aria-label="remove">
-        <CancelRoundedIcon/>
-      </IconButton>
+      <Button
+        onClick={() => removeItemFunction(index)}
+        aria-label="remove"
+        icon={<CancelRoundedIcon/>}
+        iconButton
+      />
     }
     {
       hideAdd !== true &&
-      <IconButton onClick={() => addItemFunction(index, template)} aria-label="add">
-        <AddCircleRoundedIcon/>
-      </IconButton>
+      <Button
+        onClick={() => addItemFunction(index, template)}
+        aria-label="add"
+        icon={<AddCircleRoundedIcon/>}
+        iconButton
+      />
     }
   </ButtonContainer>
 }

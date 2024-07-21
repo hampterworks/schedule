@@ -4,27 +4,27 @@
   "private": true,
   "exports": {
     "./ApplicationFrame": "./src/ApplicationFrame.tsx",
-    "./DatePickerElement": "./src/DatePickerElement.tsx",
-    "./InputElement": "./src/InputElement.tsx",
-    "./TimePickerElement": "./src/TimePickerElement.tsx",
     "./ButtonWrapper": "./src/ButtonWrapper.tsx",
-    "./AutocompleteElement": "./src/AutocompleteElement.tsx",
     "./ResultSection": "./src/ResultSection.tsx",
-    "./ButtonElement": "./src/ButtonElement.tsx",
     "./DesignDisplay": "./src/DesignDisplay.tsx",
     "./CollapsibleSection": "./src/CollapsibleSection.tsx",
-    "./ColorPicker": "./src/ColorPicker.tsx",
-    "./AlignmentPicker": "./src/AlignmentPicker.tsx",
+    "./ColorPicker": "./src/components/ColorPicker.tsx",
+    "./AlignmentPicker": "./src/components/AlignmentPicker.tsx",
     "./PositionSelector": "./src/PositionSelector.tsx",
-    "./HeaderController": "./src/HeaderController.tsx",
-    "./DateController": "./src/DateController.tsx",
-    "./SocialsController": "./src/SocialsController.tsx",
-    "./BackgroundController": "./src/BackgroundController.tsx",
+    "./HeaderSection": "./src/HeaderSection.tsx",
+    "./DateSection": "./src/DateSection.tsx",
+    "./SocialsSection": "./src/SocialsSection.tsx",
+    "./BackgroundSection": "./src/BackgroundSection.tsx",
     "./FontSelector": "./src/FontSelector.tsx",
     "./Header": "./src/Header.tsx",
-    "./SliderSelect": "./src/SliderSelect.tsx",
-    "./ToolTip": "./src/ToolTip.tsx",
-    "./DateTimeController": "./src/DateTimeController.tsx"
+    "./ToolTip": "./src/components/ToolTip.tsx",
+    "./DateTimeSection": "./src/DateTimeSection.tsx",
+    "./Input": "./src/components/Input.tsx",
+    "./Button": "./src/components/Button.tsx",
+    "./Checkbox": "./src/components/Checkbox.tsx",
+    "./Select": "./src/components/Select.tsx",
+    "./Notifications": "./src/components/Notifications.tsx",
+    "./RangeSlider": "./src/components/RangeSlider.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
@@ -44,13 +44,9 @@
     "typescript": "5.2.2"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.15.9",
-    "@mui/material": "^5.15.9",
-    "@mui/x-date-pickers": "^6.19.4",
     "luxon": "^3.4.4",
     "react-colorful": "^5.6.1",
+    "styled-components": "^6.1.11",
     "typescript": "^5.4.5"
   }
 }

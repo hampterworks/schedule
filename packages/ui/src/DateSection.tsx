@@ -2,10 +2,10 @@
 
 import React from "react";
 import CollapsibleSection from "./CollapsibleSection";
-import ColorPicker from "./ColorPicker";
-import AlignmentPicker from "./AlignmentPicker";
 import {AlignmentFn, ColorFn, DateDesign} from "web/state/schedule";
-import styled from "@emotion/styled";
+import styled from "styled-components";
+import AlignmentPicker from "./components/AlignmentPicker";
+import ColorPicker from "./components/ColorPicker";
 
 const DateContainer = styled.div`
     display: flex;
@@ -49,7 +49,7 @@ type DateControllerProps = {
  *
  * @returns {JSX.Element} DateController component.
  */
-const DateController: React.FC<DateControllerProps> = (
+const DateSection: React.FC<DateControllerProps> = (
   {
     dateDesign,
     setDateAlignment,
@@ -89,4 +89,4 @@ const DateController: React.FC<DateControllerProps> = (
   </CollapsibleSection>
 }
 
-export default DateController
+export default DateSection

@@ -1,9 +1,9 @@
 'use client'
 
 import * as React from "react";
-import styled from "@emotion/styled";
 import {useEffect, useState} from "react";
 import {Alignment} from "web/state/schedule";
+import styled from "styled-components";
 
 const AlignmentWrapper = styled.div`
     display: flex;

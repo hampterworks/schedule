@@ -2,15 +2,12 @@
 
 import React from "react";
 import {Template} from "web/state/schedule";
-import ToolTip from "./ToolTip";
-import DatePickerElement from "./DatePickerElement";
-import TimePickerElement from "./TimePickerElement";
 import {DateTime} from "luxon";
-import InputElement from "./InputElement";
 import ButtonWrapper from "./ButtonWrapper";
-import styled from "@emotion/styled";
-import Checkbox from "./Checkbox";
-import {css} from "@emotion/react";
+import Input from "./components/Input";
+import Checkbox from "./components/Checkbox";
+import styled, {css} from "styled-components";
+import ToolTip from "./components/ToolTip";
 
 const HeaderWrapper = styled.div`
     display: flex;
@@ -20,7 +17,8 @@ const HeaderWrapper = styled.div`
 `
 
 const DateTimeItem = styled.li`
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(100px, 200px) minmax(65px, 150px) 75px minmax(200px, 1fr) 40px;
     justify-content: center;
     align-items: center;
     gap: 8px;
@@ -55,7 +53,7 @@ type DateTimeControllerProps = {
  *
  * @returns {JSX.Element} The rendered DateTimeController component.
  */
-const DateTimeController: React.FC<DateTimeControllerProps> = ({templates, setTemplate, removeTemplate, addTemplateAfter, ...props}) => {
+const DateTimeSection: React.FC<DateTimeControllerProps> = ({templates, setTemplate, removeTemplate, addTemplateAfter, ...props}) => {
   return <section>
     <HeaderWrapper>
       Add Time and Description:
@@ -65,26 +63,27 @@ const DateTimeController: React.FC<DateTimeControllerProps> = ({templates, setTe
       {
         templates.map((template, index) =>
           <DateTimeItem key={"template-" + index}>
-            <DatePickerElement
-              onSelect={(date) => {
+            <Input
+              type='date'
+              value={typeof template.date !== "string"
+                ? template.date.toISODate() ?? ''
+                : DateTime.fromISO(template.date).toISODate() ?? ''}
+              onInput={date => {
                 if (date !== null)
-                  setTemplate(index, {...template, date: date})
+                  setTemplate(index, {...template, date: date as string})
               }}
-              value={template.date}
             />
-            <TimePickerElement
-              label='Time'
-              value={template.time !== undefined
-                ? DateTime.fromFormat(template.time, 'HH:mm')
-                : null}
-              onSelect={(selectedTime) => {
-                setTemplate(index, {...template, time: selectedTime.toFormat('HH:mm')})
+            <Input
+              type='time'
+              value={template.time ?? ''}
+              onInput={selectedTime => {
+                setTemplate(index, {...template, time: (selectedTime as string)})
               }}
               disabled={template.wholeDay ?? false}
             />
             <Checkbox
-              title='Whole day'
-              name='whole-day-toggle'
+              label='Whole day'
+              name='whole-day'
               isChecked={template.wholeDay ?? false}
               onChecked={isChecked => {
                 setTemplate(index, {...template, wholeDay: isChecked})
@@ -94,14 +93,15 @@ const DateTimeController: React.FC<DateTimeControllerProps> = ({templates, setTe
                     font-size: 13px;
                     white-space: nowrap;
                     margin-top: 6px;
+                    flex-direction: column;
+                    gap: 2px;
                 `}
             />
-            <InputElement
-              label='Description'
-              type='text'
+            <Input
               value={template.description}
+              placeholder='description'
               onInput={inputText => {
-                setTemplate(index, {...template, description: inputText ?? ''})
+                setTemplate(index, {...template, description: inputText as string ?? ''})
               }}
             />
             <ButtonWrapper
@@ -116,4 +116,4 @@ const DateTimeController: React.FC<DateTimeControllerProps> = ({templates, setTe
   </section>
 }
 
-export default DateTimeController
+export default DateTimeSection

@@ -61,7 +61,7 @@ export type BackgroundDesign = {
 export type SocialNetworks = 'twitch' | 'twitter' | 'youtube'
 
 export type Socials = {
-  network: SocialNetworks | 'none'
+  network: SocialNetworks | 'None'
   tag?: string
 }
 
@@ -126,7 +126,7 @@ let initialState: ScheduleState = {
     headerText: 'Edit header',
     headerFont: {
       className: '',
-      key: 'none',
+      key: 'Default',
       weight: '400'
     },
     headerTextColor: { r: 0, g: 0, b: 0, a: 1 },
@@ -135,7 +135,7 @@ let initialState: ScheduleState = {
     headerTextSize: 24,
     subHeaderFont: {
       className: '',
-      key: 'none',
+      key: 'Default',
       weight: '400'
     },
     subHeaderTextSize: 16,
@@ -148,7 +148,7 @@ let initialState: ScheduleState = {
     dateDayTextColor: { r: 0, g: 0, b: 0, a: 1 },
     dateDescriptionTextColor: { r: 0, g: 0, b: 0, a: 1 },
   },
-  socials: [{network: 'none',}],
+  socials: [{network: 'None',}],
   socialsDesign: {
     socialsAlignment: 'right'
   },

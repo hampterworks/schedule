@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useCallback, useEffect, useMemo, useState} from "react";
-import styled from "@emotion/styled";
 import {BackgroundPosition} from "web/state/schedule";
+import styled from "styled-components";
 
 const PositionSelectorWrapper = styled.div`
     color: rgba(0, 0, 0, 0.6);

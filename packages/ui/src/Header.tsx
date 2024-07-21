@@ -3,10 +3,9 @@
 import React from "react";
 import ScheduleIcon from "./icons/ScheduleIcon";
 import FillIcon from "./icons/FillIcon";
-import {css} from "@emotion/react";
 import Link from "next/link";
-import styled from "@emotion/styled";
 import GithubIcon from "./icons/githubIcon";
+import styled, {css} from "styled-components";
 
 const HeaderWrapper = styled.header`
     display: flex;

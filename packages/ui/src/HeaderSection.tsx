@@ -2,13 +2,13 @@
 
 import React from "react";
 import CollapsibleSection from "./CollapsibleSection";
-import InputElement from "./InputElement";
-import ColorPicker from "./ColorPicker";
-import AlignmentPicker from "./AlignmentPicker";
 import {AlignmentFn, ColorFn, Font, HeaderDesign} from "web/state/schedule";
 import FontSelect from "./FontSelect";
-import styled from "@emotion/styled";
-import SliderSelect from "./SliderSelect";
+import Input from "./components/Input";
+import RangeSlider from "./components/RangeSlider";
+import styled from "styled-components";
+import AlignmentPicker from "./components/AlignmentPicker";
+import ColorPicker from "./components/ColorPicker";
 
 const FontContainer = styled.div`
     display: flex;
@@ -66,7 +66,7 @@ type HeaderControllerProps = {
  *
  * @returns {JSX.Element} - The rendered HeaderController component.
  */
-const HeaderController: React.FC<HeaderControllerProps> = (
+const HeaderSection: React.FC<HeaderControllerProps> = (
   {
     headerDesign,
     setMainHeader,
@@ -80,13 +80,14 @@ const HeaderController: React.FC<HeaderControllerProps> = (
     setSubHeaderColor,
     ...props
   }) => {
+
   return <CollapsibleSection title='Header' {...props}>
-    <InputElement
+    <Input
       label='Header Text:'
-      type='text'
+      placeholder='Edit header text'
       value={headerDesign.headerText}
       onInput={inputText =>
-        setMainHeader(inputText ?? '')}
+        setMainHeader((inputText as string) ?? '')}
     />
     <FontContainer>
       <FontSelect
@@ -120,22 +121,26 @@ const HeaderController: React.FC<HeaderControllerProps> = (
         colorValue={headerDesign.subHeaderTextColor}
         setColor={setSubHeaderColor}
       />
-      <SliderSelect
-        title='Header Font Size'
-        size={headerDesign.headerTextSize}
+      <RangeSlider
+        label='Header Font Size'
+        value={headerDesign.headerTextSize}
         min={10}
         max={55}
-        fontSizeSetter={setHeaderSize}
+        onSelected={event => {
+          setHeaderSize(parseInt(event))
+        }}
       />
-      <SliderSelect
-        title='Sub-header Font Size'
-        size={headerDesign.subHeaderTextSize}
+      <RangeSlider
+        label='Sub-header Font Size'
+        value={headerDesign.subHeaderTextSize}
         min={10}
         max={55}
-        fontSizeSetter={setSubHeaderSize}
+        onSelected={event => {
+          setSubHeaderSize(parseInt(event))
+        }}
       />
     </ControlsContainer>
   </CollapsibleSection>
 }
 
-export default HeaderController
+export default HeaderSection

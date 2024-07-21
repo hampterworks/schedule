@@ -3,10 +3,10 @@
 import React from "react";
 import CollapsibleSection from "./CollapsibleSection";
 import {BackgroundDesign, BackgroundPosition, BackgroundSize, ColorFn} from "web/state/schedule";
-import ColorPicker from "./ColorPicker";
 import PositionSelector from "./PositionSelector";
-import SliderSelect from "./SliderSelect";
-import styled from "@emotion/styled";
+import RangeSlider from "./components/RangeSlider";
+import styled from "styled-components";
+import ColorPicker from "./components/ColorPicker";
 
 const BackgroundContainer = styled.div`
     display: flex;
@@ -39,7 +39,7 @@ type BackgroundControllerProps = {
  * @param {Object} props - Other props to be passed to the component.
  * @returns {JSX.Element} - The rendered BackgroundController component.
  */
-const BackgroundController: React.FC<BackgroundControllerProps> = (
+const BackgroundSection: React.FC<BackgroundControllerProps> = (
   {
     backgroundDesign,
     setBackgroundColor,
@@ -54,13 +54,13 @@ const BackgroundController: React.FC<BackgroundControllerProps> = (
         colorValue={backgroundDesign.backgroundColor}
         setColor={setBackgroundColor}
       />
-      <SliderSelect
-        title='Background Size'
-        size={backgroundDesign.backgroundSize === 'auto' ? 100 : parseInt(backgroundDesign.backgroundSize.replace('%', ''))}
+      <RangeSlider
+        label={'Background Size'}
         min={10}
         max={200}
         step={10}
-        fontSizeSetter={(value) => setBackgroundSize(value + '%')}
+        value={backgroundDesign.backgroundSize === 'auto' ? 100 : parseInt(backgroundDesign.backgroundSize.replace('%', ''))}
+        onSelected={(value) => setBackgroundSize(value + '%')}
       />
     </BackgroundContainer>
     <PositionSelector
@@ -70,4 +70,4 @@ const BackgroundController: React.FC<BackgroundControllerProps> = (
   </CollapsibleSection>
 }
 
-export default BackgroundController
+export default BackgroundSection

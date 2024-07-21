@@ -1,8 +1,7 @@
 "use client"
 
 import React from "react";
-import styled from "@emotion/styled";
-import {css} from "@emotion/react";
+import styled, { css } from "styled-components";
 
 const IconWrapper = styled.svg<{ $isToggled: boolean }>`
     height: 18px;
