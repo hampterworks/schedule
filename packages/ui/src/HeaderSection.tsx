@@ -2,13 +2,13 @@
 
 import React from "react";
 import CollapsibleSection from "./CollapsibleSection";
-import ColorPicker from "./ColorPicker";
-import AlignmentPicker from "./AlignmentPicker";
 import {AlignmentFn, ColorFn, Font, HeaderDesign} from "web/state/schedule";
 import FontSelect from "./FontSelect";
 import Input from "./components/Input";
 import RangeSlider from "./components/RangeSlider";
 import styled from "styled-components";
+import AlignmentPicker from "./components/AlignmentPicker";
+import ColorPicker from "./components/ColorPicker";
 
 const FontContainer = styled.div`
     display: flex;
@@ -66,7 +66,7 @@ type HeaderControllerProps = {
  *
  * @returns {JSX.Element} - The rendered HeaderController component.
  */
-const HeaderController: React.FC<HeaderControllerProps> = (
+const HeaderSection: React.FC<HeaderControllerProps> = (
   {
     headerDesign,
     setMainHeader,
@@ -143,4 +143,4 @@ const HeaderController: React.FC<HeaderControllerProps> = (
   </CollapsibleSection>
 }
 
-export default HeaderController
+export default HeaderSection

@@ -4,7 +4,7 @@ import * as React from "react";
 import {RgbaColorPicker} from "react-colorful";
 import {Color} from "web/state/schedule";
 import {useRef, useState} from "react";
-import useClickOutside from "./hooks/useClickOutside";
+import useClickOutside from "../hooks/useClickOutside";
 import styled from "styled-components";
 
 const ColorPickerWrapper = styled.div`

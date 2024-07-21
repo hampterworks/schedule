@@ -4,10 +4,10 @@ import React from "react";
 import styles from "./page.module.css";
 import useScheduleStore from "../../state/schedule";
 import DesignDisplay from "@repo/ui/DesignDisplay";
-import HeaderController from "@repo/ui/HeaderController";
-import DateController from "@repo/ui/DateController";
-import SocialsController from "@repo/ui/SocialsController";
-import BackgroundController from "@repo/ui/BackgroundController";
+import HeaderSection from "../../../../packages/ui/src/HeaderSection";
+import DateSection from "../../../../packages/ui/src/DateSection";
+import SocialsSection from "../../../../packages/ui/src/SocialsSection";
+import BackgroundSection from "../../../../packages/ui/src/BackgroundSection";
 
 const Page: React.FC = ({}) => {
   const {
@@ -46,7 +46,7 @@ const Page: React.FC = ({}) => {
     <div className={styles.warning}>
       This section is designed to work best in higher resolution / window sizes
     </div>
-    <HeaderController
+    <HeaderSection
       headerDesign={headerDesign}
       setMainHeader={setMainHeader}
       setMainHeaderFont={setMainHeaderFont}
@@ -58,7 +58,7 @@ const Page: React.FC = ({}) => {
       setSubHeaderSize={setSubHeaderSize}
       setSubHeaderColor={setSubHeaderColor}
     />
-    <DateController
+    <DateSection
       dateDesign={dateDesign}
       setDateAlignment={setDateAlignment}
       setDateDescriptionColor={setDateDescriptionColor}
@@ -66,7 +66,7 @@ const Page: React.FC = ({}) => {
       setDateDayColor={setDateDayColor}
       setDateDayTextColor={setDateDayTextColor}
     />
-    <SocialsController
+    <SocialsSection
       socials={socials}
       addSocials={addSocials}
       removeSocials={removeSocials}
@@ -75,7 +75,7 @@ const Page: React.FC = ({}) => {
       creditsTag={creditsTag}
       setCreditsTag={setCreditsTag}
     />
-    <BackgroundController
+    <BackgroundSection
       backgroundDesign={backgroundDesign}
       setBackgroundColor={setBackgroundColor}
       setBackgroundSize={setBackgroundSize}

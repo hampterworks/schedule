@@ -2,12 +2,12 @@
 
 import React from "react";
 import CollapsibleSection from "./CollapsibleSection";
-import AlignmentPicker from "./AlignmentPicker";
 import {AlignmentFn, SocialNetworks, Socials, SocialsDesign} from "web/state/schedule";
 import ButtonWrapper from "./ButtonWrapper";
 import Input from "./components/Input";
 import Select from "./components/Select";
 import styled from "styled-components";
+import AlignmentPicker from "./components/AlignmentPicker";
 
 const SocialsToolbar = styled.div`
     width: 100%;
@@ -50,7 +50,7 @@ type SocialsControllerProps = {
  * @param {SocialsControllerProps} props - The props for the SocialsController component.
  * @returns {JSX.Element} - The rendered SocialsController component.
  */
-const SocialsController: React.FC<SocialsControllerProps> = (
+const SocialsSection: React.FC<SocialsControllerProps> = (
   {
     socials,
     addSocials,
@@ -127,4 +127,4 @@ const SocialsController: React.FC<SocialsControllerProps> = (
   </CollapsibleSection>
 }
 
-export default SocialsController
+export default SocialsSection

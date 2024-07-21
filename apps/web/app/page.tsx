@@ -5,7 +5,7 @@ import useScheduleStore from "../state/schedule";
 import {DateTime} from "luxon";
 import ResultSection from "@repo/ui/ResultSection";
 import ToolTip from "@repo/ui/ToolTip";
-import DateTimeController from "@repo/ui/DateTimeController";
+import DateTimeSection from "../../../packages/ui/src/DateTimeSection";
 import Input from "@repo/ui/Input";
 import Button from "@repo/ui/Button";
 import Select from "@repo/ui/Select";
@@ -77,7 +77,7 @@ const Page: React.FC = () => {
         multiple
       />
     </div>
-    <DateTimeController
+    <DateTimeSection
       templates={templates}
       setTemplate={setTemplate}
       removeTemplate={removeTemplate}

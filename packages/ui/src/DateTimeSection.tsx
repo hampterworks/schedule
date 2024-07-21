@@ -2,12 +2,12 @@
 
 import React from "react";
 import {Template} from "web/state/schedule";
-import ToolTip from "./ToolTip";
 import {DateTime} from "luxon";
 import ButtonWrapper from "./ButtonWrapper";
 import Input from "./components/Input";
 import Checkbox from "./components/Checkbox";
 import styled, {css} from "styled-components";
+import ToolTip from "./components/ToolTip";
 
 const HeaderWrapper = styled.div`
     display: flex;
@@ -53,7 +53,7 @@ type DateTimeControllerProps = {
  *
  * @returns {JSX.Element} The rendered DateTimeController component.
  */
-const DateTimeController: React.FC<DateTimeControllerProps> = ({templates, setTemplate, removeTemplate, addTemplateAfter, ...props}) => {
+const DateTimeSection: React.FC<DateTimeControllerProps> = ({templates, setTemplate, removeTemplate, addTemplateAfter, ...props}) => {
   return <section>
     <HeaderWrapper>
       Add Time and Description:
@@ -116,4 +116,4 @@ const DateTimeController: React.FC<DateTimeControllerProps> = ({templates, setTe
   </section>
 }
 
-export default DateTimeController
+export default DateTimeSection

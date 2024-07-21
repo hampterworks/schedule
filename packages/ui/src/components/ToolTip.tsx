@@ -1,7 +1,7 @@
 'use client'
 
 import React from "react";
-import InfoIcon from "./icons/InfoIcon";
+import InfoIcon from "../icons/InfoIcon";
 import styled from "styled-components";
 
 const ToolTipWrapper = styled.span`
