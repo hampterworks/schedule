@@ -19,11 +19,14 @@ const PositionSelectorContainer = styled.div`
     border-radius: 4px;
 `
 
-const Selector = styled.div<{ x: string; y: string }>`
+const Selector = styled.div.attrs<{ x: string; y: string }>((props) => ({
+  style: {
+    top: props.y,
+    left:props.x
+  }
+}))`
     position: absolute;
     cursor: pointer;
-    top: ${(props) => props.y};
-    left: ${(props) => props.x};
     height: 15px;
     width: 15px;
     border: 3px solid #575757;
@@ -101,7 +104,7 @@ const PositionSelector: React.FC<PositionSelectorProps> = ({backgroundPosition, 
   }, [handleMouseMove])
 
   useEffect(() => {
-    setBackgroundPosition(`${((position.x / 100) * 300 - 100).toString() + '%'} ${((position.y / 100) * 300 - 100).toString() + '%'}`)
+    setBackgroundPosition(`${((position.x / 100) * 300 - 100).toString() + '%'} ${(300 - ((position.y / 100) * 300) - 100).toString() + '%'}`)
   }, [position])
 
   return <PositionSelectorWrapper>

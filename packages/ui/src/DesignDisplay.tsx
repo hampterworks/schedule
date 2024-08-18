@@ -19,29 +19,32 @@ import html2canvas from 'html2canvas';
 import Button from "./components/Button";
 import styled, {css} from "styled-components";
 
-const DesignResults = styled.div<{
-  background: string,
+const DesignResults = styled.div.attrs<{
+  $background: string,
   $backgroundColor: Color,
   $backgroundSize: BackgroundSize,
   $backgroundPosition: BackgroundPosition
-}>`
+}>((props) => ({
+  style: {
+    backgroundColor: `rgba(
+        ${props.$backgroundColor.r}, 
+        ${props.$backgroundColor.g},
+        ${props.$backgroundColor.b}, 
+        ${props.$backgroundColor.a})`,
+    backgroundSize: props.$backgroundSize,
+    backgroundPosition: props.$backgroundPosition,
+  }
+}))`
     padding: 16px 0;
     display: grid;
     grid-template-columns: 16px repeat(2, 1fr) 16px;
     row-gap: 16px;
     line-height: 22px;
-    background: ${props => `rgba(
-        ${props.$backgroundColor.r}, 
-        ${props.$backgroundColor.g},
-        ${props.$backgroundColor.b}, 
-        ${props.$backgroundColor.a})`};
 
-    ${props => props.background.length > 0 && `background-image: url(${props.background})`};
+    ${props => props.$background.length > 0 && `background-image: url(${props.$background})`};
 
-    background-size: ${props => props.$backgroundSize};
     background-repeat: no-repeat;
     background-origin: border-box;
-    background-position: ${props => props.$backgroundPosition};
 `
 
 /**
@@ -232,7 +235,7 @@ const FileUpload = styled.label`
     justify-content: center;
     width: 200px;
     cursor: pointer;
-    
+
     height: 37px;
     border-radius: 4px;
     border: 1px solid gray;
@@ -427,8 +430,9 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
       }
       reader.readAsDataURL(file)
     }
-  }
 
+  }
+  // console.log(backgroundDesign.backgroundPosition)
   const takeScreenshot = () => {
     setIsUploading(true)
     if (divRef.current) {
@@ -461,7 +465,7 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
       }
     </UploadContainer>
     <DesignResults
-      background={backgroundImage}
+      $background={backgroundImage}
       $backgroundPosition={backgroundDesign.backgroundPosition}
       $backgroundColor={backgroundDesign.backgroundColor}
       $backgroundSize={backgroundDesign.backgroundSize}
