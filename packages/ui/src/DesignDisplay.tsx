@@ -433,36 +433,35 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
 
     dbRequest.onupgradeneeded = (event) => {
       const db = (event.target as IDBOpenDBRequest).result
-      // Creates an objectStore for this database
-      db.createObjectStore('backgroundImage', {autoIncrement: true})
+      db.createObjectStore('backgroundImage', { autoIncrement: true })
     }
 
     dbRequest.onsuccess = (event) => {
-      setDbRequest((event.target as IDBOpenDBRequest).result)
+      const db = (event.target as IDBOpenDBRequest).result
+
+      setDbRequest(db)
+
+      if (backgroundImage.length === 0) {
+        const transaction = db.transaction('backgroundImage', 'readonly')
+        const objectStore = transaction.objectStore('backgroundImage')
+        const getRequest = objectStore.get('background')
+
+        getRequest.onsuccess = () => {
+          if (getRequest.result !== undefined) {
+            const reader = new FileReader()
+            reader.onloadend = () => {
+              setBackgroundImage(reader.result?.toString() ?? '')
+            }
+            reader.readAsDataURL(getRequest.result)
+          }
+        }
+      }
     }
 
     dbRequest.onerror = (event) => {
       console.error('There was an error accessing the database')
     }
   }, [])
-
-  useEffect(() => {
-    if (dbRequest && backgroundImage.length === 0) {
-      const transaction = dbRequest.transaction('backgroundImage', 'readonly')
-      const objectStore = transaction.objectStore('backgroundImage')
-      const getRequest = objectStore.get('background')
-
-      getRequest.onsuccess = () => {
-        if (getRequest.result !== undefined) {
-          const reader = new FileReader()
-          reader.onloadend = () => {
-            setBackgroundImage(reader.result?.toString() ?? '')
-          }
-          reader.readAsDataURL(getRequest.result)
-        }
-      };
-    }
-  }, [dbRequest]);
 
   const handleUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0]
