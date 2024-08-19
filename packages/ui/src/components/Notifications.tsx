@@ -64,7 +64,7 @@ const NotificationWrapper = styled.div<{$alertType?: Alert, $delay: number, $sx?
  * Represents an Alert message.
  * @typedef {('success' | 'warning' | 'error' | 'info')} Alert
  */
-type Alert = 'success' | 'warning' | 'error' | 'info'
+export type Alert = 'success' | 'warning' | 'error' | 'info'
 
 /**
  * Defines the properties for the Notifications component.

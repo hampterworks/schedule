@@ -1,6 +1,6 @@
 "use client"
 
-import React, {useRef, useState} from "react";
+import React, {ChangeEvent, useEffect, useRef, useState} from "react";
 import {
   Alignment,
   BackgroundDesign,
@@ -18,30 +18,34 @@ import {DateTime} from "luxon";
 import html2canvas from 'html2canvas';
 import Button from "./components/Button";
 import styled, {css} from "styled-components";
+import Notifications, {Alert} from "./components/Notifications";
 
-const DesignResults = styled.div<{
-  background: string,
+const DesignResults = styled.div.attrs<{
+  $background: string,
   $backgroundColor: Color,
   $backgroundSize: BackgroundSize,
   $backgroundPosition: BackgroundPosition
-}>`
+}>((props) => ({
+  style: {
+    backgroundColor: `rgba(
+        ${props.$backgroundColor.r}, 
+        ${props.$backgroundColor.g},
+        ${props.$backgroundColor.b}, 
+        ${props.$backgroundColor.a})`,
+    backgroundSize: props.$backgroundSize,
+    backgroundPosition: props.$backgroundPosition,
+  }
+}))`
     padding: 16px 0;
     display: grid;
     grid-template-columns: 16px repeat(2, 1fr) 16px;
     row-gap: 16px;
     line-height: 22px;
-    background: ${props => `rgba(
-        ${props.$backgroundColor.r}, 
-        ${props.$backgroundColor.g},
-        ${props.$backgroundColor.b}, 
-        ${props.$backgroundColor.a})`};
 
-    ${props => props.background.length > 0 && `background-image: url(${props.background})`};
+    ${props => props.$background.length > 0 && `background-image: url(${props.$background})`};
 
-    background-size: ${props => props.$backgroundSize};
     background-repeat: no-repeat;
     background-origin: border-box;
-    background-position: ${props => props.$backgroundPosition};
 `
 
 /**
@@ -232,7 +236,7 @@ const FileUpload = styled.label`
     justify-content: center;
     width: 200px;
     cursor: pointer;
-    
+
     height: 37px;
     border-radius: 4px;
     border: 1px solid gray;
@@ -362,6 +366,11 @@ const getSocialNetworkIcon = (network: SocialNetworks): React.ReactNode => {
   }
 }
 
+type Notification = {
+  text: string
+  type: Alert
+}
+
 /**
  * Represents the properties for configuring the design display.
  * @typedef {Object} DesignDisplayProps
@@ -415,15 +424,76 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
   const [backgroundImage, setBackgroundImage] = useState('')
   const [screenshotDataUrl, setScreenshotDataUrl] = useState<string | null>(null)
   const [isUploading, setIsUploading] = useState(false)
+  const [dbRequest, setDbRequest] = useState<IDBDatabase | null>(null);
+  const [notification, setNotification] = useState<Notification | null>(null)
   const localTimeZone = DateTime.local().offset / 60
 
-  const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    const dbRequest = window.indexedDB.open('HampterStore', 3)
+
+    dbRequest.onupgradeneeded = (event) => {
+      const db = (event.target as IDBOpenDBRequest).result
+      // Creates an objectStore for this database
+      db.createObjectStore('backgroundImage', {autoIncrement: true})
+    }
+
+    dbRequest.onsuccess = (event) => {
+      setDbRequest((event.target as IDBOpenDBRequest).result)
+    }
+
+    dbRequest.onerror = (event) => {
+      console.error('There was an error accessing the database')
+    }
+  }, [])
+
+  useEffect(() => {
+    if (dbRequest && backgroundImage.length === 0) {
+      const transaction = dbRequest.transaction('backgroundImage', 'readonly')
+      const objectStore = transaction.objectStore('backgroundImage')
+      const getRequest = objectStore.get('background')
+
+      getRequest.onsuccess = () => {
+        if (getRequest.result !== undefined) {
+          const reader = new FileReader()
+          reader.onloadend = () => {
+            setBackgroundImage(reader.result?.toString() ?? '')
+          }
+          reader.readAsDataURL(getRequest.result)
+        }
+      };
+    }
+  }, [dbRequest]);
+
+  const handleUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0]
+    const maxSize = 20 * 1024 * 1024; // 20MB
+
     if (file) {
+      if (file.size > maxSize) {
+        setNotification({type: 'warning', text: 'File is too large (Max size 20Mb)'})
+        return
+      }
+
       const reader = new FileReader()
       reader.onloadend = () => {
-        if (reader.result !== null)
+        if (reader.result && dbRequest !== null) {
           setBackgroundImage(reader.result.toString())
+
+          const transaction = dbRequest.transaction('backgroundImage', 'readwrite')
+          const objectStore = transaction.objectStore('backgroundImage')
+
+
+          const objStoreRequest = objectStore.put(file, 'background')
+
+          objStoreRequest.onsuccess = () => {
+            console.info('Successfully stored blob in indexedDB')
+          }
+
+          objStoreRequest.onerror = () => {
+            console.error('There was an error storing the blob in indexedDB')
+          }
+          setNotification({type: 'success', text: 'Background uploaded'})
+        }
       }
       reader.readAsDataURL(file)
     }
@@ -436,6 +506,7 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
         .then(canvas => {
           setIsUploading(false)
           setScreenshotDataUrl(canvas.toDataURL('image/png'))
+          setNotification({type: 'success', text: 'Image saved'})
         })
     }
   }
@@ -461,7 +532,7 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
       }
     </UploadContainer>
     <DesignResults
-      background={backgroundImage}
+      $background={backgroundImage}
       $backgroundPosition={backgroundDesign.backgroundPosition}
       $backgroundColor={backgroundDesign.backgroundColor}
       $backgroundSize={backgroundDesign.backgroundSize}
@@ -539,6 +610,16 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
         <CreditsTag $alignment={socialsDesign.socialsAlignment}>{creditsTag}</CreditsTag>
       }
     </DesignResults>
+    {
+      notification &&
+      <Notifications
+        delay={3}
+        message={notification.text}
+        alertType={notification.type}
+        onClose={() => setNotification(null)}
+      />
+    }
+
   </section>
 }
 

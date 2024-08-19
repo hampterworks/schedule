@@ -59,6 +59,27 @@ const Page: React.FC = () => {
         size='large'
         onClick={() => {
           resetTemplate()
+          const dbRequest = window.indexedDB.open('HampterStore', 3)
+
+          dbRequest.onsuccess = (event) => {
+            const db = (event.target as IDBOpenDBRequest).result
+            const transaction = db.transaction('backgroundImage', 'readwrite')
+            const objectStore = transaction.objectStore('backgroundImage')
+
+            const clearRequest = objectStore.clear()
+
+            clearRequest.onerror = (event) => {
+              console.error("Error clearing store:", event)
+            }
+
+            clearRequest.onsuccess = () => {
+              console.info("Store cleared successfully")
+            }
+          }
+
+          dbRequest.onerror = (event) => {
+            console.error("Error opening database:", event)
+          }
         }}
       />
     </div>

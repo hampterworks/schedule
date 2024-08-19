@@ -57,7 +57,6 @@ const DateTimeSection: React.FC<DateTimeControllerProps> = ({templates, setTempl
   return <section>
     <HeaderWrapper>
       Add Time and Description:
-      <ToolTip message="If you wish to select a whole day do not change the default hour"/>
     </HeaderWrapper>
     <ul>
       {
