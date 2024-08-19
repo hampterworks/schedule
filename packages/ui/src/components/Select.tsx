@@ -27,6 +27,7 @@ const SelectWrapper = styled.div<{ $sx?: ReturnType<typeof css> }>`
         top: 75%;
         appearance: none;
         font-size: 0;
+
         option {
             height: 0;
         }
@@ -67,14 +68,14 @@ const DropDown = styled.ul`
  * Represents a styled list item that can be selected.
  * @property {boolean} $isSelected - Determines whether the list item is selected with keyboard input.
  */
-const ListItem = styled.li<{ $isSelected: boolean }>`
+const ListItem = styled.li<{ $isSelected: boolean, $isHighlighted: boolean }>`
     cursor: pointer;
     background: white;
 
     &:not(:last-of-type) {
         border-bottom: 1px solid black;
     }
-    
+
     div {
         display: flex;
         gap: 8px;
@@ -95,6 +96,9 @@ const ListItem = styled.li<{ $isSelected: boolean }>`
 
     ${prop => prop.$isSelected && css`
         background: #d9d9d9;
+    `}
+    ${prop => prop.$isHighlighted && css`
+        background: #efefef;
     `}
 `
 /**
@@ -167,6 +171,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, SelectProps> = (
 
   // Ref for detecting a click outside the element and closing it
   const clickRef = useRef<HTMLDivElement>(null)
+  const highlightedRef = useRef<HTMLLIElement>(null)
 
   // State for a selected item
   const [selected, setSelected] =
@@ -176,6 +181,8 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, SelectProps> = (
           ? selectedValue
           : [selectedValue]
         : [])
+
+  const [highlighted, setHighlighted] = useState<number>()
 
   // State for toggling the dropdown menu
   const [menuToggle, setMenuToggle] = useState(false)
@@ -216,6 +223,18 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, SelectProps> = (
     setFilteredOptions(options.filter(item => item.title.toLowerCase().includes(searchTerm.toLowerCase() ?? '')))
   }, [searchTerm])
 
+  useEffect(() => {
+    if (!menuToggle && highlighted !== 0)
+      setHighlighted(undefined)
+    if (menuToggle && highlighted !== undefined) {
+      highlightedRef.current?.scrollIntoView({
+        behavior: "instant",
+        block: "nearest",
+        inline: "start"
+      });
+    }
+  }, [menuToggle, highlighted]);
+
   // Hook for detecting a click outside the element and closing the dropdown
   useClickOutside(clickRef, () => {
     if (menuToggle)
@@ -223,34 +242,35 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, SelectProps> = (
   })
 
   // keyboard controls for navigating the custom element
-  const handleMenuKeyboardInput = (event: React.KeyboardEvent) => {
+  const handleMenuKeyboardInput = (event: React.KeyboardEvent, index: number) => {
     const key = event.key
-    let selectedIndex = options.findIndex(option => option.value === selected[0]?.value)
-
-    if (key === 'ArrowDown') {
+    if (key === 'Enter') {
+      const option = highlighted !== undefined ? filteredOptions[highlighted] : filteredOptions[index]
+      if (option !== undefined) {
+        const selectedIndex = selected.findIndex(selectedOption => option.value === selectedOption.value)
+        if (selectedIndex === -1) {
+          setSelected([...selected, option])
+        } else {
+          setSelected(selected.filter(item => option.value !== item.value))
+        }
+      }
+    } else if (key === 'ArrowUp' || event.shiftKey && key === 'Tab') {
+      // Increment index for filteredOptions
       event.preventDefault()
-
-      if (selectedIndex < options.length - 1)
-        selectedIndex++
-
-      const newSelected = options[selectedIndex]
-
-      if (newSelected)
-        setSelected([newSelected])
-
-    } else if (key === 'ArrowUp') {
+      if (highlighted !== undefined)
+        setHighlighted(highlighted > 0 ? highlighted - 1 : highlighted)
+    } else if (key === 'ArrowDown' || key === 'Tab') {
+      // Increment index for filteredOptions
       event.preventDefault()
-
-      if (selectedIndex > 0)
-        selectedIndex--
-
-      const newSelected = options[selectedIndex]
-
-      if (newSelected)
-        setSelected([newSelected])
-
-    } else if (key === 'Enter' || key === 'Space') {
-      setMenuToggle(!menuToggle)
+      if (highlighted === undefined) {
+        setHighlighted(0)
+      } else {
+        const optionsLength = filteredOptions.length - 1
+        setHighlighted(highlighted < optionsLength ? highlighted + 1 : optionsLength)
+      }
+    } else if (key === 'Escape') {
+      setMenuToggle(false)
+      setHighlighted(undefined)
     }
   }
 
@@ -325,6 +345,11 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, SelectProps> = (
             toggleUnder={setMenuToggle}
             invert={menuToggle}/>
         }
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' && !menuToggle) {
+            setMenuToggle(true)
+          }
+        }}
         isInvalid={isInvalid}
         onChange={event => {
           if (searchable === true) {
@@ -341,16 +366,16 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, SelectProps> = (
         menuToggle && filteredOptions.length > 0 &&
         <DropDown
           role="listbox"
-          tabIndex={0}
-          onKeyDown={handleMenuKeyboardInput}
           aria-labelledby="dropdown-label"
         >
           {
             filteredOptions.map((option, index) =>
               <ListItem
-                $isSelected={selected.findIndex(item => item.value === option.value) >= 0}
+                $isSelected={(selected.findIndex(item => item.value === option.value) >= 0)}
+                $isHighlighted={index === highlighted}
                 id={`option-${option.value + index}`}
                 role="option"
+                tabIndex={0}
                 aria-selected={option.value === selected[0]?.value}
                 onClick={_ => {
                   if (!multiple) {
@@ -364,7 +389,10 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, SelectProps> = (
                   }
                   setMenuToggle(false)
                 }}
+                onKeyDown={(event) =>
+                  handleMenuKeyboardInput(event, index)}
                 key={option.value + index}
+                ref={highlighted === index ? highlightedRef : null}
               >
                 <div>{option.title}</div>
               </ListItem>
