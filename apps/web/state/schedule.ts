@@ -152,6 +152,7 @@ let initialState: ScheduleState = {
   socialsDesign: {
     socialsAlignment: 'right'
   },
+  creditsTag: '',
   backgroundDesign: {
     backgroundColor: { r: 255, g: 255, b: 255, a: 1 },
     backgroundSize: 'auto',
