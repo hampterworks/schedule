@@ -73,6 +73,15 @@ const Checkbox: React.ForwardRefRenderFunction<HTMLInputElement, CheckboxProps> 
     ...restProps
   } = props
 
+  const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      setSelected(!selected)
+      if (onChecked !== undefined)
+        onChecked(!selected)
+      event.preventDefault();  // prevent the default action (scroll down/page change)
+    }
+  }
+
   useEffect(() => {
     if (isChecked !== undefined)
       setSelected(isChecked)
@@ -81,6 +90,8 @@ const Checkbox: React.ForwardRefRenderFunction<HTMLInputElement, CheckboxProps> 
   return <CheckboxWrapper $sx={sx}>
     <Check
       isToggled={selected}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
       onClick={() => {
         setSelected(!selected)
         if (onChecked !== undefined)
@@ -93,6 +104,7 @@ const Checkbox: React.ForwardRefRenderFunction<HTMLInputElement, CheckboxProps> 
       ref={ref}
       name={name}
       id={name}
+      tabIndex={-1}
       type="checkbox"
       checked={selected}
       required={required}
