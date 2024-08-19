@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useCallback, useEffect, useMemo, useState} from "react";
+import {MouseEventHandler, useCallback, useEffect, useMemo, useState} from "react";
 import {BackgroundPosition} from "web/state/schedule";
 import styled from "styled-components";
 
@@ -33,6 +33,20 @@ const Selector = styled.div.attrs<{ x: string; y: string }>((props) => ({
     border-radius: 50%;
     transform: translate(-50%, -50%);
 `
+/**
+ * Calculates the relative position of an event within the boundaries of a given element.
+ *
+ * @param {React.RefObject<HTMLDivElement>} ref - The reference to the HTMLDivElement.
+ * @param {React.MouseEvent<HTMLDivElement> | MouseEvent} event - The event whose position needs to be calculated.
+ * @returns {Object} - An object containing the relative position coordinates of the event within the element.
+ */
+const getElementPosition = (ref: React.RefObject<HTMLDivElement>, event: React.MouseEvent<HTMLDivElement> | MouseEvent) => {
+  const rect = ref.current!.getBoundingClientRect()
+  return {
+    x: Math.round(Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width)) * 100),
+    y: Math.round(Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.width)) * 100),
+  }
+}
 
 /**
  * Object representing the props for the PositionSelector component.
@@ -58,6 +72,8 @@ type PositionSelectorProps = {
  * @param {Function} props.setBackgroundPosition - callback function to set the new background position
  */
 const PositionSelector: React.FC<PositionSelectorProps> = ({backgroundPosition, setBackgroundPosition, ...props}) => {
+  const ref = React.useRef<HTMLDivElement>(null)
+
   const transformPosition = useMemo(() => {
     return backgroundPosition === 'center'
       ? {x: 50, y: 50}
@@ -70,10 +86,19 @@ const PositionSelector: React.FC<PositionSelectorProps> = ({backgroundPosition, 
   const [position, setPosition] = useState(transformPosition)
   const [dragging, setDragging] = useState(false)
 
-  const handleMouseDown = useCallback(() => setDragging(true), [])
+  const handleMouseDown = useCallback((event:  React.MouseEvent<HTMLDivElement>) => {
+    const position = getElementPosition(ref, event)
+
+    setPosition({
+      x: position.x,
+      y: position.y
+    })
+
+    setDragging(true)
+
+  }, [])
   const handleMouseUp = useCallback(() => setDragging(false), [])
 
-  const ref = React.useRef<HTMLDivElement>(null)
 
   const handleMouseMove = useCallback(
     (event: MouseEvent) => {
@@ -81,13 +106,11 @@ const PositionSelector: React.FC<PositionSelectorProps> = ({backgroundPosition, 
         return
       }
 
-      const rect = ref.current!.getBoundingClientRect()
-      const x = (event.clientX - rect.left) / rect.width
-      const y = (event.clientY - rect.top) / rect.height
+      const position = getElementPosition(ref, event)
 
       setPosition({
-        x: Math.round(Math.max(0, Math.min(1, x)) * 100),
-        y: Math.round(Math.max(0, Math.min(1, y)) * 100)
+        x: position.x,
+        y: position.y
       })
     },
     [dragging])
@@ -104,7 +127,7 @@ const PositionSelector: React.FC<PositionSelectorProps> = ({backgroundPosition, 
   }, [handleMouseMove])
 
   useEffect(() => {
-    setBackgroundPosition(`${((position.x / 100) * 300 - 100).toString() + '%'} ${(((position.y / 100) * 300) - 100).toString() + '%'}`)
+    setBackgroundPosition(`${((position.x / 100) * 300 - 100).toString() + '%'} ${((300 - (position.y / 100) * 300) - 100).toString() + '%'}`)
   }, [position])
 
   return <PositionSelectorWrapper>
