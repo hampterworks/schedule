@@ -97,16 +97,18 @@ type CollapsibleSectionProps = {
 const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({title, children, ...props}) => {
   const [isExtended, setIsExtended] = useState(false)
 
-  return <CollapsibleSectionWrapper {...props}>
-    <SectionTopBar onClick={() => setIsExtended(!isExtended)}>
-      <span>{title}</span>
+  const childStyles = isExtended ? {} : { display: 'none' }
 
-      <ChevronDown
-        invert={isExtended}
-      />
-    </SectionTopBar>
-    {isExtended && children}
-  </CollapsibleSectionWrapper>
+  return (
+    <CollapsibleSectionWrapper {...props}>
+      <SectionTopBar onClick={() => setIsExtended(!isExtended)}>
+        <span>{title}</span>
+        <ChevronDown invert={isExtended} />
+      </SectionTopBar>
+
+      <CollapsibleSectionWrapper style={childStyles}>{children}</CollapsibleSectionWrapper>
+    </CollapsibleSectionWrapper>
+  )
 }
 
 export default CollapsibleSection
