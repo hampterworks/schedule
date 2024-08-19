@@ -1,5 +1,5 @@
 import * as React from "react";
-import {MouseEventHandler, useCallback, useEffect, useMemo, useState} from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
 import {BackgroundPosition} from "web/state/schedule";
 import styled from "styled-components";
 
@@ -73,7 +73,6 @@ type PositionSelectorProps = {
  */
 const PositionSelector: React.FC<PositionSelectorProps> = ({backgroundPosition, setBackgroundPosition, ...props}) => {
   const ref = React.useRef<HTMLDivElement>(null)
-
   const transformPosition = useMemo(() => {
     return backgroundPosition === 'center'
       ? {x: 50, y: 50}
@@ -127,7 +126,7 @@ const PositionSelector: React.FC<PositionSelectorProps> = ({backgroundPosition, 
   }, [handleMouseMove])
 
   useEffect(() => {
-    setBackgroundPosition(`${((position.x / 100) * 300 - 100).toString() + '%'} ${((300 - (position.y / 100) * 300) - 100).toString() + '%'}`)
+    setBackgroundPosition(`${((position.x / 100) * 300 - 100).toString() + '%'} ${(((position.y / 100) * 300) - 100).toString() + '%'}`)
   }, [position])
 
   return <PositionSelectorWrapper>
