@@ -18,7 +18,7 @@ import {DateTime} from "luxon";
 import html2canvas from 'html2canvas';
 import Button from "./components/Button";
 import styled, {css} from "styled-components";
-import Notifications from "./components/Notifications";
+import Notifications, {Alert} from "./components/Notifications";
 
 const DesignResults = styled.div.attrs<{
   $background: string,
@@ -366,6 +366,11 @@ const getSocialNetworkIcon = (network: SocialNetworks): React.ReactNode => {
   }
 }
 
+type Notification = {
+  text: string
+  type: Alert
+}
+
 /**
  * Represents the properties for configuring the design display.
  * @typedef {Object} DesignDisplayProps
@@ -420,7 +425,7 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
   const [screenshotDataUrl, setScreenshotDataUrl] = useState<string | null>(null)
   const [isUploading, setIsUploading] = useState(false)
   const [dbRequest, setDbRequest] = useState<IDBDatabase | null>(null);
-  const [fileSizeNotification, setFileSizeNotification] = useState<boolean>(false)
+  const [notification, setNotification] = useState<Notification | null>(null)
   const localTimeZone = DateTime.local().offset / 60
 
   useEffect(() => {
@@ -465,7 +470,7 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
 
     if (file) {
       if (file.size > maxSize) {
-        setFileSizeNotification(true)
+        setNotification({type: 'warning', text: 'File is too large (Max size 20Mb)'})
         return
       }
 
@@ -487,7 +492,7 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
           objStoreRequest.onerror = () => {
             console.error('There was an error storing the blob in indexedDB')
           }
-
+          setNotification({type: 'success', text: 'Background uploaded'})
         }
       }
       reader.readAsDataURL(file)
@@ -501,6 +506,7 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
         .then(canvas => {
           setIsUploading(false)
           setScreenshotDataUrl(canvas.toDataURL('image/png'))
+          setNotification({type: 'success', text: 'Image saved'})
         })
     }
   }
@@ -605,12 +611,12 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
       }
     </DesignResults>
     {
-      fileSizeNotification &&
+      notification &&
       <Notifications
         delay={3}
-        message='File is too large (Max size 20Mb)'
-        onClose={() => setFileSizeNotification(false)}
-
+        message={notification.text}
+        alertType={notification.type}
+        onClose={() => setNotification(null)}
       />
     }
 

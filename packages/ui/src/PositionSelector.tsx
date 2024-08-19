@@ -104,7 +104,7 @@ const PositionSelector: React.FC<PositionSelectorProps> = ({backgroundPosition, 
   }, [handleMouseMove])
 
   useEffect(() => {
-    setBackgroundPosition(`${((position.x / 100) * 300 - 100).toString() + '%'} ${(300 - ((position.y / 100) * 300) - 100).toString() + '%'}`)
+    setBackgroundPosition(`${((position.x / 100) * 300 - 100).toString() + '%'} ${(((position.y / 100) * 300) - 100).toString() + '%'}`)
   }, [position])
 
   return <PositionSelectorWrapper>
