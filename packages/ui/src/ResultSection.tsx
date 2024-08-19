@@ -144,7 +144,7 @@ const ResultSection: React.FC<ResultSectionProps> = ({templates, timezones}) => 
             <Button
               label='Copy'
               onClick={() => {
-                navigator.clipboard.writeText(`${template.date}\n${template.description}\n${template.timezones?.join('\n')}`)
+                navigator.clipboard.writeText(`${template.date}\n${template.description ?? 'No description'}\n${template.timezones?.join('\n') ?? ''}`)
                   .then(() => setCopyNotice("Text copied successful!"))
                   .catch(error => setCopyNotice("Failed to copy text!"))
               }}
