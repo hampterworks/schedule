@@ -12,7 +12,6 @@ const HeaderWrapper = styled.header`
     justify-content: space-between;
     padding: 16px;
     border-bottom: 1px solid black;
-    height: 85px;
     
     h1 {
         display: flex;
@@ -29,7 +28,7 @@ const NavigationWrapper = styled.nav`
         gap: 16px;
     }
 `
-const iconStyle = css`height: 48px`
+const iconStyle = css`height: 40px`
 
 type HeaderProps = {} & React.ComponentPropsWithoutRef<'header'>
 
@@ -55,7 +54,7 @@ const Header: React.FC<HeaderProps> = ({...props}) => {
         </li>
         <li>
           <a href='https://github.com/hampterworks/schedule' target='_blank' rel='noreferrer' aria-label="Github">
-            <GithubIcon $sx={css`height: 32px`}/>
+            <GithubIcon $sx={css`height: 28px`}/>
           </a>
         </li>
       </ul>
