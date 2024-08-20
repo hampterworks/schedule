@@ -182,6 +182,20 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, SelectProps> = (
           : [selectedValue]
         : [])
 
+  // update selected value
+  useEffect(() => {
+    const newSelectedValue =
+      selectedValue !== undefined
+        ? Array.isArray(selectedValue)
+          ? selectedValue
+          : [selectedValue]
+        : [];
+
+    if (JSON.stringify(newSelectedValue) !== JSON.stringify(selected)) {
+      setSelected(newSelectedValue);
+    }
+  }, [selectedValue]);
+
   const [highlighted, setHighlighted] = useState<number>()
 
   // State for toggling the dropdown menu
@@ -195,6 +209,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, SelectProps> = (
 
   // State for filtered search results
   const [filteredOptions, setFilteredOptions] = useState<SelectItem[]>(options)
+
 
   // Updates the value selected by the custom element in the native element
   useEffect(() => {
