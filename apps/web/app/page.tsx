@@ -4,11 +4,10 @@ import React from "react";
 import useScheduleStore from "../state/schedule";
 import {DateTime} from "luxon";
 import ResultSection from "@repo/ui/ResultSection";
-import ToolTip from "@repo/ui/ToolTip";
 import DateTimeSection from "../../../packages/ui/src/DateTimeSection";
 import Input from "@repo/ui/Input";
 import Button from "@repo/ui/Button";
-import Select from "@repo/ui/Select";
+import TimezoneSection from "@repo/ui/TimezoneSection";
 
 const RFX339ToLuxon = (date: string): DateTime => DateTime.fromISO(date)
 
@@ -26,9 +25,6 @@ const Page: React.FC = () => {
     removeTemplate,
     addTemplateAfter
   } = useScheduleStore()
-
-  const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
-  const timeZoneList = Intl.supportedValuesOf('timeZone').filter(zone => zone !== systemTimeZone)
 
   return <main className={styles.main}>
     <div className={styles.controlWrapper}>
@@ -83,21 +79,7 @@ const Page: React.FC = () => {
         }}
       />
     </div>
-    <div className={styles.controlItem}>
-      <div className={styles.inlineItem}>
-        Select timezones: {systemTimeZone}
-        <ToolTip message="Your system's timezone is automatically selected."/>
-      </div>
-      <Select
-        options={timeZoneList.map(item => ({value: item, title: item}))}
-        selectedValue={timeZones.map(item => ({value: item, title: item}))}
-        onSelectedValue={(event) => {
-          setTimeZones(event.map(item => item.value))
-        }}
-        searchable
-        multiple
-      />
-    </div>
+    <TimezoneSection timeZones={timeZones} setTimeZones={setTimeZones}/>
     <DateTimeSection
       templates={templates}
       setTemplate={setTemplate}
