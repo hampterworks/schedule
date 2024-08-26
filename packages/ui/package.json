@@ -24,7 +24,8 @@
     "./Checkbox": "./src/components/Checkbox.tsx",
     "./Select": "./src/components/Select.tsx",
     "./Notifications": "./src/components/Notifications.tsx",
-    "./RangeSlider": "./src/components/RangeSlider.tsx"
+    "./RangeSlider": "./src/components/RangeSlider.tsx",
+    "./DistributionPicker": "./src/components/DistributionPicker.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",

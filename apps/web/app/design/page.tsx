@@ -25,6 +25,7 @@ const Page: React.FC = ({}) => {
     setSubHeaderColor,
     dateDesign,
     setDateAlignment,
+    setDistributionAlignment,
     socials,
     addSocials,
     socialsDesign,
@@ -61,6 +62,7 @@ const Page: React.FC = ({}) => {
     <DateSection
       dateDesign={dateDesign}
       setDateAlignment={setDateAlignment}
+      setDistributionAlignment={setDistributionAlignment}
       setDateDescriptionColor={setDateDescriptionColor}
       setDateDescriptionTextColor={setDateDescriptionTextColor}
       setDateDayColor={setDateDayColor}

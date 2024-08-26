@@ -7,7 +7,7 @@ import {
   BackgroundPosition,
   BackgroundSize,
   Color,
-  DateDesign,
+  DateDesign, Distribution,
   HeaderDesign,
   SocialNetworks,
   Socials,
@@ -117,20 +117,43 @@ const DesignHeader = styled.div<{
     }
 `
 
-const DateWrapper = styled.ul<{ $alignment: Alignment }>`
+const DateWrapper = styled.ul<{ $alignment: Alignment, $distribution: Distribution }>`
     ${props => alignmentGridPosition(props.$alignment)}
     grid-row: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    ${props => {
+        if (props.$distribution === 'list') {
+            return css`
+                display: flex;
+                flex-direction: column;
+                gap: 32px;
+            `
+        } else if (props.$distribution === 'column') {
+            return css`
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(100px, 45%));
+                gap: 32px;
+            `
+        }
+    }};
 `
 
-const DateItem = styled.li<{ $backgroundColor: Color, $textColor: Color }>`
+const DateItem = styled.li<{ $backgroundColor: Color, $textColor: Color, $distribution: Distribution }>`
     width: 100%;
     display: flex;
-    gap: 16px;
     border-radius: 4px;
-    min-height: 65px;
+    ${props => {
+        if (props.$distribution === 'list') {
+            return css`
+                gap: 16px;
+                min-height: 65px;
+            `
+        } else if (props.$distribution === 'column') {
+            return css`
+                flex-direction: column;
+            `
+        }
+    }};
+
     color: ${props => `rgba(
         ${props.$textColor.r}, 
         ${props.$textColor.g},
@@ -142,16 +165,41 @@ const DateItem = styled.li<{ $backgroundColor: Color, $textColor: Color }>`
         ${props.$backgroundColor.b}, 
         ${props.$backgroundColor.a})`};
 `
-const DayName = styled.div<{ $backgroundColor: Color, $textColor: Color }>`
+
+const DayName = styled.div<{ $backgroundColor: Color, $textColor: Color, $distribution: Distribution }>`
     display: flex;
-    flex-direction: column;
-    gap: 4px;
-    flex-basis: 200px;
-    justify-content: center;
+    position: relative;
+    padding: 18px;
     align-items: center;
     font-size: 24px;
     background: ${props => props.$backgroundColor};
-    border-radius: 4px 0 0 4px;
+
+    ${props => {
+        if (props.$distribution === 'list') {
+            return css`
+                flex-direction: column;
+                gap: 4px;
+                flex-basis: 200px;
+                border-radius: 4px 0 0 4px;
+                justify-content: center;
+                
+                span:last-of-type {
+                    font-size: 18px;
+                }
+            `
+        } else if (props.$distribution === 'column') {
+            return css`
+                gap: 8px;
+                border-radius: 4px 4px 0 0;
+                span:last-of-type {
+                    position: absolute;
+                    font-size: 16px;
+                    right: 16px;
+                }
+            `
+        }
+    }};
+    
     color: ${props => `rgba(
         ${props.$textColor.r}, 
         ${props.$textColor.g},
@@ -162,12 +210,9 @@ const DayName = styled.div<{ $backgroundColor: Color, $textColor: Color }>`
         ${props.$backgroundColor.g},
         ${props.$backgroundColor.b}, 
         ${props.$backgroundColor.a})`};
-
-    span:last-of-type {
-        font-size: 18px;
-    }
 `
-const DayDetailsWrapper = styled.div`
+
+const DayDetailsWrapper = styled.div<{ $distribution: Distribution }>`
     min-height: 85px;
     width: 100%;
     display: flex;
@@ -175,7 +220,18 @@ const DayDetailsWrapper = styled.div`
     gap: 8px;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    
+    ${props => {
+        if (props.$distribution === 'list') {
+            return css`
+                justify-content: space-around;
+            `
+        } else if (props.$distribution === 'column') {
+          return css`
+              text-align: center;
+          `
+        }
+    }};
 `
 const DayDescription = styled.div`
     font-size: 18px;
@@ -433,7 +489,7 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
 
     dbRequest.onupgradeneeded = (event) => {
       const db = (event.target as IDBOpenDBRequest).result
-      db.createObjectStore('backgroundImage', { autoIncrement: true })
+      db.createObjectStore('backgroundImage', {autoIncrement: true})
     }
 
     dbRequest.onsuccess = (event) => {
@@ -550,14 +606,14 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
         <h1 className={headerDesign.headerFont.className}>{headerDesign.headerText}</h1>
         <div className={headerDesign.subHeaderFont.className}>{getWeekDurationString(templates)}</div>
       </DesignHeader>
-      <DateWrapper $alignment={dateDesign.dateAlignment}>
+      <DateWrapper $alignment={dateDesign.dateAlignment} $distribution={dateDesign.dateDistribution}>
         {
           templates.map((template, index) => {
             const date = (typeof template.date === 'string')
               ? DateTime.fromISO(template.date)
               : template.date
 
-            const day = date.toFormat('ccc')
+            const day = date.toFormat('EEEE')
             const dayDate = date.toFormat('d/L')
             const time = formatTimeWithOptionalMinutes(template.time)
 
@@ -571,17 +627,19 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
 
             return <DateItem
               key={day + index}
+              $distribution={dateDesign.dateDistribution}
               $textColor={dateDesign.dateDescriptionTextColor}
               $backgroundColor={dateDesign.dateDescriptionColor}
             >
               <DayName
                 $textColor={dateDesign.dateDayTextColor}
+                $distribution={dateDesign.dateDistribution}
                 $backgroundColor={dateDesign.dateDayColor}
               >
                 <span>{day}</span>
                 <span>{dayDate}</span>
               </DayName>
-              <DayDetailsWrapper>
+              <DayDetailsWrapper $distribution={dateDesign.dateDistribution}>
                 <DayDescription>{template.description}</DayDescription>
                 {
                   localTime !== undefined && template.wholeDay !== true &&

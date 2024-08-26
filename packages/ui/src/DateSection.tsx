@@ -2,10 +2,11 @@
 
 import React from "react";
 import CollapsibleSection from "./CollapsibleSection";
-import {AlignmentFn, ColorFn, DateDesign} from "web/state/schedule";
+import {AlignmentFn, ColorFn, DateDesign, DistributionFn} from "web/state/schedule";
 import styled from "styled-components";
 import AlignmentPicker from "./components/AlignmentPicker";
 import ColorPicker from "./components/ColorPicker";
+import DistributionPicker from "./components/DistributionPicker";
 
 const DateContainer = styled.div`
     display: flex;
@@ -27,6 +28,7 @@ const DateContainer = styled.div`
 type DateControllerProps = {
   dateDesign: DateDesign
   setDateAlignment: AlignmentFn
+  setDistributionAlignment: DistributionFn
   setDateDescriptionColor: ColorFn
   setDateDescriptionTextColor: ColorFn
   setDateDayColor: ColorFn
@@ -53,14 +55,20 @@ const DateSection: React.FC<DateControllerProps> = (
   {
     dateDesign,
     setDateAlignment,
+    setDistributionAlignment,
     setDateDescriptionColor,
     setDateDescriptionTextColor,
     setDateDayColor,
     setDateDayTextColor,
     ...props
   }) => {
+
   return <CollapsibleSection title='Date' {...props}>
     <DateContainer>
+      <DistributionPicker
+        setDistributionAlignment={setDistributionAlignment}
+        dateDistribution={dateDesign.dateDistribution}
+      />
       <AlignmentPicker
         alignment={dateDesign.dateAlignment}
         setAlignment={setDateAlignment}

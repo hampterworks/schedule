@@ -19,8 +19,10 @@ export type Color = {
 }
 
 export type Alignment = 'left' | 'center' | 'right'
+export type Distribution = 'list' | 'column'
 
 export type AlignmentFn = (alignment: Alignment) => void
+export type DistributionFn = (distribution: Distribution) => void
 export type ColorFn = (color: Color) => void
 
 export type Font = {
@@ -43,6 +45,7 @@ export type HeaderDesign = {
 
 export type DateDesign = {
   dateAlignment: Alignment
+  dateDistribution: Distribution
   dateDayColor: Color
   dateDayTextColor: Color
   dateDescriptionColor: Color
@@ -107,6 +110,7 @@ export type DesignStateReducers = {
   setSubHeaderSize: (size: number) => void,
   setSubHeaderColor: ColorFn,
   setDateAlignment: AlignmentFn,
+  setDistributionAlignment: DistributionFn,
   setDateDescriptionColor: ColorFn,
   setDateDescriptionTextColor: ColorFn,
   setDateDayColor: ColorFn,
@@ -143,6 +147,7 @@ let initialState: ScheduleState = {
   },
   dateDesign: {
     dateAlignment: 'right',
+    dateDistribution: 'list',
     dateDescriptionColor: { r: 255, g: 255, b: 255, a: 1 },
     dateDayColor: { r: 130, g: 167, b: 236, a: 1 },
     dateDayTextColor: { r: 0, g: 0, b: 0, a: 1 },
@@ -294,6 +299,13 @@ let reducers: StateCreator<ScheduleStateReducers & DesignStateReducers & Schedul
         dateDesign: {
           ...state.dateDesign,
           dateAlignment: alignment
+        }
+      })),
+    setDistributionAlignment: (distribution: Distribution) => set((state) =>
+      ({
+        dateDesign: {
+          ...state.dateDesign,
+          dateDistribution: distribution
         }
       })),
     setDateDayColor: (color: Color) => set((state) =>
