@@ -228,6 +228,7 @@ const DayDetailsWrapper = styled.div<{ $distribution: Distribution }>`
             `
         } else if (props.$distribution === 'column') {
           return css`
+              justify-content: center;
               text-align: center;
           `
         }
