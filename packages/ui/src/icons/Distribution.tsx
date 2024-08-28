@@ -7,7 +7,8 @@ import styled from "styled-components";
 const Icon = styled.svg`
     cursor: pointer;
     pointer-events: auto;
-
+    fill: white;
+    
     &:hover {
         fill: #cdcdcd;
     }
@@ -36,7 +37,7 @@ const Distribution: React.FC<DistributionProps> = ({toggle, onSelected, ...props
   return <IconWrapper>
     <Icon
       viewBox="0 0 128 64.4"
-      fill="none"
+      fill="fff"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >

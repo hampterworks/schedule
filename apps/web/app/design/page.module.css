@@ -3,7 +3,6 @@
     flex-direction: column;
     padding: 16px;
     gap: 16px;
-    background: #020202;
 }
 .warning {
     display: none;
@@ -16,5 +15,11 @@
 @media(max-width: 900px){
     .warning {
         display: block;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .main {
+        background: #020202;
     }
 }
