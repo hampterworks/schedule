@@ -22,6 +22,10 @@ const DateTimeItem = styled.li`
     justify-content: center;
     align-items: center;
     gap: 8px;
+    
+    &:last-of-type {
+        margin-bottom: 32px;
+    }
 `
 
 /**

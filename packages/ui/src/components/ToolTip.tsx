@@ -29,6 +29,9 @@ const ToolTipWrapper = styled.span`
     }
     svg {
         height: 18px;
+        path, circle {
+            fill: ${props => props.theme.textColor};
+        }
     }
 `
 

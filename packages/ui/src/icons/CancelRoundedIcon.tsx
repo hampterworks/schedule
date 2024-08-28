@@ -8,7 +8,6 @@ type CancelRoundedIconProps = React.ComponentPropsWithoutRef<'svg'>
 const CancelRoundedIcon: React.FC<CancelRoundedIconProps> = ({...props}) => {
   return <svg
     xmlns="http://www.w3.org/2000/svg"
-    fill="#000"
     width="24px"
     height="24px"
     viewBox="0 0 32 32"
