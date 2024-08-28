@@ -1,17 +1,3 @@
-.controlWrapper {
-  display: flex;
-  gap: 16px;
-}
-
-.controlWrapper > * {
-  width: 100%;
-}
-
-.controlItem {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
 
 .templateListItem {
   display: flex;
@@ -20,15 +6,14 @@
   gap: 8px;
 }
 
-.inlineItem {
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
-}
-
 .main {
   display: flex;
   flex-direction: column;
   padding: 16px;
-  gap: 32px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .main {
+    background: #020202;
+  }
 }

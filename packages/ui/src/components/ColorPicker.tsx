@@ -22,7 +22,7 @@ const ColorWindowWrapper = styled.div`
     flex-direction: column;
     gap: 8px;
     span {
-        color: rgba(0, 0, 0, 0.6);
+        color: ${props => props.theme.textColor};
         font-size: 13px;
         white-space: nowrap;
     }
@@ -35,7 +35,8 @@ const ColorWindow = styled.button<{ $selectedColor: Color }>`
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    border: 1px solid black;
+    border: 1px solid ${props => props.theme.borderColor};
+    border-radius: 4px;
     
     &:after {
         content: '';

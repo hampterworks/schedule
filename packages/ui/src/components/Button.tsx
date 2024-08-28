@@ -18,13 +18,13 @@ const StyledButton = styled.button<{
     gap: 8px;
     padding: 16px;
     border-radius: 4px;
-    color: #0b0b0b;
+    color: ${props => props.theme.textColor};
     cursor: pointer;
 
     ${props => !props.$iconButton && 'border: 1px solid gray;'}
     
     &:hover, &:focus {
-        background: #e8e8e8;
+        background: ${props => props.theme.highlight};
     }
 
     ${props => {

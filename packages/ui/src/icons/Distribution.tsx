@@ -7,7 +7,8 @@ import styled from "styled-components";
 const Icon = styled.svg`
     cursor: pointer;
     pointer-events: auto;
-
+    fill: white;
+    
     &:hover {
         fill: #cdcdcd;
     }
@@ -36,7 +37,7 @@ const Distribution: React.FC<DistributionProps> = ({toggle, onSelected, ...props
   return <IconWrapper>
     <Icon
       viewBox="0 0 128 64.4"
-      fill="none"
+      fill="fff"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -50,17 +51,17 @@ const Distribution: React.FC<DistributionProps> = ({toggle, onSelected, ...props
       <g>
 
         <rect x="24.5" y="11.5"
-              fillRule='evenodd' clipRule='evenodd' fill='#1A1A1A' stroke='#1A1A1A' strokeLinejoin='round'
+              fillRule='evenodd' clipRule='evenodd' fill='#808080' stroke='#808080' strokeLinejoin='round'
               strokeMiterlimit={10}
               width="79" height="10"/>
 
         <rect x="24.5" y="29.25"
-              fillRule='evenodd' clipRule='evenodd' fill='#1A1A1A' stroke='#1A1A1A' strokeLinejoin='round'
+              fillRule='evenodd' clipRule='evenodd' fill='#808080' stroke='#808080' strokeLinejoin='round'
               strokeMiterlimit={10}
               width="79" height="10"/>
 
         <rect x="24.5" y="46.5"
-              fillRule='evenodd' clipRule='evenodd' fill='#1A1A1A' stroke='#1A1A1A' strokeLinejoin='round'
+              fillRule='evenodd' clipRule='evenodd' fill='#808080' stroke='#808080' strokeLinejoin='round'
               strokeMiterlimit={10}
               width="79" height="10"/>
         <rect x="25" y="47" fillRule='evenodd' clipRule='evenodd' fill='#FFFFFF' width="13" height="9"/>

@@ -16,6 +16,7 @@
     "./SocialsSection": "./src/SocialsSection.tsx",
     "./BackgroundSection": "./src/BackgroundSection.tsx",
     "./FontSelector": "./src/FontSelector.tsx",
+    "./ControlSection": "./src/ControlSection.tsx",
     "./Header": "./src/Header.tsx",
     "./ToolTip": "./src/components/ToolTip.tsx",
     "./DateTimeSection": "./src/DateTimeSection.tsx",

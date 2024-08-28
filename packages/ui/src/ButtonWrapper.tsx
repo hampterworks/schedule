@@ -10,6 +10,9 @@ const ButtonContainer = styled.div`
     justify-content: flex-end;
     align-items: flex-end;
     flex-direction: column;
+    svg path {
+        fill: ${props => props.theme.textColor};
+    }
 `
 /**
  * Represents the props for the ButtonWrapper component.

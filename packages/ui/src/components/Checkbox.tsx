@@ -12,9 +12,10 @@ const CheckboxWrapper = styled.div<{ $sx?: ReturnType<typeof css> }>`
     gap: 4px;
     position: relative;
     font-size: 18px;
-
+    
     label, svg {
         cursor: pointer;
+        color: ${props => props.theme.textColor};
     }
 
     &:hover {

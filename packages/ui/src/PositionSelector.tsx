@@ -4,7 +4,7 @@ import {BackgroundPosition} from "web/state/schedule";
 import styled from "styled-components";
 
 const PositionSelectorWrapper = styled.div`
-    color: rgba(0, 0, 0, 0.6);
+    color: ${props => props.theme.textColor};
     font-size: 13px;
     > div {
         margin-bottom: 8px;

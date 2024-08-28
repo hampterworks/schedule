@@ -13,7 +13,8 @@ const HeaderWrapper = styled.div`
     display: flex;
     align-items: flex-end;
     gap: 8px;
-    margin-bottom: 8px;
+    margin: 32px 0 8px 0;
+    color: ${props => props.theme.textColor};
 `
 
 const DateTimeItem = styled.li`
@@ -22,6 +23,10 @@ const DateTimeItem = styled.li`
     justify-content: center;
     align-items: center;
     gap: 8px;
+    
+    &:last-of-type {
+        margin-bottom: 32px;
+    }
 `
 
 /**
