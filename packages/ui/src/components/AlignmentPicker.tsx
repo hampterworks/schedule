@@ -12,7 +12,7 @@ const AlignmentWrapper = styled.div`
 
 const TitleContainer = styled.div`
     margin: 0 0 4px 4px;
-    color: rgba(0, 0, 0, 0.6);
+    color: ${props => props.theme.textColor};
     font-size: 13px;
     white-space: nowrap;
 `
@@ -21,14 +21,17 @@ const AlignmentButton = styled.button<{ $isSelected: boolean }>`
     cursor: pointer;
     padding: 4px;
     border-radius: 2px;
-    background: ${props => props.$isSelected && '#dedede'};
+    background: ${props => props.$isSelected && props.theme.secondaryBackground};
 
     &:hover {
-        background: #dedede;
+        background: ${props => props.theme.highlight};
     }
 `
 
 const IconWrapper = styled.svg`
+    path {
+        fill: ${props => props.theme.textColor};
+    }
     height: 24px;
 `
 const AlignLeftIcon: React.FC = () => {

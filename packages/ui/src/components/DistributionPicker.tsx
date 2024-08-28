@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 const TitleContainer = styled.div`
     margin: 0 0 4px 4px;
-    color: rgba(0, 0, 0, 0.6);
+    color: ${props => props.theme.textColor};
     font-size: 13px;
     white-space: nowrap;
 `

@@ -11,8 +11,17 @@ const HeaderWrapper = styled.header`
     display: flex;
     justify-content: space-between;
     padding: 16px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid ${props => props.theme.textColor};
     height: 85px;
+    
+    background: ${props => props.theme.background};
+    color: ${props => props.theme.textColor};
+    
+    svg {
+        path {
+            fill: ${props => props.theme.textColor};
+        }
+    }
     
     h1 {
         display: flex;

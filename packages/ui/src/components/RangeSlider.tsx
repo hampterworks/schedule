@@ -10,7 +10,7 @@ const RangeWrapper = styled.div<{ $sx?: ReturnType<typeof css> }>`
     gap: 8px;
 
     font-size: 13px;
-    color: rgba(0, 0, 0, 0.6);
+    color: ${props => props.theme.textColor};
     
     label {
         margin-bottom: 8px;

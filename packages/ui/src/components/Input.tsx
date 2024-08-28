@@ -9,6 +9,7 @@ const ElementWrapper = styled.div<{ $sx?: ReturnType<typeof css> }>`
     flex-direction: column;
     gap: 8px;
     width: 100%;
+    color: ${props => props.theme.textColor};
     ${props => props.$sx}
 `
 
@@ -27,10 +28,10 @@ const InputWrapper = styled.div<
       input {
           height: var(--input-height);
           width: 100%;
-          background: white;
-          color: black;
-          border: 1px solid gray;
+          background: ${props => props.theme.background};
+          border: 1px solid ${props => props.theme.borderColor};
           border-radius: 4px;
+          color-scheme: dark; //TODO: connect to global state
 
           ${props => {
               if (!props.$iconLeft && !props.$iconRight) {
@@ -50,18 +51,17 @@ const InputWrapper = styled.div<
           }
 
           ${props => props.$isInvalid && css`border: 3px solid red;`}
-
           &::-webkit-calendar-picker-indicator {
               cursor: pointer;
           }
-          
+
           &::placeholder {
               color: gray;
               opacity: 1; /* Firefox */
           }
-          
+
           ${props => props.$disabled && css`
-            cursor: not-allowed;
+              cursor: not-allowed;
               color: gray;
           `}
       }

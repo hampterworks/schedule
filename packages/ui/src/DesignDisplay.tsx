@@ -296,10 +296,10 @@ const FileUpload = styled.label`
 
     height: 37px;
     border-radius: 4px;
-    border: 1px solid gray;
+    border: 1px solid ${props => props.theme.borderColor};
 
     &:hover {
-        background: rgba(0, 0, 0, 0.08);
+        background: ${props => props.theme.highlight};
     }
 
     input[type="file"] {
@@ -311,6 +311,7 @@ const UploadContainer = styled.div`
     display: flex;
     gap: 8px;
     margin-bottom: 16px;
+    color: ${props => props.theme.textColor};
 `
 
 /**

@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 const IconWrapper = styled.svg`
     path {
-        fill: #2e2e2e;
+        fill: #686868;
     }
 `
 

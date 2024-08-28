@@ -12,6 +12,7 @@ const ResultWrapper = styled.div`
     flex-direction: column;
     gap: 16px;
     
+    color: ${props => props.theme.textColor};
     ul {
         width: 100%;
     }
@@ -26,7 +27,7 @@ const ResultWrapper = styled.div`
 const DateDisplay = styled.ul`
     li {
         margin-bottom: 32px;
-        background: #f8f8f8;;
+        background: ${props => props.theme.secondaryBackground};
         padding: 16px;
         border-radius: 4px;
     }
@@ -43,7 +44,7 @@ const DiscordDisplay = styled.ul`
     display: flex;
     flex-direction: column;
     gap: 16px;
-    background: #f8f8f8;
+    background: ${props => props.theme.secondaryBackground};
     margin-bottom: 16px;
     padding: 16px;
     border-radius: 4px;

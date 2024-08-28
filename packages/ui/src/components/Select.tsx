@@ -20,6 +20,7 @@ const SelectWrapper = styled.div<{ $sx?: ReturnType<typeof css> }>`
 
     label {
         display: block;
+        color: ${props => props.theme.textColor};
     }
 
     > select {
@@ -53,12 +54,12 @@ const MultiSelectWrapper = styled.ul`
  * Represents a styled dropdown element.
  */
 const DropDown = styled.ul`
-    color: black;
+    color: ${props => props.theme.textColor};
     width: 100%;
     max-height: 350px;
     overflow-y: auto;
     border-radius: 4px;
-    border: 1px solid gray;
+    border: 1px solid ${props => props.theme.borderColor};
     z-index: 9001;
     position: absolute;
     top: 50px;
@@ -70,10 +71,10 @@ const DropDown = styled.ul`
  */
 const ListItem = styled.li<{ $isSelected: boolean, $isHighlighted: boolean }>`
     cursor: pointer;
-    background: white;
+    background: ${props => props.theme.background};
 
     &:not(:last-of-type) {
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid ${props => props.theme.borderColor};;
     }
 
     div {
@@ -83,7 +84,7 @@ const ListItem = styled.li<{ $isSelected: boolean, $isHighlighted: boolean }>`
     }
 
     &:hover {
-        background: #d9d9d9;
+        background: ${props => props.theme.highlight};
     }
 
     &:first-of-type {
@@ -95,10 +96,10 @@ const ListItem = styled.li<{ $isSelected: boolean, $isHighlighted: boolean }>`
     }
 
     ${prop => prop.$isSelected && css`
-        background: #d9d9d9;
+        background: ${props => props.theme.selected};
     `}
     ${prop => prop.$isHighlighted && css`
-        background: #efefef;
+        background: ${props => props.theme.highlight};
     `}
 `
 /**
