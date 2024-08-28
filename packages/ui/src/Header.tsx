@@ -11,8 +11,7 @@ const HeaderWrapper = styled.header`
     display: flex;
     justify-content: space-between;
     padding: 16px;
-    border-bottom: 1px solid ${props => props.theme.textColor};
-    height: 85px;
+    border-bottom: 1px solid ${props => props.theme.borderColor};
     
     background: ${props => props.theme.background};
     color: ${props => props.theme.textColor};
@@ -26,7 +25,7 @@ const HeaderWrapper = styled.header`
     h1 {
         display: flex;
         align-items: center;
-        font-size: clamp(24px, 1em, 32px);
+        font-size: clamp(22px, 1em, 30px);
         font-variant: small-caps;
         font-weight: bold;
     }
@@ -38,7 +37,7 @@ const NavigationWrapper = styled.nav`
         gap: 16px;
     }
 `
-const iconStyle = css`height: 48px`
+const iconStyle = css`height: 28px`
 
 type HeaderProps = {} & React.ComponentPropsWithoutRef<'header'>
 
@@ -64,7 +63,7 @@ const Header: React.FC<HeaderProps> = ({...props}) => {
         </li>
         <li>
           <a href='https://github.com/hampterworks/schedule' target='_blank' rel='noreferrer' aria-label="Github">
-            <GithubIcon $sx={css`height: 32px`}/>
+            <GithubIcon $sx={iconStyle}/>
           </a>
         </li>
       </ul>

@@ -4,7 +4,6 @@ import React from "react";
 import styled, {css} from "styled-components";
 
 const IconWrapper = styled.svg<{$sx?: ReturnType<typeof css>}>`
-    height: 24px;
     ${props => props.$sx}
 `
 
