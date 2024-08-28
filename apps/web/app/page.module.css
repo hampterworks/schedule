@@ -12,8 +12,4 @@
   padding: 16px;
 }
 
-@media (prefers-color-scheme: dark) {
-  .main {
-    background: #020202;
-  }
-}
+
