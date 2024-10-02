@@ -176,12 +176,15 @@ const DayName = styled.div<{
   $textColor: Color,
   $distribution: Distribution,
   $dayNameTextSize: number,
-  $dayNumberTextSize: number
+  $dayNumberTextSize: number,
+  $datePadding: number,
+  $daySpacing: number
 }>`
     display: flex;
     position: relative;
-    padding: 18px;
+    padding: ${props => `${props.$datePadding}px`};
     align-items: center;
+    justify-content: space-between;
     background: ${props => props.$backgroundColor};
 
     span:first-of-type {
@@ -195,20 +198,14 @@ const DayName = styled.div<{
         if (props.$distribution === 'list') {
             return css`
                 flex-direction: column;
-                gap: ${props.$dayNumberTextSize > 35 ? '1.5em' : '1em'};
+                gap: ${props.$daySpacing + 'px'};
                 flex-basis: 200px;
                 border-radius: 4px 0 0 4px;
                 justify-content: center;
             `
         } else if (props.$distribution === 'column') {
             return css`
-                gap: 8px;
                 border-radius: 4px 4px 0 0;
-
-                span:last-of-type {
-                    position: absolute;
-                    right: 16px;
-                }
             `
         }
     }};
@@ -225,12 +222,16 @@ const DayName = styled.div<{
         ${props.$backgroundColor.a})`};
 `
 
-const DayDetailsWrapper = styled.div<{ $distribution: Distribution }>`
+const DayDetailsWrapper = styled.div<{
+  $distribution: Distribution
+  $datePadding: number,
+  $dateDescriptionSpacing: number
+}>`
     min-height: 85px;
     width: 100%;
     display: flex;
-    padding: 16px;
-    gap: 0.5em;
+    padding: ${props => `${props.$datePadding}px`};
+    gap: ${props => `${props.$dateDescriptionSpacing}px`};
     flex-direction: column;
     align-items: center;
 
@@ -653,11 +654,17 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
                 $backgroundColor={dateDesign.dateDayColor}
                 $dayNameTextSize={dateDesign.dayNameTextSize}
                 $dayNumberTextSize={dateDesign.dayNumberTextSize}
+                $daySpacing={dateDesign.daySpacing}
+                $datePadding={dateDesign.datePadding}
               >
                 <span>{day}</span>
                 <span>{dayDate}</span>
               </DayName>
-              <DayDetailsWrapper $distribution={dateDesign.dateDistribution}>
+              <DayDetailsWrapper
+                $distribution={dateDesign.dateDistribution}
+                $datePadding={dateDesign.datePadding}
+                $dateDescriptionSpacing={dateDesign.dateDescriptionSpacing}
+              >
                 <DayDescription $dateDescriptionTextSize={dateDesign.dateDescriptionTextSize}>
                   {template.description}
                 </DayDescription>
