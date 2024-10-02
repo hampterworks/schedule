@@ -7,23 +7,37 @@ import styled from "styled-components";
 import AlignmentPicker from "./components/AlignmentPicker";
 import ColorPicker from "./components/ColorPicker";
 import DistributionPicker from "./components/DistributionPicker";
+import RangeSlider from "./components/RangeSlider";
 
 const DateContainer = styled.div`
     display: flex;
     gap: 32px;
 `
+const ControlsWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    > div {
+        display: flex;
+        gap: 16px;
+    }
+`
 
 /**
- * Type representing the properties for the DateController component.
- *
+ * Props for the DateController component.
  * @typedef {Object} DateControllerProps
  * @property {DateDesign} dateDesign - The design configuration for the date.
- * @property {AlignmentFn} setDateAlignment - The function to set the alignment of the date.
- * @property {ColorFn} setDateDescriptionColor - The function to set the color of the date description.
- * @property {ColorFn} setDateDescriptionTextColor - The function to set the text color of the date description.
- * @property {ColorFn} setDateDayColor - The function to set the color of the date day.
- * @property {ColorFn} setDateDayTextColor - The function to set the text color of the date day.
- * @property {React.ComponentPropsWithoutRef<'section'>} - The remaining props for the DateController component.
+ * @property {AlignmentFn} setDateAlignment - A function to set the alignment of the date.
+ * @property {DistributionFn} setDistributionAlignment - A function to set the distribution alignment of the date.
+ * @property {ColorFn} setDateDescriptionColor - A function to set the color of the date description.
+ * @property {ColorFn} setDateDescriptionTextColor - A function to set the color of the date description text.
+ * @property {ColorFn} setDateDayColor - A function to set the color of the date day.
+ * @property {ColorFn} setDateDayTextColor - A function to set the color of the date day text.
+ * @property {Function} setDateDescriptionTextSize - A function to set the size of the date description text.
+ * @property {Function} setDateTimesTextSize - A function to set the size of the date times text.
+ * @property {Function} setDayNameTextSize - A function to set the size of the day name text.
+ * @property {Function} setDayNumberTextSize - A function to set the size of the day number text.
+ * @property {React.ComponentPropsWithoutRef<'section'>} [additionalProps] - Additional props for the underlying section element.
  */
 type DateControllerProps = {
   dateDesign: DateDesign
@@ -33,23 +47,29 @@ type DateControllerProps = {
   setDateDescriptionTextColor: ColorFn
   setDateDayColor: ColorFn
   setDateDayTextColor: ColorFn
+  setDateDescriptionTextSize: (size: number) => void
+  setDateTimesTextSize: (size: number) => void
+  setDayNameTextSize: (size: number) => void
+  setDayNumberTextSize: (size: number) => void
 } & React.ComponentPropsWithoutRef<'section'>
 
 /**
- * DateController component.
+ * DateSection component is used to display and control the design settings for a date section.
  *
  * @component
- * @subcategory Controllers
- *
- * @param {object} props - React props object.
- * @param {object} dateDesign - Date design object.
- * @param {function} setDateAlignment - Function to set date alignment.
- * @param {function} setDateDescriptionColor - Function to set date description color.
- * @param {function} setDateDescriptionTextColor - Function to set date description text color.
- * @param {function} setDateDayColor - Function to set date day background color.
- * @param {function} setDateDayTextColor - Function to set date day text color.
- *
- * @returns {JSX.Element} DateController component.
+ * @param {Object} props - The props for the DateSection component
+ * @param {Object} props.dateDesign - The design settings for the date section
+ * @param {Function} props.setDateAlignment - The function to set the date alignment
+ * @param {Function} props.setDistributionAlignment - The function to set the distribution alignment
+ * @param {Function} props.setDateDescriptionColor - The function to set the description color
+ * @param {Function} props.setDateDescriptionTextColor - The function to set the description text color
+ * @param {Function} props.setDateDayColor - The function to set the day background color
+ * @param {Function} props.setDateDayTextColor - The function to set the day text color
+ * @param {Function} props.setDayNumberTextSize - The function to set the day number font size
+ * @param {Function} props.setDateDescriptionTextSize - The function to set the description font size
+ * @param {Function} props.setDateTimesTextSize - The function to set the time font size
+ * @param {Function} props.setDayNameTextSize - The function to set the day name font size
+ * @returns {React.FC} - The DateSection component
  */
 const DateSection: React.FC<DateControllerProps> = (
   {
@@ -60,6 +80,10 @@ const DateSection: React.FC<DateControllerProps> = (
     setDateDescriptionTextColor,
     setDateDayColor,
     setDateDayTextColor,
+    setDayNumberTextSize,
+    setDateDescriptionTextSize,
+    setDateTimesTextSize,
+    setDayNameTextSize,
     ...props
   }) => {
 
@@ -73,26 +97,68 @@ const DateSection: React.FC<DateControllerProps> = (
         alignment={dateDesign.dateAlignment}
         setAlignment={setDateAlignment}
       />
-      <ColorPicker
-        title='Description Color'
-        colorValue={dateDesign.dateDescriptionColor}
-        setColor={setDateDescriptionColor}
-      />
-      <ColorPicker
-        title='Description Text Color'
-        colorValue={dateDesign.dateDescriptionTextColor}
-        setColor={setDateDescriptionTextColor}
-      />
-      <ColorPicker
-        title='Day Background Color'
-        colorValue={dateDesign.dateDayColor}
-        setColor={setDateDayColor}
-      />
-      <ColorPicker
-        title='Day Text Color'
-        colorValue={dateDesign.dateDayTextColor}
-        setColor={setDateDayTextColor}
-      />
+      <ControlsWrapper>
+        <div>
+          <ColorPicker
+            title='Description Color'
+            colorValue={dateDesign.dateDescriptionColor}
+            setColor={setDateDescriptionColor}
+          />
+          <ColorPicker
+            title='Description Text Color'
+            colorValue={dateDesign.dateDescriptionTextColor}
+            setColor={setDateDescriptionTextColor}
+          />
+          <ColorPicker
+            title='Day Background Color'
+            colorValue={dateDesign.dateDayColor}
+            setColor={setDateDayColor}
+          />
+          <ColorPicker
+            title='Day Text Color'
+            colorValue={dateDesign.dateDayTextColor}
+            setColor={setDateDayTextColor}
+          />
+        </div>
+        <div>
+          <RangeSlider
+            label='Day Name Font Size'
+            value={dateDesign.dayNameTextSize}
+            min={10}
+            max={55}
+            onSelected={event => {
+              setDayNameTextSize(parseInt(event))
+            }}
+          />
+          <RangeSlider
+            label='Day Number Font Size'
+            value={dateDesign.dayNumberTextSize}
+            min={10}
+            max={55}
+            onSelected={event => {
+              setDayNumberTextSize(parseInt(event))
+            }}
+          />
+          <RangeSlider
+            label='Discription Font Size'
+            value={dateDesign.dateDescriptionTextSize}
+            min={10}
+            max={55}
+            onSelected={event => {
+              setDateDescriptionTextSize(parseInt(event))
+            }}
+          />
+          <RangeSlider
+            label='Time Font Size'
+            value={dateDesign.dateTimesTextSize}
+            min={10}
+            max={55}
+            onSelected={event => {
+              setDateTimesTextSize(parseInt(event))
+            }}
+          />
+        </div>
+      </ControlsWrapper>
     </DateContainer>
   </CollapsibleSection>
 }

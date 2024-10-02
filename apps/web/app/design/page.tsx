@@ -26,6 +26,10 @@ const Page: React.FC = ({}) => {
     dateDesign,
     setDateAlignment,
     setDistributionAlignment,
+    setDateDescriptionTextSize,
+    setDayNumberTextSize,
+    setDateTimesTextSize,
+    setDayNameTextSize,
     socials,
     addSocials,
     socialsDesign,
@@ -67,6 +71,10 @@ const Page: React.FC = ({}) => {
       setDateDescriptionTextColor={setDateDescriptionTextColor}
       setDateDayColor={setDateDayColor}
       setDateDayTextColor={setDateDayTextColor}
+      setDateDescriptionTextSize={setDateDescriptionTextSize}
+      setDateTimesTextSize={setDateTimesTextSize}
+      setDayNumberTextSize={setDayNumberTextSize}
+      setDayNameTextSize={setDayNameTextSize}
     />
     <SocialsSection
       socials={socials}
