@@ -171,17 +171,24 @@ const DateItem = styled.li<{
         ${props.$backgroundColor.a})`};
 `
 
-const DayName = styled.div<{
+const DayName = styled.div.attrs<{
   $backgroundColor: Color,
   $textColor: Color,
   $distribution: Distribution,
   $dayNameTextSize: number,
-  $dayNumberTextSize: number
-}>`
+  $dayNumberTextSize: number,
+  $datePadding: number,
+  $daySpacing: number
+}>((props) => ({
+  style: {
+    padding: props.$datePadding + 'px',
+    gap: props.$daySpacing + 'px'
+  }
+}))`
     display: flex;
     position: relative;
-    padding: 18px;
     align-items: center;
+    justify-content: space-between;
     background: ${props => props.$backgroundColor};
 
     span:first-of-type {
@@ -195,20 +202,13 @@ const DayName = styled.div<{
         if (props.$distribution === 'list') {
             return css`
                 flex-direction: column;
-                gap: ${props.$dayNumberTextSize > 35 ? '1.5em' : '1em'};
                 flex-basis: 200px;
                 border-radius: 4px 0 0 4px;
                 justify-content: center;
             `
         } else if (props.$distribution === 'column') {
             return css`
-                gap: 8px;
                 border-radius: 4px 4px 0 0;
-
-                span:last-of-type {
-                    position: absolute;
-                    right: 16px;
-                }
             `
         }
     }};
@@ -225,12 +225,19 @@ const DayName = styled.div<{
         ${props.$backgroundColor.a})`};
 `
 
-const DayDetailsWrapper = styled.div<{ $distribution: Distribution }>`
+const DayDetailsWrapper = styled.div.attrs<{
+  $distribution: Distribution
+  $datePadding: number,
+  $dateDescriptionSpacing: number
+}>((props) => ({
+  style: {
+    padding: props.$datePadding + 'px',
+    gap: props.$dateDescriptionSpacing + 'px'
+  }
+}))`
     min-height: 85px;
     width: 100%;
     display: flex;
-    padding: 16px;
-    gap: 0.5em;
     flex-direction: column;
     align-items: center;
 
@@ -254,6 +261,7 @@ const DayDescription = styled.div<{ $dateDescriptionTextSize: number }>`
 const TimesWrapper = styled.div<{ $dateTimesTextSize: number }>`
     font-size: ${props => `${props.$dateTimesTextSize}px`};
     justify-self: flex-end;
+    line-height: ${props => `${props.$dateTimesTextSize + 8}px`};
 `
 
 const tag = css`
@@ -653,11 +661,17 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
                 $backgroundColor={dateDesign.dateDayColor}
                 $dayNameTextSize={dateDesign.dayNameTextSize}
                 $dayNumberTextSize={dateDesign.dayNumberTextSize}
+                $daySpacing={dateDesign.daySpacing}
+                $datePadding={dateDesign.datePadding}
               >
                 <span>{day}</span>
                 <span>{dayDate}</span>
               </DayName>
-              <DayDetailsWrapper $distribution={dateDesign.dateDistribution}>
+              <DayDetailsWrapper
+                $distribution={dateDesign.dateDistribution}
+                $datePadding={dateDesign.datePadding}
+                $dateDescriptionSpacing={dateDesign.dateDescriptionSpacing}
+              >
                 <DayDescription $dateDescriptionTextSize={dateDesign.dateDescriptionTextSize}>
                   {template.description}
                 </DayDescription>

@@ -24,6 +24,9 @@ const Page: React.FC = ({}) => {
     setSubHeaderSize,
     setSubHeaderColor,
     dateDesign,
+    setDaySpacing,
+    setDatePadding,
+    setDateDescriptionSpacing,
     setDateAlignment,
     setDistributionAlignment,
     setDateDescriptionTextSize,
@@ -75,6 +78,9 @@ const Page: React.FC = ({}) => {
       setDateTimesTextSize={setDateTimesTextSize}
       setDayNumberTextSize={setDayNumberTextSize}
       setDayNameTextSize={setDayNameTextSize}
+      setDateDescriptionSpacing={setDateDescriptionSpacing}
+      setDatePadding={setDatePadding}
+      setDaySpacing={setDaySpacing}
     />
     <SocialsSection
       socials={socials}

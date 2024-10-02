@@ -51,9 +51,12 @@ export type DateDesign = {
   dateDescriptionColor: Color
   dateDescriptionTextColor: Color
   dateDescriptionTextSize: number
+  dateDescriptionSpacing: number
+  daySpacing: number
   dateTimesTextSize: number
   dayNameTextSize: number
   dayNumberTextSize: number
+  datePadding: number
 }
 
 export type BackgroundSize = 'auto' | 'cover' | 'contain' | string
@@ -123,6 +126,9 @@ export type DesignStateReducers = {
   setDateTimesTextSize: (size: number) => void,
   setDayNameTextSize: (size: number) => void,
   setDayNumberTextSize: (size: number) => void,
+  setDateDescriptionSpacing: (size: number) => void,
+  setDaySpacing: (size: number) => void,
+  setDatePadding: (size: number) => void,
   setBackgroundColor: ColorFn,
   setBackgroundSize: (backgroundSize: BackgroundSize) => void,
   setBackgroundPosition: (backgroundPosition: BackgroundPosition) => void,
@@ -163,7 +169,10 @@ let initialState: ScheduleState = {
     dateDescriptionTextSize: 18,
     dateTimesTextSize: 18,
     dayNameTextSize: 24,
-    dayNumberTextSize: 16
+    dayNumberTextSize: 16,
+    dateDescriptionSpacing: 1,
+    daySpacing: 1,
+    datePadding: 18
   },
   socials: [{network: 'None',}],
   socialsDesign: {
@@ -251,6 +260,27 @@ let reducers: StateCreator<ScheduleStateReducers & DesignStateReducers & Schedul
         headerDesign: {
           ...state.headerDesign,
           headerTextSize: size
+        }
+      })),
+    setDateDescriptionSpacing: (size: number) => set((state) =>
+      ({
+        dateDesign: {
+          ...state.dateDesign,
+          dateDescriptionSpacing: size
+        }
+      })),
+    setDaySpacing: (size: number) => set((state) =>
+      ({
+        dateDesign: {
+          ...state.dateDesign,
+          daySpacing: size
+        }
+      })),
+    setDatePadding: (size: number) => set((state) =>
+      ({
+        dateDesign: {
+          ...state.dateDesign,
+          datePadding: size
         }
       })),
     setDateDescriptionTextSize: (size: number) => set((state) =>

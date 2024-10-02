@@ -17,6 +17,7 @@ const ControlsWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 32px;
+
     > div {
         display: flex;
         gap: 16px;
@@ -51,6 +52,9 @@ type DateControllerProps = {
   setDateTimesTextSize: (size: number) => void
   setDayNameTextSize: (size: number) => void
   setDayNumberTextSize: (size: number) => void
+  setDateDescriptionSpacing: (size: number) => void,
+  setDaySpacing: (size: number) => void,
+  setDatePadding: (size: number) => void,
 } & React.ComponentPropsWithoutRef<'section'>
 
 /**
@@ -84,6 +88,9 @@ const DateSection: React.FC<DateControllerProps> = (
     setDateDescriptionTextSize,
     setDateTimesTextSize,
     setDayNameTextSize,
+    setDaySpacing,
+    setDatePadding,
+    setDateDescriptionSpacing,
     ...props
   }) => {
 
@@ -159,6 +166,37 @@ const DateSection: React.FC<DateControllerProps> = (
           />
         </div>
       </ControlsWrapper>
+      <RangeSlider
+        label='Padding'
+        value={dateDesign.datePadding}
+        min={10}
+        max={100}
+        onSelected={event => {
+          setDatePadding(parseInt(event))
+        }}
+      />
+      <RangeSlider
+        label='Description Spacing'
+        value={dateDesign.dateDescriptionSpacing}
+        min={1}
+        max={100}
+        onSelected={event => {
+          setDateDescriptionSpacing(parseInt(event))
+        }}
+      />
+      {
+        dateDesign.dateDistribution === 'list' &&
+        <RangeSlider
+          label='Day Spasing'
+          value={dateDesign.daySpacing}
+          min={1}
+          max={100}
+          onSelected={event => {
+            setDaySpacing(parseInt(event))
+          }}
+        />
+      }
+
     </DateContainer>
   </CollapsibleSection>
 }
