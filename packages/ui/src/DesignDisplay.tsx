@@ -257,11 +257,13 @@ const DayDetailsWrapper = styled.div.attrs<{
 const DayDescription = styled.div<{ $dateDescriptionTextSize: number }>`
     font-size: ${props => `${props.$dateDescriptionTextSize}px`};
     font-weight: bold;
+    color: red;
+    line-height: normal;
 `
 const TimesWrapper = styled.div<{ $dateTimesTextSize: number }>`
     font-size: ${props => `${props.$dateTimesTextSize}px`};
     justify-self: flex-end;
-    line-height: ${props => `${props.$dateTimesTextSize + 8}px`};
+    line-height: normal;
 `
 
 const tag = css`
