@@ -187,7 +187,7 @@ const DateSection: React.FC<DateControllerProps> = (
       {
         dateDesign.dateDistribution === 'list' &&
         <RangeSlider
-          label='Day Spasing'
+          label='Day Spacing'
           value={dateDesign.daySpacing}
           min={1}
           max={100}
