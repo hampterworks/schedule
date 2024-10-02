@@ -50,6 +50,10 @@ export type DateDesign = {
   dateDayTextColor: Color
   dateDescriptionColor: Color
   dateDescriptionTextColor: Color
+  dateDescriptionTextSize: number
+  dateTimesTextSize: number
+  dayNameTextSize: number
+  dayNumberTextSize: number
 }
 
 export type BackgroundSize = 'auto' | 'cover' | 'contain' | string
@@ -115,6 +119,10 @@ export type DesignStateReducers = {
   setDateDescriptionTextColor: ColorFn,
   setDateDayColor: ColorFn,
   setDateDayTextColor: ColorFn,
+  setDateDescriptionTextSize: (size: number) => void,
+  setDateTimesTextSize: (size: number) => void,
+  setDayNameTextSize: (size: number) => void,
+  setDayNumberTextSize: (size: number) => void,
   setBackgroundColor: ColorFn,
   setBackgroundSize: (backgroundSize: BackgroundSize) => void,
   setBackgroundPosition: (backgroundPosition: BackgroundPosition) => void,
@@ -152,6 +160,10 @@ let initialState: ScheduleState = {
     dateDayColor: { r: 130, g: 167, b: 236, a: 1 },
     dateDayTextColor: { r: 0, g: 0, b: 0, a: 1 },
     dateDescriptionTextColor: { r: 0, g: 0, b: 0, a: 1 },
+    dateDescriptionTextSize: 18,
+    dateTimesTextSize: 18,
+    dayNameTextSize: 24,
+    dayNumberTextSize: 16
   },
   socials: [{network: 'None',}],
   socialsDesign: {
@@ -239,6 +251,34 @@ let reducers: StateCreator<ScheduleStateReducers & DesignStateReducers & Schedul
         headerDesign: {
           ...state.headerDesign,
           headerTextSize: size
+        }
+      })),
+    setDateDescriptionTextSize: (size: number) => set((state) =>
+  ({
+    dateDesign: {
+      ...state.dateDesign,
+      dateDescriptionTextSize: size
+    }
+  })),
+    setDayNumberTextSize: (size: number) => set((state) =>
+      ({
+        dateDesign: {
+          ...state.dateDesign,
+          dayNumberTextSize: size
+        }
+      })),
+    setDateTimesTextSize: (size: number) => set((state) =>
+      ({
+        dateDesign: {
+          ...state.dateDesign,
+          dateTimesTextSize: size
+        }
+      })),
+    setDayNameTextSize: (size: number) => set((state) =>
+      ({
+        dateDesign: {
+          ...state.dateDesign,
+          dayNameTextSize: size
         }
       })),
     setSubHeaderFont: (font: Font) => set((state) =>

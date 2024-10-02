@@ -7,7 +7,8 @@ import {
   BackgroundPosition,
   BackgroundSize,
   Color,
-  DateDesign, Distribution,
+  DateDesign,
+  Distribution,
   HeaderDesign,
   SocialNetworks,
   Socials,
@@ -137,7 +138,11 @@ const DateWrapper = styled.ul<{ $alignment: Alignment, $distribution: Distributi
     }};
 `
 
-const DateItem = styled.li<{ $backgroundColor: Color, $textColor: Color, $distribution: Distribution }>`
+const DateItem = styled.li<{
+  $backgroundColor: Color,
+  $textColor: Color,
+  $distribution: Distribution,
+}>`
     width: 100%;
     display: flex;
     border-radius: 4px;
@@ -166,40 +171,48 @@ const DateItem = styled.li<{ $backgroundColor: Color, $textColor: Color, $distri
         ${props.$backgroundColor.a})`};
 `
 
-const DayName = styled.div<{ $backgroundColor: Color, $textColor: Color, $distribution: Distribution }>`
+const DayName = styled.div<{
+  $backgroundColor: Color,
+  $textColor: Color,
+  $distribution: Distribution,
+  $dayNameTextSize: number,
+  $dayNumberTextSize: number
+}>`
     display: flex;
     position: relative;
     padding: 18px;
     align-items: center;
-    font-size: 24px;
     background: ${props => props.$backgroundColor};
 
+    span:first-of-type {
+        font-size: ${props => `${props.$dayNameTextSize}px`};
+    }
+    span:last-of-type {
+        font-size: ${props => `${props.$dayNumberTextSize}px`};
+    }
+    
     ${props => {
         if (props.$distribution === 'list') {
             return css`
                 flex-direction: column;
-                gap: 4px;
+                gap: ${props.$dayNumberTextSize > 35 ? '1.5em' : '1em'};
                 flex-basis: 200px;
                 border-radius: 4px 0 0 4px;
                 justify-content: center;
-                
-                span:last-of-type {
-                    font-size: 18px;
-                }
             `
         } else if (props.$distribution === 'column') {
             return css`
                 gap: 8px;
                 border-radius: 4px 4px 0 0;
+
                 span:last-of-type {
                     position: absolute;
-                    font-size: 16px;
                     right: 16px;
                 }
             `
         }
     }};
-    
+
     color: ${props => `rgba(
         ${props.$textColor.r}, 
         ${props.$textColor.g},
@@ -217,28 +230,29 @@ const DayDetailsWrapper = styled.div<{ $distribution: Distribution }>`
     width: 100%;
     display: flex;
     padding: 16px;
-    gap: 8px;
+    gap: 0.5em;
     flex-direction: column;
     align-items: center;
-    
+
     ${props => {
         if (props.$distribution === 'list') {
             return css`
                 justify-content: space-around;
             `
         } else if (props.$distribution === 'column') {
-          return css`
-              justify-content: center;
-              text-align: center;
-          `
+            return css`
+                justify-content: center;
+                text-align: center;
+            `
         }
     }};
 `
-const DayDescription = styled.div`
-    font-size: 18px;
+const DayDescription = styled.div<{ $dateDescriptionTextSize: number }>`
+    font-size: ${props => `${props.$dateDescriptionTextSize}px`};
     font-weight: bold;
 `
-const TimesWrapper = styled.div`
+const TimesWrapper = styled.div<{ $dateTimesTextSize: number }>`
+    font-size: ${props => `${props.$dateTimesTextSize}px`};
     justify-self: flex-end;
 `
 
@@ -637,15 +651,21 @@ const DesignDisplay: React.FC<DesignDisplayProps> = (
                 $textColor={dateDesign.dateDayTextColor}
                 $distribution={dateDesign.dateDistribution}
                 $backgroundColor={dateDesign.dateDayColor}
+                $dayNameTextSize={dateDesign.dayNameTextSize}
+                $dayNumberTextSize={dateDesign.dayNumberTextSize}
               >
                 <span>{day}</span>
                 <span>{dayDate}</span>
               </DayName>
               <DayDetailsWrapper $distribution={dateDesign.dateDistribution}>
-                <DayDescription>{template.description}</DayDescription>
+                <DayDescription $dateDescriptionTextSize={dateDesign.dateDescriptionTextSize}>
+                  {template.description}
+                </DayDescription>
                 {
                   localTime !== undefined && template.wholeDay !== true &&
-                  <TimesWrapper>{`${localTime} ${timeZoneList.length !== 0 ? '/ ' : ''}${timeZoneList.join(" / ")}`}</TimesWrapper>
+                  <TimesWrapper $dateTimesTextSize={dateDesign.dateTimesTextSize}>
+                    {`${localTime} ${timeZoneList.length !== 0 ? '/ ' : ''}${timeZoneList.join(" / ")}`}
+                  </TimesWrapper>
                 }
               </DayDetailsWrapper>
             </DateItem>
