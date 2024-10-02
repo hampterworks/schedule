@@ -171,7 +171,7 @@ const DateItem = styled.li<{
         ${props.$backgroundColor.a})`};
 `
 
-const DayName = styled.div<{
+const DayName = styled.div.attrs<{
   $backgroundColor: Color,
   $textColor: Color,
   $distribution: Distribution,
@@ -179,10 +179,14 @@ const DayName = styled.div<{
   $dayNumberTextSize: number,
   $datePadding: number,
   $daySpacing: number
-}>`
+}>((props) => ({
+  style: {
+    padding: props.$datePadding + 'px',
+    gap: props.$daySpacing + 'px'
+  }
+}))`
     display: flex;
     position: relative;
-    padding: ${props => `${props.$datePadding}px`};
     align-items: center;
     justify-content: space-between;
     background: ${props => props.$backgroundColor};
@@ -198,7 +202,6 @@ const DayName = styled.div<{
         if (props.$distribution === 'list') {
             return css`
                 flex-direction: column;
-                gap: ${props.$daySpacing + 'px'};
                 flex-basis: 200px;
                 border-radius: 4px 0 0 4px;
                 justify-content: center;
@@ -222,16 +225,19 @@ const DayName = styled.div<{
         ${props.$backgroundColor.a})`};
 `
 
-const DayDetailsWrapper = styled.div<{
+const DayDetailsWrapper = styled.div.attrs<{
   $distribution: Distribution
   $datePadding: number,
   $dateDescriptionSpacing: number
-}>`
+}>((props) => ({
+  style: {
+    padding: props.$datePadding + 'px',
+    gap: props.$dateDescriptionSpacing + 'px'
+  }
+}))`
     min-height: 85px;
     width: 100%;
     display: flex;
-    padding: ${props => `${props.$datePadding}px`};
-    gap: ${props => `${props.$dateDescriptionSpacing}px`};
     flex-direction: column;
     align-items: center;
 
@@ -255,6 +261,7 @@ const DayDescription = styled.div<{ $dateDescriptionTextSize: number }>`
 const TimesWrapper = styled.div<{ $dateTimesTextSize: number }>`
     font-size: ${props => `${props.$dateTimesTextSize}px`};
     justify-self: flex-end;
+    line-height: ${props => `${props.$dateTimesTextSize + 8}px`};
 `
 
 const tag = css`
