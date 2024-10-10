@@ -190,6 +190,7 @@ const DayName = styled.div.attrs<{
     align-items: center;
     justify-content: space-between;
     background: ${props => props.$backgroundColor};
+    width: 12ch;
 
     span:first-of-type {
         font-size: ${props => `${props.$dayNameTextSize}px`};
