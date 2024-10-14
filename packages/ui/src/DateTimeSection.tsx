@@ -81,7 +81,8 @@ const DateTimeSection: React.FC<DateTimeControllerProps> = ({templates, setTempl
               type='time'
               value={template.time ?? ''}
               onInput={selectedTime => {
-                setTemplate(index, {...template, time: (selectedTime as string)})
+                if (selectedTime)
+                  setTemplate(index, {...template, time: (selectedTime as string)})
               }}
               disabled={template.wholeDay ?? false}
             />
